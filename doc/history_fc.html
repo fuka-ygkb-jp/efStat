@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM HomePage Builder 2000 V4.0.6  for Windows">
+<LINK rel="stylesheet" type="text/css" href="def.css">
+<TITLE>efCount改修履歴</TITLE>
+</HEAD>
+<BODY bgcolor="#ffffff" text="#7e2828" link="#7726c8" alink="5c4fff" vlink="ff5959"><FONT size="+3"><B>efCount改修履歴</B></FONT>
+<HR>
+<DIV align="right">アクセス解析パッケージ - efStat <IMG src="fstat.gif" width="88" height="31" border="0" align="top"></DIV>
+<BR>
+<TABLE width="95%" align="center" cellpadding="2" cellspacing="0" border="1" bgcolor="#ffdfe0">
+  <TBODY>
+    <TR nowrap valign="top">
+      <TD bgcolor="#ffc6c7"><B><FONT size="+1">■課題</FONT></B></TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>ログ形式を、大幅に変えます。<BR>
+      今のままでは、サーバに対する負荷が大きすぎるので…。<BR>
+      (業者様、ご迷惑をお掛けしております)</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<BR>
+<TABLE width="95%" align="center" cellpadding="2" cellspacing="0" border="1" bgcolor="#ffdfe0">
+  <TBODY>
+    <TR nowrap valign="top">
+      <TD>2001/09/21</TD>
+      <TD>2.1.2</TD>
+      <TD>
+      <UL>
+        <LI>再読み込み防止機能をon/offできるようにした
+        <LI>
+        再読み込み防止機能にタイマーを付けた
+        <LI>その他、細かい点を修正
+      </UL>
+      </TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2001/01/12</TD>
+      <TD>2.1.1</TD>
+      <TD>＜SSIモード＞
+      <UL>
+        <LI>エラー出力のMIMEタイプを text/plain から
+        text/html へ
+      </UL>
+      </TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2001/01/04</TD>
+      <TD>2.1</TD>
+      <TD>＜SSIモード＞
+      <UL>
+        <LI>exec cgi による呼び出しは止め、include virtual
+        による呼び出しに変更した
+      </UL>
+      </TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2000/11/12</TD>
+      <TD>2.0.1</TD>
+      <TD>パッチ当て。
+      <UL>
+        <LI>参照元を上手く取得できなかった場合、'.ref.'
+        というゴミが残ってしまうのを修正
+      </UL>
+      </TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2000/10/06</TD>
+      <TD>2.0</TD>
+      <TD>●ログの記録形式を2版に改訂。<BR>
+      efCount/2.0では、旧ログ形式(Webstat系,
+      efStat
+      1.x系)を読み込んだときに自動的にコンバートします。<BR>
+      ＜変更点＞
+      <UL>
+        <LI>区切り文字に \t (タブ記号)を使うことにした
+        <LI>数値の表現に62進数を採用し、容量圧縮に努める
+        <LI>参照元が http://～ の場合、省略する
+        <LI>ブラウザ名が Mozilla～ の場合、省略する(Netscape
+        + IE + その他互換品)<BR>
+        かつ (compatible; ～ を含む場合、これも省略する(IE)
+        <LI>将来的な互換性を見据えてヘッダを付加
+        <LI>ログ記録開始日時、最終記録日時を通算秒で記録することにした<BR>
+        (容易に経過時間が算出できるようになる。
+        記録開始日時を使ったギミックは後々考える予定)
+        <LI>年度別集計を追加
+        <LI>画面サイズ・色深度情報を追加
+      </UL>
+      ●表示桁数を20桁まで拡張<BR>
+      ●何日アクセスがないか真面目に処理するようにした<BR>
+      ●年度が替わったら自動的に月別集計をリセットするようにした(完全にメンテナンスフリーに)<BR>
+      ●オプションでカウントアップしない指定をできるようになった(カウント値の精度向上に役立つ)<BR>
+      ●カウントアップさせないホスト名を複数指定できるようになった<BR>
+      ●カウントアップさせないブラウザを複数指定できるようになった<BR>
+      ●SSI の表示メッセージ中のを細分化した。<BR>
+      <BR>
+      ＜ツール群＞<BR>
+      タグ生成ツール 0.4<BR>
+      ●NavigatorだとDIGITの値がNULLになってしまうのを修正<BR>
+      <BR>
+      62進数変換ツール 0.1　(fcount.html
+      に内蔵)<BR>
+      ●ログ形式変更に合わせ、作成</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2000/06/18</TD>
+      <TD>1.4</TD>
+      <TD>●hオプションを廃止。<BR>
+      ●時計機能を追加。　(wオプション)<BR>
+      ●その他、無駄な所、気になる所を修正。<BR>
+      ●呼び出しタグを自動的に作りだすJavaScriptツールを作った。目指せ国民化。</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2000/05/17</TD>
+      <TD>1.3c</TD>
+      <TD>●MacのNetscapeが出力する'bookmarks'という参照元に対応(→無視する)。<BR>
+      ●カウンタ用画像のディレクトリをfstatインストールディレクトリの配下に固定した。<BR>
+      　(今まで他のディレクトリに画像を置いていた方は注意して下さい)</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2000/04/05</TD>
+      <TD>1.3b</TD>
+      <TD>●色々と揉めそうなので、NPHスクリプト形式をやめる。</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2000/03/02</TD>
+      <TD>1.3a</TD>
+      <TD>●月別カウントが増えないバグを修正。</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2000/02/19</TD>
+      <TD>1.3</TD>
+      <TD>●プログラム名称をFCountからefCountへ変更<BR>
+      ●NPHスクリプト形式に変更。<BR>
+      ●エラー表示関数の仕様整備。<BR>
+      ●週別カウントが5週前までしか無いはずなのに6週前まで記録していたのを修正。<BR>
+      ●標準関数に出来ることを任せてプログラムサイズ縮小。<BR>
+      ●SSIとCGIで呼び出し方を変えた<BR>
+      　&lt;CGIモード&gt;<BR>
+      　　・URI上でフォントを自由に変えることが出来るようにした<BR>
+      　　・URLエンコードを修正<BR>
+      　&lt;SSIモード&gt;<BR>
+      　　・カウント数表示メッセージ中の変数が変換されないバグを修正<BR>
+      ●綾瀬ふみお氏からカウンタ用GIFを提供していただいたので添付しました。<BR>
+      　小さいチューリップが飾られた可愛い画像です。　ありがとうございます(^^)</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<BR>
+<TABLE width="95%" align="center" cellpadding="2" cellspacing="0" border="1" bgcolor="#ffdfe0">
+  <TBODY>
+    <TR nowrap valign="top">
+      <TD colspan="3" nowrap bgcolor="#ffc6c7">
+      <P><B><FONT size="+1">■いにしえのFCount時代</FONT></B></P>
+      </TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>1999/10/12</TD>
+      <TD>1.2</TD>
+      <TD>
+      <UL>
+        <LI>それらしい所はチェックしましたが、多分、2000年問題は大丈夫です。<BR>
+        (強いて言うならUNIXのシステム時間が2030年辺りでパンクするっぽいのですが)
+        <LI>Netscape 4.7が返す'[unknown origin]'という参照元に対応(無視する)。
+        <LI>くるいぬ氏からカウンタ用GIFを提供していただいたので添付しました。ありがとうございます☆(^^)v
+      </UL>
+      </TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>1999/08/21</TD>
+      <TD>1.1</TD>
+      <TD>
+      <UL>
+        <LI>表示桁数を指定できるようにした(CGIモード時のみ)。
+        <LI>ホスト名の取得をFCount側でやる事にした。
+        <LI>最大ログ保存数を途中で変更したときにログにゴミが残るのを修正。
+        <LI>URLエンコード関係のミスを直した。
+      </UL>
+      </TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>1999/07/08</TD>
+      <TD>1.0</TD>
+      <TD>count.pl , count.cgiを統合し、FCountという名前に変更。
+      <UL>
+        <LI>CGI,SSI両用になった
+        <LI>それに伴うオプション指定方法の変更
+      </UL>
+      </TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD colspan="3">この間、暫く記録に残らない時が過ぎる…。</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>1998夏頃</TD>
+      <TD>0.0.1</TD>
+      <TD>CGIの勉強用にとりあえず作る。<BR>
+      SSI(coung.pl) と CGI(coung.cgi) で別々のファイルだった。<BR>
+      gifcat.pl を知らなかった頃。　一桁ずつ呼び出す非効率的な物だった。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<HR>
+<DIV align="right">&copy;1998-2001 不可思議絵の具<BR>
+(<A href="http://yugen.main.jp/">http://yugen.main.jp/</A>)</DIV>
+</BODY>
+</HTML>

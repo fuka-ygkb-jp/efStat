@@ -1,0 +1,102 @@
+BODY				{
+	font-family : Tahoma,Arial;
+	color : #7e2828;
+	background-position : center top;
+	line-height : 140%;
+	vertical-align : baseline;
+	letter-spacing : 1pt;
+}
+
+A:HOVER				{text-decoration:underline;}
+A:VISITED			{color : #ff5959; text-decoration:none; font-weight:bold;}
+A:LINK				{color : #7726c8; text-decoration:none; font-weight:bold;}
+A:ACTIVE			{color : #5c4fff; text-decoration:none; font-weight:bold;}
+P					{margin-top : 7pt;margin-bottom : 7pt;}
+H1					{font-size : 220%;font-weight : bold;}
+H2					{font-size : 180%;font-weight : bold;}
+H3					{font-size : 150%;font-weight : bold;}
+H4					{font-size : 120%;font-weight : bold;margin-top : 2em;}
+H5					{font-size : 110%;font-weight : bold;margin-top : 2em;}
+PRE					{font-size : 1em;line-height : 100%;}
+CAPTION				{font-weight : bold;}
+VAR					{font-weight : bolder;	font-style : italic;}
+EM					{font-weight : bold;	font-style : italic;	color : red;	text-decoration : underline;}
+CODE {
+	font-size : 1em;
+	font-family : "Lucida Console","OCR A Extended",OCRB,"Trebuchet MS";
+	font-weight : bold;
+}
+
+KBD {
+	font-size : 1em;
+	font-family : "Lucida Console","OCR A Extended",OCRB,"Trebuchet MS";
+	font-weight : bold;
+}
+
+SAMP {
+	font-size : 1em;
+	font-family : "Trebuchet MS","Lucida Sans Unicode";
+	font-weight : bold;
+}
+
+.Dirctory {
+	line-height : 100%;
+	background-color : white;
+	border-right-style : ridge;	border-bottom-style : ridge;
+	border-right-color : white;	border-bottom-color : white;
+	border-right-width : 2px;	border-bottom-width : 2px;
+}
+
+.Chapter_Headline {
+	background-color : #ffc6c7;
+	padding-top : 10px;			padding-left : 10px;		padding-right : 10px;		padding-bottom : 10px;
+	margin-top : 2em;			margin-right : 1em;			margin-left : 1em;			margin-bottom : 8px;
+	border-top-width : 2px;		border-left-width : 2px;	border-right-width : 4px;	border-bottom-width : 4px;
+	border-top-style : groove;	border-left-style : groove;	border-right-style : ridge;	border-bottom-style : ridge;
+	border-top-color : white;	border-left-color : white;	border-right-color : white;	border-bottom-color : white;
+}
+
+.Tips_Headline {
+	color : #400040;
+	background-color : #c4c4ff;
+	padding-top : 10px;			padding-left : 10px;		padding-right : 10px;		padding-bottom : 10px;
+	margin-top : 2em;			margin-right : 1em;			margin-left : 1em;			margin-bottom : 8px;
+	border-top-width : 2px;		border-left-width : 2px;	border-right-width : 4px;	border-bottom-width : 4px;
+	border-top-style : groove;	border-left-style : groove;	border-right-style : ridge;	border-bottom-style : ridge;
+	border-top-color : white;	border-left-color : white;	border-right-color : white;	border-bottom-color : white;
+}
+
+.Chapter {
+	background-color : #ffdfe0;
+	margin-top : 0px;			margin-left : 2em;			margin-right : 2em;			margin-bottom : 1em;
+	border-top-width : 2px;		border-left-width : 2px;	border-right-width : 4px;	border-bottom-width : 4px;
+	border-top-style : groove;	border-left-style : groove;	border-right-style : ridge;	border-bottom-style : ridge;
+	border-top-color : white;	border-left-color : white;	border-right-color : white;	border-bottom-color : white;
+	padding-left : 2em;			padding-right : 2em;
+}
+
+.Tips {
+	color : #400040;
+	background-color : #e8e8ff;
+	margin-top : 0px;			margin-left : 2em;			margin-right : 2em;			margin-bottom : 1em;
+	border-top-width : 2px;		border-left-width : 2px;	border-right-width : 4px;	border-bottom-width : 4px;
+	border-top-style : groove;	border-left-style : groove;	border-right-style : ridge;	border-bottom-style : ridge;
+	border-top-color : white;	border-left-color : white;	border-right-color : white;	border-bottom-color : white;
+	padding-left : 2em;			padding-right : 2em;
+}
+
+.Quote {
+	padding-left : 3em;
+}
+
+.Table_Normal {
+	background-color : white;
+	word-spacing : normal;
+	margin-top : 5pt;	margin-left : 5pt;	margin-right : 5pt;	margin-bottom : 5pt;
+}
+
+.Caution {
+	color : black;
+	background-color : yellow;
+	font-weight : bold;
+}

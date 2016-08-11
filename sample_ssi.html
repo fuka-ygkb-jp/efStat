@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM HomePage Builder 2000 V4.0.6  for Windows">
+<TITLE>efCount呼び出しサンプル / SSIモード</TITLE>
+</HEAD>
+<BODY>
+
+<FONT size="+2" color="#ff8000">●SSIモードでの呼び出しサンプル●</FONT><BR>
+
+<P align="center"><B><U>■　基本的な使い方　■</U></B></P>
+SSIで動作させる場合は include virtual で呼び出して下さい。<BR>
+あなたの指定した書式で結果がテキスト表示されます。<BR>
+include virtual ではHTMLファイルから見たCGIファイルへの相対パス(*1)、又は、ドキュメントルートからの絶対パス(*2)で指定します。<BR>
+(*1 相対パス指定) <!--#include virtual="./fcount.cgi?LOG=index"--><BR>
+(*2 絶対パス指定) <!--#include virtual="/~fuka2/cgi-bin/fstat/fcount.cgi?LOG=index"-->　←　※ あなたの環境に合わせない限りエラーが出ているはずです ※<BR>
+<BR>
+
+<!--#include virtual="./fcount.cgi?LOG=index&MODE=-"--><BR>
+▲カウントアップしないオプションを付加しています。("-"オプション)<BR>
+<BR>
+
+<!--#include virtual="./fcount.cgi?LOG=index&MODE=h"--><BR>
+▲隠しカウンタとして動作しています。("h"オプション)<BR>
+
+
+</BODY>
+</HTML>

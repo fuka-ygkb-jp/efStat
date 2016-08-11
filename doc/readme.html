@@ -1,0 +1,614 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<TITLE>総合説明書</TITLE>
+<LINK rel="stylesheet" href="default.css">
+</HEAD>
+<BODY>
+<H1>総合説明書</H1>
+<HR>
+<P align="right">アクセス解析パッケージ - efStat <IMG src="fstat.gif" width="88" height="31" border="0" align="top"></P>
+<H2 class="Chapter_Headline">■もくじ</H2>
+<DIV class="Chapter">
+<P>この説明書では efStat の概要やインストールについての説明をします。</P>
+<UL>
+  <LI><A href="#hajimeni">はじめに </A>
+  <UL>
+    <LI><A href="#hajimeni_point">古いefStatを新しいefStatに差し替える際のポイント</A>
+  </UL>
+  
+  <LI><A href="#gaiyou">概要</A>
+  <UL>
+    <LI><A href="#gaiyou_fcount">efCount(fcount.cgi)の特徴</A>
+    <LI><A href="#gaiyou_fstat">efStat(fstat.cgi)の特徴</A>
+  </UL>
+  
+  <LI><A href="#kankyou">動作環境</A>
+  <LI><A href="#dounyuu">導入</A>
+  <LI><A href="#settei">プログラム側の設定・使用法</A>
+  <LI><A href="#sengen">宣言</A>
+  <LI><A href="#tasya">多謝/関連資料</A>
+  <LI><A href="#saigoni">最後に</A>
+</UL>
+</DIV>
+<H2 class="Chapter_Headline"><A name="hajimeni">■はじめに</A></H2>
+<DIV class="Chapter">
+<P><EM><STRONG>このソフトウェア<SUP>(※1)</SUP>はリンクウェア<SUP>(※2)</SUP>です。</STRONG></EM><BR>
+リンクウェアとは、貴方が本プログラムを使い始めて有用だと感じ使用し続ける場合に、貴方のウェブサイトから「有限工房」へ必ず何らかの形でリンクしていただくという契約を持ったソフトウェアです。<BR>
+堅苦しさ抜きに書きますと、便利さの見返りにウチのページを宣伝してチョ☆、という事です(笑)</P>
+<P>プログラムの性格上、efStat の存在を明らかにする必要はありませんが、せめて「ここにはお世話になってます」みたいな感じで上手く誤魔化してリンクを張ってあげて下さい。<BR>
+(まあ、別に説明文を書く必要もありませんが)<BR>
+カウンタに&lt;A&gt;要素でリンクを張るという方法もよく見かけます。</P>
+<P>企業サイトに採用する場合などで、どうしてもそれだけは勘弁してくれ、という場合はメールにて個別に相談下さい。<BR>
+何の断りもなくリンクせずに使っている会社さんがよくおられますが、私にはそれが企業の質量にものを言わせた横暴に感じられます。<BR>
+お互いにそれはマイナスだと思いますので、出来れば一言知らせていただきたい。<BR>
+お金は一切頂きませんし、そのことを口外することは決してありませんので。</P>
+<P>(※1…私の書く説明書では「CGI/SSI スクリプト」の事を「プログラム」「ソフトウェア」と呼びます)<BR>
+(※2…私が勝手に作った造語です(^^；　シェアウェアの「リンク張らなきゃいけない版」と思って下さい)</P>
+<P><STRONG><EM>このスクリプトは、CGI/SSI設置の知識がある程度ある方を対象にしています。</EM></STRONG><BR>
+申し訳ありませんが、この説明書を読んでもチンプンカンプンだった方は使用をご遠慮下さい。</P>
+</DIV>
+<DIV class="Chapter">
+<H3><A name="hajimeni_point">■古いefStatを新しいefStatに差し替える際のポイント</A></H3>
+<P>特に注意書き(!!caution!!.txt)などがなければ、基本的に：</P>
+<OL>
+  <LI>ログファイル・旧fstat.cgi,fcount.cgiのバックアップを取っておく。<BR>
+  (後者は今までの設定内容を忘れないようにするため)
+  <LI>efStatをインストールしたディレクトリに新しいefStatを全て上書きする<BR>
+  (いったん中身を全て消してしまってからコピーするとなお良し)
+  <LI>バックアップを取っておいたログファイルを元に戻す。
+  <LI>前バージョンの設定を新バージョンに移植する。<BR>
+  (設定方法が変更されていたりするので、説明書と照らし合わせて注意しながら行うこと)
+</OL>
+<P>このようにして下さい。　つまり、中身を総入れ替えしてからログと設定を引っ越しさせます。<BR>
+これが一番安全・確実な方法です。</P>
+</DIV>
+<H2 class="Chapter_Headline"><A name="gaiyou">■概要</A></H2>
+<DIV>
+<P class="Chapter">「efStat」は perl で動作する「カウンタ兼アクセスログ記録スクリプト」と「ログ解析スクリプト」のパッケージです。
+<BR>
+fcount.cgi がログ記録・カウンタ表示、 fstat.cgi
+がログ解析の役割を持っています。</P>
+</DIV>
+<DIV class="Chapter">
+<H3><A name="gaiyou_fcount">efCount(fcount.cgi)の特徴</A></H3>
+<H4>カウンターの機能とアクセスロガーの機能を併せ持っている</H4>
+<DIV class="Quote">
+<P>二つ別々に設置するよりも、一つにまとまっていれば、悩むのは一回で済みますよね？(ォィォィ)<BR>
+これ一つを頑張って設置すれば、カウンタの設置で悩んだり、うざったい広告バナーが付くレンタルアクセス解析を使わなくて良くなります(？)</P>
+</DIV>
+<H4>ページ毎にログを記録することができる</H4>
+<DIV class="Quote">
+<P>一つのスクリプトで複数のログファイルを同時に記録することが出来ます。</P>
+<P>ページ毎にログを保存しておきますと、 efStat
+での解析の時に大変便利です。<BR>
+(efStat にはページの順位を月間・週間・当日の期間でランキングする機能があります)</P>
+</DIV>
+<H4>きめ細かな記録</H4>
+<DIV class="Quote">
+<P>efCount で記録できる情報は以下の通りです。<BR>
+おおよそクライアントから取得できる情報は網羅しています。</P>
+<UL>
+  <LI>[時間別・日別・曜日別・週別・月別の来客数]
+  <LI>[お客さんが踏んだカウント・訪問時刻・リモートホスト・使用ブラウザ・参照元URL・画面解像度・色深度]
+</UL>
+<P>記念番を踏んだ人にCGを強要したりするのはやめましょうネ(^^)</P>
+</DIV>
+<H4>プロバイダを選ばない、SSI・CGI両用の柔軟設計</H4>
+<DIV class="Quote">
+<P>CGI として動かす場合は&lt;IMG&gt;タグで呼び出すタイプのグラフィック表示カウンタとして。<BR>
+SSI として動かす場合は&lt;!--include virtual=&quot;～&quot;--&gt;形式で呼び出すテキスト表示のカウンタとして動作します。</P>
+<P>ただし、efStat はCGI 専用なので、efCountをSSI
+モードで使用する場合は、プロバイダがSSI/CGI
+両方に対応している必要があります。</P>
+<H5>＜SSIモードの特徴＞</H5>
+<UL>
+  <LI>使用できるプロバイダが限定される。<BR>
+  (include virtualで呼び出せる所である必要アリ)
+  <LI>設置が簡単。
+  <LI>ページが読み込まれた瞬間動作するので、ログの取りこぼしの可能性が低い。
+  <LI>普段見ることの出来ないロボットなども検知できる。
+  <LI>CGI モードと違い、画面解像度/色深度を記録することができない。
+</UL>
+<H5>＜CGIモードの特徴＞</H5>
+<UL>
+  <LI>殆どのプロバイダで対応可能。
+  <LI>少々設置が煩雑。<BR>
+  (参照元の取得には、設置するHTML文書にJavaScriptを埋め込む必要あり　→　<A href="makehtml.html">JavaScript自動生成ツール</A>)<BR>
+  (※もちろん、「参照元なんて要らないや」ということであれば、JavaScriptは関係ありません)
+  <LI>&lt;IMG&gt;タグが読み込まれてから動作するのでログの取りこぼしの可能性がある。
+  <LI>&lt;IMG&gt;タグを読み込まないブラウザ(WWWCなど)は計測できない。
+  <LI>(被呼び出しプロバイダがそれを許すならば)他のサーバからefCountを呼び出すことができる。<BR>
+  (ページを置いたプロバイダがCGI を利用できなくても、他のCGIを利用できるプロバイダにefStat
+  を設置すればログ解析ができる)
+  <LI>グラフィック表示なので、見た目に華やか(^^；
+</UL>
+</DIV>
+<H4>同じ人が再読込してもカウントしない</H4>
+<DIV class="Quote">
+<P>キリ番を取りたがる人、イタズラをする人に少しだけ効果があります。</P>
+<P>直前の訪問者のIPアドレスと、最新の訪問者のIPアドレスを比較することによって機能を実現しています。<BR>
+クッキーを調べるタイプに比べると遙かにスマートな方法です。</P>
+<P>ただし、最後に記録された IP アドレスと比較していますので、IP
+がコロコロ変わったりするプロキシ(大学などに多い)には効果がありません。(ただし、そういう所は殆どありません)</P>
+</DIV>
+<H4>アクセスが何日無かろうと、カウント値が反映される</H4>
+<DIV class="Quote">
+<P>殆どのアクセスカウンタは「前回ログ記録日とログ記録日を比較し、日にちが違っていれば単純に一日分過去にずらす」という仕組みですが、このカウンタでは真面目に前回記録日時からの経過時間を計算しています。</P>
+<P>3日ぶりにアクセスがあっても、3年ぶりにアクセスがあっても、その分だけ正確に日数がずれます。<BR>
+当たり前の事だと笑うかも知れませんが、実は案外珍しいんですよ(笑)</P>
+</DIV>
+<H4>その他特徴</H4>
+<UL>
+  <LI>カウントアップしたくないホスト・IPアドレスを指定可能
+  <LI>カウントアップしたくないブラウザを指定可能
+  <LI>flock を使った強固なファイルロック機構
+  <LI>時計表示<BR>
+  (単純なので役に立たないとは思いますが、まあ、ページの飾りにでも使って下さい(^^；)
+  <LI>表示のみを行い、カウントアップをしないようにも指定可能
+</UL>
+</DIV>
+<DIV class="Chapter">
+<H3><A name="gaiyou_fstat">efStat(fstat.cgi)の特徴</A></H3>
+<H4>強力なログ分析・解析機能</H4>
+<DIV class="Quote">
+<P>無料でありながら、同種のシェアウェア・サービスに全く見劣りしません。<BR>
+ただし、自分のヲタク系サイトのために開発したものですので、機能に若干ヲタクチックな偏りがあります(笑)</P>
+<P>以下の項目を表示できます。</P>
+<UL>
+  <LI>生ログの整形表示
+  <LI>カウント系
+  <UL>
+    <LI>時間別集計
+    <LI>日別集計
+    <LI>曜日別集計
+    <LI>週別集計
+    <LI>月別集計
+  </UL>
+  
+  <LI>ランキング系
+  <UL>
+    <LI>サイト内 総合ランキング
+    <LI>サイト内 月間ランキング
+    <LI>サイト内 週間ランキング
+    <LI>サイト内 本日ランキング
+  </UL>
+  
+  <LI>アクセス解析系
+  <UL>
+    <LI>参照元統計(系)
+    <UL>
+      <LI>参照元統計
+      <P class="Quote">特定のURLを自分の好きな言葉に置き換えることもできます。<BR>
+      つまり、サーチエンジンの整理やお得意先ページの愛称付けなどができます。</P>
+      
+      <LI>サイト内移動分析
+      <P>自分のサイトの中で、お客さんがどのページからどのページに移動したのかを調べます。</P>
+      
+      <LI>サーチエンジンのシェア
+      <LI>サーチエンジン・キーワード統計
+      <LI>TINAMI (Charlotte) カテゴリ・キーワード統計
+      <LI>Surfers Paradice キーワード統計
+      <P class="Quote">この中で efStat ならではの特色といえば、アニメ・漫画・CG系の検索エンジン<A href="http://www.tinami.com/">TINAMI</A>・<A href="http://www.surpara.com/">Surfers Paradice</A>のカテゴリ分析機能でしょう。</P>
+      <P class="Quote">[TINAMIカテゴリ分析機能] / [Surfers Paradice分析機能]
+      を使えば、お客さんがどんなカテゴリを選んで飛んできたか、また、どのカテゴリ(ジャンル)が人気があるのかが一目瞭然です。<BR>
+      CG描きさんや同人系のジャンルでサイトを開いている方にとっては、次回作の市場調査の為には無くてはならない機能になるでしょう(笑)</P>
+      <P class="Quote">もちろん、Yahoo や goo など、国内外の著名な検索ページにも対応し、検索に使用されたキーワードの統計を取ることが出来ます。</P>
+      
+    </UL>
+    
+    <LI>ホスト統計(系)
+    <UL>
+      <LI>ホスト統計
+      <LI>国籍別統計 (第１レベルドメイン統計)
+      <P class="Quote">お客さんがどの国から何人見に来てくれたか表示する機能です。<BR>
+      すべての国名は日本語表記で表示されます。</P>
+      
+      <LI>国内ドメイン統計 (第2レベルドメイン統計)
+      <P class="Quote">日本国内のネットワークの種類別(co, ac, ne
+      ... etc.)に統計を取ります。</P>
+      
+      <LI>米国ドメイン統計 (第2レベルドメイン統計)
+      <P class="Quote">米国のネットワークの種類別(com , edu , net
+      ... etc.)に統計を取ります。</P>
+      
+    </UL>
+    
+    <LI>ブラウザ統計(系)
+    <UL>
+      <LI>ブラウザ統計
+      <P class="Quote">RFC1945・InternetExplorer・Navigatorの仕様に則った仕分けを行います。<BR>
+      ある程度の命名規則に沿ったブラウザ名なら、未知の物でも綺麗に分類できます。</P>
+      
+      <LI>Internet Explorer同士のシェア
+      <LI>Netscape Navigator同士のシェア
+      <LI>利用OS統計
+    </UL>
+    
+    <LI>画面情報統計(系)
+    <UL>
+      <LI>画面情報統計
+      <LI>画面サイズ別統計
+      <LI>画面色深度別統計
+    </UL>
+    
+  </UL>
+  
+</UL>
+</DIV>
+<H4>全て・本日・昨日と範囲を指定して表示できます</H4>
+<DIV class="Quote">非常に簡易的ではありますが、解析の対象範囲を指定できます。<BR>
+例えば時間別集計などは通常、「のべ来客人数」を表した物なので、「昨日のお昼頃は何人来たか」という情報は見えてきませんが、範囲指定を行うことによりそういった情報を知ることができるようになります。　(それなりに大きいログが必要)</DIV>
+<H4>練られたユーザ・インターフェース</H4>
+<DIV class="Quote">一括表示モード(サイト全体の結果を表示)とログ単体表示モードを用意しています。<BR>
+一括表示モードではメニュー画面を使った手軽な操作で使用できます。<BR>
+ログ単体表示モード (Webstat互換表示) はブラウザのURL入力欄から直接操作することで軽快に使用できます。<BR>
+日々の軽いチェックに持ってこい。　ブックマーク(お気に入り)から手軽に呼び出せます。</DIV>
+</DIV>
+<H2 class="Chapter_Headline"><A name="kankyou">■動作環境</A></H2>
+<DIV class="Chapter">
+<P>UNIX系OSなら多分なんでも行けると思います。<BR>
+厳密には truncate 関数と flock 関数をサポートした<STRONG>Perl 5以上</STRONG>が必要です。<BR>
+動作確認は FreeBSD 2.2.7R + Apache/1.2.6
++ jperl5.004_04-980303 にて行いました。</P>
+<P><EM>Windows系/MacOS系とPerlの組み合わせでも動作する筈ですが、サポート外とさせていただきます。</EM><BR>
+(腕に自信のある人は勝手に弄って下さい)<BR>
+私の元にはUNIX以外のOS環境がないので動作確認ができないのです。<BR>
+少なくとも Win9x + MS IIS + ActivePerl の組み合わせでは修正なしには動きません。</P>
+<P>CGI、又はSSIが使用可能になっているかどうかもご確認下さい。<BR>
+プロバイダ側サーバに Perl がインストールされているかもご確認下さい。</P>
+<P>efCount(カウンタ部)はSSI , CGIのどちらでも使えるように作られていますが、efStat(ログ解析部)はCGIでしか使えません。<BR>
+つまり、<STRONG>efCountを SSI として使う場合は、サーバがSSI
+だけでなく、 CGI にも対応している必要があります。</STRONG></P>
+</DIV>
+<H2 class="Chapter_Headline"><A name="dounyuu">■導入</A></H2>
+<DIV class="Chapter">
+<H3>☆解凍☆</H3>
+<P>fstat.lzh を解凍します。<BR>
+こんな感じでファイルが詰まっているはずです。</P>
+<TABLE class="Table_Normal" border="1">
+  <TBODY>
+    <TR>
+      <TH>&lt;efStatディレクトリ&gt;</TH>
+      <TH>[プログラム本体や、周辺ツールを置きます]</TH>
+    </TR>
+    <TR>
+      <TD>fstat.cgi</TD>
+      <TD>efStat - ログ表示部</TD>
+    </TR>
+    <TR>
+      <TD>fcount.cgi</TD>
+      <TD>efCount - カウンタ部</TD>
+    </TR>
+    <TR>
+      <TD><A href="../sample_cgi.html">sample_cgi.html</A></TD>
+      <TD>efCount 導入例(CGI モード)</TD>
+    </TR>
+    <TR>
+      <TD><A href="../sample_ssi.html">sample_ssi.html</A></TD>
+      <TD>efCount 導入例(SSI モード)</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<DIV class="Quote">
+<TABLE border="1" class="Table_Normal">
+  <TBODY>
+    <TR>
+      <TH nowrap>&lt;libディレクトリ&gt;</TH>
+      <TH nowrap>[プログラムの動作に必要なファイルを格納しています]</TH>
+    </TR>
+    <TR>
+      <TD>start.pl</TD>
+      <TD>efStat 初期設定ルーチン</TD>
+    </TR>
+    <TR>
+      <TD>main.pl</TD>
+      <TD>efStat ログ解析ルーチン</TD>
+    </TR>
+    <TR>
+      <TD>func.pl</TD>
+      <TD>efStat 共有関数ファイル</TD>
+    </TR>
+    <TR>
+      <TD>menu.pl</TD>
+      <TD>efStat メニュー用HTML</TD>
+    </TR>
+    <TR>
+      <TD>jcode.pl</TD>
+      <TD>日本語コード変換ライブラリ<BR>
+      &copy;歌代和正</TD>
+    </TR>
+    <TR>
+      <TD>gifcat.pl</TD>
+      <TD>GIF 画像連結ライブラリ<BR>
+      &copy;s-hasei</TD>
+    </TR>
+    <TR>
+      <TD>d.gif</TD>
+      <TD>ダミー画像 (efCcount が使います)</TD>
+    </TR>
+    <TR>
+      <TD>e.gif / 0.gif / 1.gif</TD>
+      <TD>エラー表示用画像 (efCount が使います)</TD>
+    </TR>
+    <TR>
+      <TD>b.gif</TD>
+      <TD>グラフ用画像 (efStat が使います)</TD>
+    </TR>
+    <TR>
+      <TD>w.jpg</TD>
+      <TD>壁紙用画像 (efStat が使います)</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+</DIV>
+<DIV class="Quote">
+<DIV class="Quote">
+<TABLE border="1" class="Table_Normal">
+  <TBODY>
+    <TR>
+      <TH>&lt;tableディレクトリ&gt;</TH>
+      <TH>[各種コードを変換するテーブルを格納しています]</TH>
+    </TR>
+    <TR>
+      <TD>agent.tbl</TD>
+      <TD>ブラウザ変換用テーブル</TD>
+    </TR>
+    <TR>
+      <TD>cctld.tbl</TD>
+      <TD>ccTLD変換用テーブル</TD>
+    </TR>
+    <TR>
+      <TD>gtld.tbl</TD>
+      <TD>gTLD変換用テーブル</TD>
+    </TR>
+    <TR>
+      <TD>jpdomain.tbl</TD>
+      <TD>JPドメイン変換用テーブル</TD>
+    </TR>
+    <TR>
+      <TD>tinami.tbl</TD>
+      <TD>TINAMIカテゴリコード変換用テーブル</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+</DIV>
+</DIV>
+<DIV class="Quote">
+<TABLE border="1" class="Table_Normal">
+  <TBODY>
+    <TR>
+      <TH nowrap>&lt;logディレクトリ&gt;</TH>
+      <TH nowrap>[ログファイルを格納します]</TH>
+    </TR>
+    <TR>
+      <TD>index.log</TD>
+      <TD>サンプルのログ。これで練習するといいでしょう</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+</DIV>
+<DIV class="Quote">
+<TABLE border="1" class="Table_Normal">
+  <TBODY>
+    <TR>
+      <TH nowrap>&lt;docディレクトリ&gt;</TH>
+      <TH nowrap>[説明書が格納されています]</TH>
+    </TR>
+    <TR>
+      <TD><A href="readme.html">readme.html</A></TD>
+      <TD>総合説明書。これ</TD>
+    </TR>
+    <TR>
+      <TD><A href="fcount.html">fcount.html</A></TD>
+      <TD>efCount 取扱説明書</TD>
+    </TR>
+    <TR>
+      <TD><A href="fstat.html">fstat.html</A></TD>
+      <TD>efStat 取扱説明書</TD>
+    </TR>
+    <TR>
+      <TD><A href="history_fc.html">history_fc.html</A></TD>
+      <TD>efCount バージョンアップ履歴</TD>
+    </TR>
+    <TR>
+      <TD><A href="history_fs.html">history_fs.html</A></TD>
+      <TD>efStat バージョンアップ履歴</TD>
+    </TR>
+    <TR>
+      <TD><A href="makehtml.html">makehtml.html</A></TD>
+      <TD>fcount.cgi を呼び出すためのタグを生成するツール。<BR>
+      タグがややこしすぎてワカラン！　という人はどうぞ。</TD>
+    </TR>
+    <TR>
+      <TD><A href="format.csv">format.csv</A></TD>
+      <TD>ログの仕様。　CSV形式に対応した表計算ソフトでご覧下さい。</TD>
+    </TR>
+    <TR>
+      <TD>default.css</TD>
+      <TD>説明書の表示スタイルを定義したファイル(あってもなくても無害)</TD>
+    </TR>
+    <TR>
+      <TD>fstat.gif</TD>
+      <TD><IMG src="fstat.gif" width="88" height="31" border="0" align="middle" alt="Analyzed by efStat">バナーです。宜しければお使い下さい。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+</DIV>
+<DIV class="Quote">
+<TABLE border="1" class="Table_Normal">
+  <TBODY>
+    <TR>
+      <TH nowrap>&lt;imageディレクトリ&gt;</TH>
+      <TH nowrap>[カウンタ用GIFファイルを格納します]</TH>
+    </TR>
+    <TR>
+      <TD>&lt;fuksan&gt;</TD>
+      <TD>サンプル。　白地に黒字の丸っこい書体。<BR>
+      白い背景のページに馴染みます。<BR>
+      &copy;不可思議絵の具</TD>
+    </TR>
+    <TR>
+      <TD>&lt;fuksan_&gt;</TD>
+      <TD>サンプル。　fuksanを白黒反転させました。<BR>
+      黒い背景のページに馴染みます。<BR>
+      &copy;不可思議絵の具</TD>
+    </TR>
+    <TR>
+      <TD colspan="2">※その他にも皆さんから特別に作っていただいたサンプルがありますが、そちらは「有限工房」にて入手して下さい。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+</DIV>
+<P>※ 所々にヒョッコリある index.html ファイルは、ディレクトリを覗こうとする人を弾くためのダミーです
+※</P>
+<P>これらのファイルが出てきましたか？<BR>
+ちょっと説明書が多いですけど、中身はほとんど同じです。<BR>
+CGI 設置を経験済みの方なら、いつも CGI を設置しているのと同じ要領で行けますので挫けないで下さい(^^；</P>
+</DIV>
+<DIV class="Chapter">
+<H3>☆パーミッションの設定・ディレクトリ構成☆</H3>
+<P>出てきたファイルをサーバ側の任意のディレクトリ(※)へコピーします。<BR>
+そのとき、ディレクトリ名は fstat が適当でしょう。<BR>
+(※…WindowsやMacで言うところの「フォルダ」です。　以後、UNIXでの呼び方に合わせ「ディレクトリ」とします)</P>
+<P>プロバイダから「CGI スクリプトは cgi-bin
+以下に置きなさい」など、スクリプトの置き場所を指定されているときは、そのディレクトリの下に
+fstat ディレクトリを作って下さい。</P>
+<P>最終的には、次の様になるようにします。</P>
+<H5>＜標準のディレクトリ構成＞</H5>
+<PRE class="Dirctory">                                      (パーミッション)
+/cgi-bin                              (705) drwx---r-x  [CGIスクリプト格納ディレクトリ]
+   |--/fstat                          (705) drwx---r-x  [efStat格納ディレクトリ]
+         |-- fcount.cgi               (705) -rwx---r-x  (カウンタ部)
+         |-- fstat.cgi                (705) -rwx---r-x  (ログ表示部)
+         |-- /lib                     (705) drwx---r-x  [ライブラリ用ディレクトリ]
+         |     |-- start.pl
+         |     |-- func.pl
+         |     |-- main.pl
+         |     |-- menu.pl
+         |     |-- jcode.pl
+         |     |-- gifcat.pl
+         |     |-- e.gif
+         |     |-- 0.gif
+         |     |-- 1.gif
+         |     |-- d.gif
+         |     |-- w.jpg
+         |     |-- b.gif
+         |     +-- /table
+         |            |-- agent.tbl
+         |            |-- cctld.tbl
+         |            |-- gtld.tbl
+         |            |-- jpdomain.tbl
+         |            +-- tinami.tbl
+         |
+         |-- /log                     (705) drwx---r-x  [ログ用ディレクトリ]
+         |     |-- index.log          (606) -rw----rw-  (ログファイル(テスト用))
+         |     |       ：
+         |
+         +-- /image                   (705) drwx---r-x  [カウンタ画像用ディレクトリ]
+               |-- /fuksan            (705) drwx---r-x  [フォントごとのディレクトリ]
+               |      |-- 0fuksan.gif
+               |      |       ：
+               |      +-- 9fuksan.gif
+               |
+               |-- /fuksan_
+               |      ：
+
+()内はパーミッションの数値</PRE>
+<DIV>
+<H5 class="caution">備考</H5>
+</DIV>
+<DIV class="Quote">
+<P>パーミッションを表記していない物に関しては殆どのサーバでデフォルトの
+644(rw-r--r--) でOKです。<BR>
+セキュリティの観点から言えば 604(rw----r--)にしておけば言うこと無いです。</P>
+<P>なお、サーバによってはパーミッションが 705では動作しないところがあります。<BR>
+その場合は 705(rwx---r-x) を 755(rwxr-xr-x)に読み替えて下さい。</P>
+<P>ミルトクラブなど、CGI が設置したユーザの権限で動作するサーバに関しては<BR>
+705(rwx---r-x) を 700(rwx------)に<BR>
+606(-rw----rw-) を 600(rw-------)に<BR>
+読み替えて下さい。</P>
+<P>その他、詳しい情報については入会しているプロバイダのHowToページなどを参照下さい。</P>
+</DIV>
+<DIV>
+<H5 class="caution">注意(必読！)</H5>
+<DIV class="Quote">画像ファイル以外は「アスキーモード」で転送して下さい。<BR>
+普通通りに転送してしまうと大抵「バイナリモード」で転送されてしまい、思わぬ誤動作の原因になります。<BR>
+アスキーモードでの転送の仕方・パーミッションの変更の仕方は各
+ftp クライアントの説明書を参照下さい。</DIV>
+</DIV>
+</DIV>
+<H2 class="Chapter_Headline"><A name="settei">■プログラム側の設定・使用法</A></H2>
+<DIV class="Chapter">
+<P>冗長になりますので説明書を分けました。<BR>
+設定の仕方、使用法などについては各プログラム説明書をご覧下さい。</P>
+<P>カウンタ部 efCount については <A href="fcount.html">fcount.html</A> をご覧下さい。<BR>
+ログ表示部 efStat については <A href="fstat.html">fstat.html</A> をご覧下さい。</P>
+</DIV>
+<H2 class="Chapter_Headline"><A name="sengen">■宣言</A></H2>
+<DIV class="Chapter">
+<P>このプログラムはフリーソフトです。　(ただし、「はじめに」でも書いたように「リンクウェア」です)<BR>
+著作権は放棄しません。 プログラム中のコピーライト表記を削除したり、改変しないで下さい。</P>
+<P>画面のレイアウトを変えたりだとか、メッセージを変更したくらいで名前を変更されると、作者としては非常に寂しいです(笑)<BR>
+が、あなたが efStat に原形をとどめない程の大幅な改造を施した場合は問題ありません。<BR>
+その辺は常識的なさじ加減ということで…(^_^；</P>
+<P>正規版の第三者による配布は禁止します。 <BR>
+これは、普及に伴いバージョン管理が困難になってきた実状を踏まえてこうなっています。<BR>
+CD-ROMなど、私のページ以外の場所で掲載する場合は必ずご一報下さい。<BR>
+(ただし、Vectorなど、私が自ら登録した物は除外します)</P>
+<P>自由に改造して使用して下さい。　 改造したものを再配布する事も制限しません。<BR>
+当然、 efCount のログ形式を利用した互換品を開発することもOKです。<BR>
+ただし、改造版のサポートは改造した方が各自責任を持って行って下さい。</P>
+<P>営利目的の使用・個人向けサイト以外の利用を制限しません。<BR>
+煮るなり焼くなり好きに使って下さい。</P>
+<P>このプログラムを用いた事による一切の損害について、作者は責任を負わないものとします。<BR>
+あなたの責任の範囲において使用して下さい。</P>
+</DIV>
+<H2 class="Chapter_Headline"><A name="tasya">■多謝</A></H2>
+<DIV class="Chapter">
+<P>本プログラムを構成しているファイルのうち、</P>
+<UL>
+  <LI>日本語コード変換ライブラリ jperl.pl は 歌代和正
+  氏
+  <LI>GIF画像連結ライブラリ gifcat.pl は s-hasei
+  氏
+</UL>
+<P>に著作権があります。<BR>
+これらの有用なプログラムを開発して下さった方々に深く感謝いたします。</P>
+</DIV>
+<DIV class="Chapter">
+<H3>■参考資料(著者敬称略/参照頻度順)</H3>
+<UL>
+  <LI>プログラミングPerl 改訂版 / Larry Wall, Tom
+  Christiansen, Randal L. Schwarts
+  <LI>「すぐに使える Perl スクリプト CGI &amp;
+  SSI 快適活用ライブラリ」 / ドッシー秋山・キャメル桜田
+  <LI>68user's page内「User Agent統計」 / 68user
+  <LI>Some Gripes on User-Agent / Kabe
+  <LI>DNS &amp; BIND 第3版 / Paul Albitz, Cricket
+  Liu
+  <LI>RFC1945 - HTTP/1.0 / T. Berners-Lee他
+  <LI>RFC2068 - HTTP/1.1 / R. Fielding他
+  <LI>「とほほのWWW入門」 / s-hasei
+</UL>
+</DIV>
+<H2 class="Chapter_Headline"><A name="saigoni">■最後に</A></H2>
+<DIV class="Chapter">
+<P>本ソフトはフリーソフトではありますが、沢山の労力と時間を割いて作られております。<BR>
+だからといって物質的な見返りはこれっぽっちも期待しておりませんが、皆さんに使ってもらいたい、沢山の反響が欲しい、という自己満足がプログラム製作の原動力になっております。　宣言にもありますとおり、必ず私のサイトへリンクを張って下さい。　(お客が増える　＞　反響も増える　＞　サイトが盛り上がる　＞　私嬉しい☆)</P>
+<P>もしよろしければ不可思議絵の具まで「efStat使ってるよ～」とメールでも掲示板でも何でも構いませんので教えてあげて下さい。<BR>
+大抵の場合、返事をお返しすることは出来ないと思いますが、送っていただいたメールには全て目を通しております。<BR>
+そんな皆様の温かいご声援メールは私の元気の源になっています。　ありがとうございます(^^)<BR>
+ただ、質問は掲示板にお願いします。　近頃捌ききれないので…(^_^;</P>
+<P>カウンターGIF作家の皆様、カウンタ用画像を自分用に作ってそのままだったり、一応公開する目的で作ってはみたけれど公開する場所・チャンスがない…そんなデータをお持ちではないですか？<BR>
+そのまま終わりじゃもったいないですよ☆　皆さんの自慢の作品を
+efStat のページに置いてみませんか？<BR>
+もしかしたら、誰かが使ってくれるかも知れません。<BR>
+カウンタ用画像を提供して下さる方を募集しています。　もしよかったらメール下さい。</P>
+</DIV>
+<HR>
+<P align="right">&copy;1998-2001 不可思議絵の具<BR>
+(<A href="http://yugen.main.jp/">http://yugen.main.jp/</A>)</P>
+</BODY>
+</HTML>

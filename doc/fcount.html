@@ -1,0 +1,872 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<TITLE>efStat / efCount取扱説明書</TITLE>
+<LINK rel="stylesheet" href="default.css">
+<SCRIPT language="JavaScript">
+<!--JavaScript
+/*** 恥ずかしいからソース覗かないで～ ***/
+
+// 10進数→62進数
+function C62_Encode(digit) {
+	table = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	str = "";
+
+	if ((digit == 0) || (digit == "")) {
+		return 0;
+	} else {
+		while (digit != 0) {
+			place = digit % 62;
+			str = table.charAt(place) + str;
+			digit = Math.floor(digit / 62);
+		}
+		return str;
+	}
+}
+
+//データ受け取り
+function getdata(form) {
+	num = C62_Encode(form.num.value);
+	disp(form);
+}
+
+
+//表示
+function disp(form) {
+	// 実際の表示
+	form.TEXTAREA.value = num;
+}
+//end-->
+</SCRIPT> </HEAD>
+<BODY>
+<H1>efCount取扱説明書</H1>
+<HR>
+<P align="right">アクセス解析パッケージ - efStat<IMG src="fstat.gif" width="88" height="31" border="0" align="top"></P>
+<H2 class="Chapter_Headline">■もくじ</H2>
+<DIV class="Chapter">
+<P>この説明書では訪問者のカウント・アクセスログの記録を担当する
+efCount について説明します。</P>
+<TABLE>
+  <TBODY>
+    <TR valign="top">
+      <TD>
+      <UL>
+        <LI><A href="#settei">プログラム側の設定 </A>
+        <UL>
+          <LI><A href="#settei_kyoutuu">共通の設定項目</A>
+          <LI><A href="#settei_cgi">CGI として使うときの設定項目</A>
+          <LI><A href="#settei_ssi">SSI として使うときの設定項目</A>
+        </UL>
+        
+        <LI><A href="#log_jyunbi">ログファイルの準備</A>
+        <LI><A href="#usage">実際の使用法 </A>
+        <UL>
+          <LI><A href="#usage_cgi">CGI の場合</A>
+          <LI><A href="#usage_ssi">SSI の場合</A>
+        </UL>
+        
+      </UL>
+      </TD>
+      <TD>
+      <UL>
+        <LI>Tips
+        <UL>
+          <LI><A href="#tips_trouble">トラブルシューティング</A>
+          <LI><A href="#tips_nocount">なぜ、カウントアップしない指定があるのか</A>
+          <LI><A href="#tips_gazou">カウンタ用画像の入手場所</A>
+          <LI><A href="#tips_kisoku">カウンタ用画像の命名規則</A>
+          <LI><A href="#tips_seigen">カウンタ用画像の制限</A>
+          <LI><A href="#tips_watch">時計機能を使うときの注意</A>
+          <LI><A href="#tips_henkou">カウント数の変更方法</A>
+          <LI><A href="#tips_tessoku">ログの取りこぼしを減らすための鉄則</A>
+          <LI><A href="#tips_genkai">ログ最大保存数の限界値</A>
+        </UL>
+        
+        <LI>Sub
+        <UL>
+          <LI><A href="makehtml.html">呼び出しタグ自動生成ツール</A>
+          <LI><A href="format.csv">ログファイルの仕様</A>
+        </UL>
+        
+      </UL>
+      </TD>
+    </TR>
+  </TBODY>
+</TABLE>
+</DIV>
+<H2 class="Chapter_Headline"><A name="settei">■プログラム側の設定</A></H2>
+<DIV class="Chapter">
+<P>プログラム側で設定すべきことは、</P>
+<UL>
+  <LI><A href="#settei_kyoutuu">共通の設定項目 </A>
+  <UL>
+    <LI>perl のパス
+    <LI>動作モード (SSI として動かすか、CGI として動かすかを選択)
+    <LI>ログファイルを格納したディレクトリ
+    <LI>アクセスログ最大保存数
+    <LI>再読み込み防止機構を利用するか
+    <LI>再読み込み防止機構の有効期限
+    <LI>カウントアップさせないホスト名・IPアドレス
+    <LI>カウントアップさせないブラウザ
+  </UL>
+  
+  <LI><A href="#settei_cgi">CGI として使うときの設定項目 </A>
+  <UL>
+    <LI>カウンタのイメージを格納したディレクトリ
+    <LI>カウンタイメージの名前
+  </UL>
+  
+  <LI><A href="#settei_ssi">SSI として使うときの設定項目 </A>
+  <UL>
+    <LI>efStat一式を格納したディレクトリ
+  </UL>
+  
+</UL>
+<P>となっていて、SSI として動かす場合とCGI として動かす場合とで設定すべき項目が違います。<BR>
+SSI として設置する場合とCGI で設置する場合とで２つのパターンを用意しましたので、プロバイダに合わせて読み進めて下さい。<BR>
+それでは、 <A href="../fcount.cgi">fcount.cgi</A> をテキストエディタで開いて下さい。</P>
+</DIV>
+<DIV class="Chapter">
+<H3><A name="settei_kyoutuu">共通の設定項目</A></H3>
+<P>ここは SSI/CGI に関係なく、必ず設定しなければならない部分です。</P>
+<H4>perl のパス</H4>
+<DIV class="Quote">
+<P>fcount.cgi の一行目のperl へのパスををお使いのプロバイダに合わせて書き換えます。<BR>
+もし、perl のパスが /usr/bin/perl だったら、</P>
+<P><CODE class="Quote">#!/usr/bin/perl</CODE></P>
+<P>と書き換えて下さい。　頭の #! は消してはいけません。</P>
+</DIV>
+<H4>動作モード</H4>
+<DIV class="Quote">SSI として動作させるなら 1， CGI として動作させるなら
+0(数字のゼロ) を指定します。<BR>
+大概の方は 0 を指定することになると思います。</DIV>
+<H4>ログファイルを格納したディレクトリ</H4>
+<DIV class="Quote">
+<P>ログファイルを格納したディレクトリの名前を入力します。　(デフォルトは
+log )<BR>
+(※仕様変更しました。　今までパスを指定していた方はご注意下さい！)</P>
+<P>他人にブラウザからログを直接読まれたくないという人はここを変更します。<BR>
+(ただし、ログ用ディレクトリは efStat をインストールしたディレクトリの中(配下)になければなりません)<BR>
+特別な事情がなければ変更せずにお使い下さい。</P>
+<P><A href="readme.html">readme.html</A> の通りにインストールしたのなら変更しないで下さい。</P>
+</DIV>
+<H4>アクセスログ最大保存数</H4>
+<DIV class="Quote">
+<TABLE class="Caution">
+  <TBODY>
+    <TR>
+      <TD style="font-size : 500%;">！</TD>
+      <TD>無理な値を指定すると過負荷でサーバを停止させてしまう危険性があります。<BR>
+      注意して設定して下さい。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P>アクセスログを何件分保存するか指定します。<BR>
+この数を超えた分のログは古い順からところてん式に押し出され、消えてゆきます。</P>
+<P>理論上の制限はありませんが、でかい数にしてサーバが壊れると怒られてしまいますし、ログの表示にとてつもなく時間が掛かるようになってしまいますので、程良い数にしましょう(^_^；</P>
+<P>デフォルトは300です。　これはうちのページの場合の設定値なんですが、来客数が一日100件くらいの規模のページならこれでも余裕でしょう。<BR>
+おすすめは300～500程度です。</P>
+<P>どんなに多くても3000程度にして下さい。　それ以上は安定動作を保証できません。<BR>
+これ以上増やすとログの取りこぼしやログの破損の危険があります。<BR>
+最悪の場合サーバをクラッシュさせてしまうかも知れません。</P>
+<P>詳しくは<A href="#tips_genkai">tips / ログ最大保存数の限界値</A>を参照下さい。</P>
+</DIV>
+<H4>再読み込み防止機構を(IPチェック)利用するか</H4>
+<DIV class="Quote">
+<P>再読み込み防止機構とは、訪問者のIPアドレスと、ログに記録された前回の訪問者のIPアドレスを比較し、</P>
+<UL>
+  <LI>一致すれば「同じ訪問者」　→　カウントしない
+  <LI>一致しなければ「違う訪問者」　→　カウントする
+</UL>
+<P>という仕組みで無駄なカウントアップを防ぐ機能です。</P>
+<P>しかしながら、常にカウントアップしたい、という方もおられることでしょう。<BR>
+そのような場合、このオプションの数値を 0
+に指定してください。</P>
+</DIV>
+<H4>再読み込み防止機構の有効期限</H4>
+<P>再読み込み防止機構を有効(1)にしている場合、「○分の間隔を置いてなら、カウントアップして良い」という指定を加える事ができます。<BR>
+例えば、ここに <KBD>5</KBD> と入力すると、5分過ぎると同じIPでもカウントされます。<BR>
+例外として <KBD>0</KBD> を入力すると、同じIPの場合は永遠にカウントアップしません。</P>
+<H4>カウントアップさせないホスト名・IPアドレス</H4>
+<DIV class="Quote">
+<P>自分自身など、カウントに含めたくないホスト名又はIPアドレスを指定して下さい。<BR>
+但し、完全に一致させなければ効果がありません。</P>
+<P>この欄を空欄にすると正常に動作しません。<BR>
+不要な方も、必ず適当な値を入力しておいて下さい。　</P>
+</DIV>
+<H4>カウントアップさせないブラウザ</H4>
+<DIV class="Quote">
+<P>ロボットなど、カウントに含めたくないブラウザ名を記述します。<BR>
+SSI モードで動かしていて、WWWC 等のロボットが頻繁に来るようなページでは特に有効です。</P>
+<P>ここで指定された文字列は前方一致比較の対象になります。<BR>
+つまり、<STRONG>WWWC</STRONG> としておけば</P>
+<UL>
+  <LI><STRONG>WWWC</STRONG>/0.93
+  <LI><STRONG>WWWC</STRONG>/1.23
+  <LI><STRONG>WWWC</STRONG>abcdefg
+</UL>
+<P>などを名前に持つブラウザの場合に無視します。</P>
+<P>この欄を空欄にすると正常に動作しません。<BR>
+不要な方も、必ず適当な値を入力しておいて下さい。</P>
+</DIV>
+</DIV>
+<DIV class="Chapter">
+<H3><A name="settei_cgi">CGI として動かす場合の設定項目</A></H3>
+<P>CGI として efCount を動かす場合に設定しなければならない部分です。<BR>
+<A href="#settei_ssi">SSIとして動かす場合の設定項目</A>は読み飛ばしても構いません。　また、設定する必要もありません。</P>
+<H4>カウンタのイメージを格納したディレクトリ</H4>
+<DIV class="Quote">
+<P>画像ファイルを格納したディレクトリの名前を入力します。　(デフォルトは
+image )</P>
+<P>都合上、他のディレクトリにカウンタ用イメージを入れた場合はここを変更します。<BR>
+<STRONG><EM>ただし、カウンタ画像用ディレクトリは efStat
+をインストールしたディレクトリの中(配下)になければなりません</EM></STRONG>。<BR>
+特別な事情がなければ変更せずにお使い下さい。</P>
+<P><A href="readme.html">readme.html</A> の通りにインストールしたのなら変更しないで下さい。</P>
+<P><A href="#tips_gazou">カウンタ用画像配布サイト</A>からカウンタのイメージファイルをダウンロードしてきて解凍すると、フォント名の付いたディレクトリが出来るはずです。<BR>
+そのディレクトリをそのまま、イメージ格納用ディレクトリ(何も変更していないなら
+image )の中にコピーして下さい。<BR>
+そうしないと上手く動作しません。</P>
+<H5>＜例＞</H5>
+<DIV class="Quote">
+<P>fuksan.zip を解凍したら、 fuksan というディレクトリが出来ます。<BR>
+それをそのままイメージ格納用ディレクトリに放り込んで下さい。</P>
+</DIV>
+<P>カウンタ画像ファイルをefStatで使うには、命名規則に合わせる必要があります。　<A href="#tips_kisoku">tips / カウンタ用画像の命名規則</A>も併せてご覧ください。</P>
+</DIV>
+<H4>カウンタのイメージの名前</H4>
+<DIV class="Quote">
+<P>カウンタの名前を指定して下さい。<BR>
+上の例では fuksan ですね。</P>
+<P>ここで指定する名前はデフォルトの指定となり、呼び出し時にフォント指定をしなかった場合、ここで指定されたフォントが使用されます。</P>
+</DIV>
+</DIV>
+<DIV class="Chapter">
+<H3><A name="settei_ssi">SSI として動かす場合の設定項目</A></H3>
+<P>SSI として efCount を動かす場合に設定しなければならない部分です。<BR>
+<A href="#settei_cgi">CGI として動かす場合の設定項目</A>は読み飛ばしても構いません。<BR>
+また、設定する必要もありません。</P>
+<H4>efStat一式を格納したディレクトリ</H4>
+<DIV class="Quote">
+<P>efStat 一式をインストールしたディレクトリを指定します。</P>
+<P>呼び出すHTMLから見た相対パスでも良いですが、ルートディレクトリからのフルパスが望ましいです。<BR>
+相対パスで指定した場合、呼び出すHTMLが他のディレクトリにあったりすると動作しないからです。</P>
+<P>フルパスは telnet や ftp 等を使い、各自でお調べ下さい。<BR>
+プロバイダの説明ページに載っている場合があります。</P>
+</DIV>
+<H4>表示するメッセージのカスタマイズ</H4>
+<DIV class="Quote">
+<P>fcount.cgi の(約)398行目から(約)421行目までが変更箇所です。<BR>
+(おすすめ：　エディタの検索機能で &quot;<SAMP>sub Macro_Output</SAMP>&quot; を検索してみて下さい)</P>
+<P class="Quote"><CODE>@mes = (<BR>
+　　&quot;&lt;FONT FACE=\&quot;Arial\&quot;&gt;&lt;B&gt;[Counter]&lt;/B&gt;
+Total:&lt;B&gt;${all}}&lt;/B&gt;<BR>
+　　/ Today:&lt;B&gt;${today}&lt;/B&gt; /
+Yesterday:&lt;B&gt;${yesterday}&lt;/B&gt;&lt;/FONT&gt;&quot;,<BR>
+);</CODE></P>
+<P>こんな部分があると思います。<BR>
+メッセージを変更したいときはここを変更します。　変数などの詳しい意味はプログラム中に説明がありますので、そちらをご覧下さい。</P>
+<P>上記の例では総ヒット数が5600、今日のヒット数が23、昨日のヒット数が56の場合、</P>
+<P><B class="Quote">[Counter]</B> Total:<B>5600</B> / Today:<B>23</B> / Yesterday:<B>56</B></P>
+<P>と表示されます。</P>
+<P>メッセージを複数指定しておくことでランダムに表示させることが出来ます。</P>
+<P class="Quote"><CODE>@mes = (<BR>
+　　&quot;メッセージ A&quot;,<BR>
+　　&quot;メッセージ B&quot;,<BR>
+　　&quot;メッセージ C&quot;,<BR>
+);</CODE></P>
+<P>例えばこの様に書いた場合、3つのメッセージをランダムに表示させます。</P>
+<P>また、</P>
+<P class="Quote"><CODE>@mes = (<BR>
+　　&quot;メッセージ A&quot;,<BR>
+);</CODE></P>
+<P>または</P>
+<P class="Quote"><CODE>@mes = (<BR>
+　　&quot;メッセージ A&quot;,<BR>
+　　#&quot;メッセージ B&quot;,<BR>
+　　#&quot;メッセージ C&quot;,<BR>
+);</CODE></P>
+<P>このようにすると常に一つのメッセージだけを出力するようになります。</P>
+</DIV>
+</DIV>
+<H2 class="Chapter_Headline"><A name="log_jyunbi">■ログファイルの準備</A></H2>
+<DIV class="Chapter">
+<P>プログラム側の設定が済んだら、次はログファイルの準備です。</P>
+<OL>
+  <LI>log ディレクトリの中に空のファイルを作って下さい。
+  <DIV class="Quote">
+  <P>Windowsなら右クリックして「新規作成」→「テキスト文書」でファイルが出来ますよね。<BR>
+  それを <KBD><VAR>[好きな名前]</VAR>.log</KBD> に変更して下さい。　<EM><STRONG>(拡張子は必ず .log で！)</STRONG></EM><BR>
+  (UNIX だったら <KBD>% touch <VAR>[好きな名前]</VAR>.log</KBD> で一発)</P>
+  <P>例えば index.html を計測したいのであれば
+  <VAR>index.log</VAR> という名前が良いでしょう。　link.html なら
+  <VAR>link.log</VAR> とか。　自分が分かりやすいものを。</P>
+  </DIV>
+  
+  <LI>作ったファイルをftpでサーバにアップロードします。
+  <P class="Quote">必ず「アスキーモード」でアップロードして下さい。</P>
+  
+  <LI>パーミッションを 606(-rw----rw-) にします。
+  <P class="Quote">これを忘れるとプログラムがログを書き込めず、カウントしてくれません。<BR>
+  パーミッションに関する詳しい説明は <A href="readme.html">readme.html</A> を読んで下さい。</P>
+  
+</OL>
+<P>これで準備は完了です。</P>
+</DIV>
+<H2 class="Chapter_Headline"><A name="usage">■実際の使用法</A></H2>
+<DIV class="Chapter">
+<P>ここも、SSI として使う場合とCGI として使う場合とで違います。<BR>
+それぞれの設定に基づき、読み進めて下さい。</P>
+<UL>
+  <LI><A href="#usage_cgi">CGI として動かす場合</A>
+  <LI><A href="#usage_ssi">SSI として動かす場合</A>
+</UL>
+</DIV>
+<DIV class="Chapter">
+<H3><A name="usage_cgi">CGI として動かす場合</A></H3>
+<DIV class="Quote">
+<P>ちょっと戸惑うかも知れませんけど、呼び出しの書式を示しておきます。
+<BR>
+本当は<A href="makehtml.html">呼び出しタグ自動生成ツール</A>がありますが、これに甘えすぎるとトラブった時に自分で解決できないので、必ずこちらを熟読してから使って下さい。</P>
+<TABLE class="Table_Normal" border="1" cellspacing="0">
+  <TBODY>
+    <TR>
+      <TD colspan="3"><STRONG>【書式】</STRONG><BR>
+      <DFN>fcount.cgi?LOG=<VAR><FONT color="#353571">[ログファイル名]</FONT></VAR>&amp;MODE=<VAR><FONT color="#a600a2">[表示モード]</FONT></VAR>&amp;DIGIT=<VAR><FONT color="#a60400">[表示桁数]</FONT></VAR>&amp;FONT=<VAR><FONT color="#376f6f">[フォント指定]</FONT></VAR>&amp;REF=<VAR>[参照元URL]</VAR>&amp;SCR=</DFN><VAR><DFN>[画面情報]</DFN></VAR><BR>
+      <EM>※すべてのオプションに順番は関係ありません。</EM></TD>
+    </TR>
+    <TR>
+      <TD><FONT color="#353571"><VAR>[ログファイル名]</VAR></FONT><BR>
+      ※時計機能の場合のみ省略可</TD>
+      <TD colspan="2">カウントさせるログファイルの名前を指定します。<BR>
+      <B>拡張子は指定する必要がありません。</B><BR>
+      (というか、指定するとエラーになります)</TD>
+    </TR>
+    <TR>
+      <TD nowrap rowspan="6"><FONT color="#a600a2"><VAR>[表示モード]</VAR></FONT><BR>
+      ※省略可</TD>
+      <TD colspan="2">どういうカウンタを表示させるかを指定します。<B><BR>
+      <FONT color="#a600a2">a , t , y , w</FONT></B> が使用できます。<BR>
+      省略すると強制的に総カウント数が表示されます。<BR>
+      <BR>
+      それぞれの英文字に頭に <B><FONT color="#a600a2">-</FONT></B> (ハイフン)を付加すると、カウントアップを行いません。<BR>
+      つまり、<B>それぞれの項目のカウント値を表示させるだけ</B>という動き方をします。<BR>
+      詳しくは <A href="#tips_nocount">何故カウントアップしない指定があるのか</A> を参照下さい。</TD>
+    </TR>
+    <TR>
+      <TH colspan="2">それぞれの意味</TH>
+    </TR>
+    <TR>
+      <TH><FONT color="#a600a2"><VAR>a (-a)</VAR></FONT></TH>
+      <TD>総カウント数を表示 (<B><U>A</U></B>ll)</TD>
+    </TR>
+    <TR>
+      <TH><FONT color="#a600a2"><VAR>t (-t)</VAR></FONT></TH>
+      <TD>本日カウント数を表示 (<B><U>T</U></B>oday)</TD>
+    </TR>
+    <TR>
+      <TH><FONT color="#a600a2"><VAR>y (-y)</VAR></FONT></TH>
+      <TD>昨日カウント数を表示 (<B><U>Y</U></B>esterday)</TD>
+    </TR>
+    <TR>
+      <TH><FONT color="#a600a2"><VAR>w</VAR></FONT></TH>
+      <TD>[おまけ機能]：24時間表記の時計を表示させる
+      (<B><U>W</U></B>atch)<BR>
+      (→<A href="#tips_watch">時計機能を使うときの注意</A>)</TD>
+    </TR>
+    <TR>
+      <TD nowrap><FONT color="#a60400"><VAR>[表示桁数]</VAR></FONT><BR>
+      ※省略可</TD>
+      <TD colspan="2">カウンターの数字を何桁で表示させるか指定します。<BR>
+      <B><FONT color="#a60400">0 から 9 まで</FONT></B>の値が指定できます。<BR>
+      (0 は実質的にオプションを省略したことと同じ意味になります)<BR>
+      9桁以上を指定するとエラーになります。<BR>
+      省略すると、実際の桁数に合わせて表示します。</TD>
+    </TR>
+    <TR>
+      <TD><FONT color="#376f6f"><VAR>[フォント指定]</VAR></FONT><BR>
+      ※省略可</TD>
+      <TD colspan="2">デフォルトで指定したフォント(カウンタ用画像の名前)を任意に変更させるにはこの項目を追加します。<BR>
+      省略すると、プログラムの設定項目で指定した画像が使用されます。</TD>
+    </TR>
+    <TR>
+      <TD nowrap><VAR>[参照元URL]</VAR><BR>
+      ※省略可</TD>
+      <TD colspan="2">参照元URLを記録します。<BR>
+      実際には、 JavaScript の力を借りてココを埋めます。<BR>
+      (よって、訪問者が JavaScript をオフにしている場合、参照元を取得できないという制限があります)</TD>
+    </TR>
+    <TR>
+      <TD><VAR>[画面横幅],[縦幅],[色数]</VAR><BR>
+      ※省略可</TD>
+      <TD colspan="2">画面の縦幅・横幅・色数を記録します。<BR>
+      実際には、 JavaScript の力を借りてココを埋めます。<BR>
+      (よって、訪問者が JavaScript をオフにしている場合、画面情報を取得できないという制限があります)</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+</DIV>
+<H4>《まずは動くかどうか試してみましょう》</H4>
+<DIV class="Quote">
+<P>いきなりHTMLに組み込んだりせずに、動作するのを確認してからHTMLに組み込むのが賢いやり方です。<BR>
+ブラウザのURL入力欄に</P>
+<P class="Quote"><KBD>http://???/~username/cgi-bin/fstat/fcount.cgi?<FONT color="#353571">LOG=<B>index</B></FONT></KBD><BR>
+（ページのあるサーバが <KBD>???</KBD> で、あなたのユーザ名が <KBD>username</KBD>、<KBD>cgi-bin</KBD> というディレクトリの中に fstat を置いている場合）</P>
+<P>と打ち込んでみましょう。　（もちろん <FONT color="#353571"><B>index</B></FONT> は同梱の <FONT color="#353571"><B>index.log</B></FONT> の事ですネ）<BR>
+あなたが既に他にログファイルを作っているのなら、その名前に置き換えて下さい。</P>
+<P>上のように試して、数字が表示されましたか？　上手く行かなければ<A href="#tips_trouble">tips / トラブルシューティング</A>をお読み下さい。<BR>
+上手く行ったなら、もう怖い物はありません。　ジャンジャン応用してみましょう。　例えば、</P>
+<DIV class="Quote">
+<P><KBD>http://???/~username/cgi-bin/fstat/fcount.cgi?<FONT color="#353571">LOG=<B>index</B></FONT>&amp;<FONT color="#a60400">DIGIT=<B>5</B></FONT></KBD><BR>
+(<FONT color="#353571"><B>index.log</B></FONT> をカウント。表示桁数は <FONT color="#a60400"><B>5</B></FONT> 桁)</P>
+<P><KBD>http://???/~username/cgi-bin/fstat/fcount.cgi?<FONT color="#353571">LOG=<B>index</B></FONT>&amp;<FONT color="#376f6f">FONT=<B>fuksan_</B></FONT></KBD><BR>
+(<FONT color="#353571"><B>index.log</B></FONT> をカウント。表示フォントに <FONT color="#376f6f"><B>fuksan_</B></FONT> を指定。)</P>
+<P><KBD>http://???/~username/cgi-bin/fstat/fcount.cgi?<FONT color="#353571">LOG=<B>index</B></FONT>&amp;<FONT color="#a60400">DIGIT=<B>5</B></FONT>&amp;<FONT color="#376f6f">FONT=<B>fuksan_</B></FONT></KBD><BR>
+(<FONT color="#353571"><B>index.log</B></FONT> をカウント。表示桁数は <FONT color="#a60400"><B>5</B></FONT> 桁。表示フォントに <FONT color="#376f6f"><B>fuksan_</B></FONT> を指定。)</P>
+<P><KBD>http://???/~username/cgi-bin/fstat/fcount.cgi?<FONT color="#376f6f">FONT=<B>fuksan_</B></FONT>&amp;<FONT color="#353571">LOG=<B>index</B></FONT>&amp;<FONT color="#a60400">DIGIT=<B>5</B></FONT></KBD><BR>
+もちろん、バラバラに指定したってOK。　意味は上と同じ。</P>
+<P><KBD>http://???/~username/cgi-bin/fstat/fcount.cgi?<FONT color="#353571">LOG=<B>index</B></FONT>&amp;<FONT color="#a600a2">MODE=</FONT><B><FONT color="#a600a2">y</FONT></B></KBD><BR>
+(<FONT color="#353571"><B>index.log</B></FONT> をカウント。<FONT color="#a600a2"><B>昨日のカウント数</B></FONT>を表示させます。)</P>
+<P><KBD>http://???/~username/cgi-bin/fstat/fcount.cgi?<FONT color="#a600a2">MODE=</FONT><B><FONT color="#a600a2">w</FONT></B></KBD><BR>
+(時計を表示させます。)</P>
+</DIV>
+<P>など、オプションを色々と組み合わせて反応を見てみましょう。<BR>
+（ちなみに、この時にカウント数が増えないのは正常な動作です）<BR>
+なお、書式の欄でも書きましたが、<B>全てのオプションの順番はバラバラでも構いません。</B><BR>
+ここまで来れば、fcount.cgi を使いこなせたも同然です(^^)<BR>
+さらに応用として、JavaScript を組み合わせて参照元を記録できる状態まで持って行きましょう。　そのまま読み進めて下さい。</P>
+</DIV>
+<H4>《実際の導入例》</H4>
+<DIV class="Quote">
+<P>sample.html　を読むと更に分かり易いでしょう。<BR>
+と、いうか、sample.html のサンプルをそのままパチると簡単です。<BR>
+（下の例は純粋なテキストではないのでお奨めできません）</P>
+<P>他にも有用なテクニックが載っていると思いますので、是非参考にして下さい。</P>
+<P>なお、手動でタグを準備する自信がない方は
+呼び出しタグ自動生成ツール をお使い下さい。<BR>
+これでタグを作り、呼び出したいHTMLファイルにカット＆ペーストすれば楽勝でしょう。<BR>
+ただ、こればかりに頼っているとハマったときに原因が分からなくなりますので、退屈かとは思いますが下の説明もちゃんと読んで下さいね。</P>
+<P>カウンターを表示させたい部分に、</P>
+<DIV class="Quote">
+<P class="Dirctory"><KBD>&lt;SCRIPT language=&quot;JavaScript&quot;&gt;<BR>
+&lt;!--<BR>
+　　/* efStat from YugenKoubou (http://www.skipup.com/~fuka/)
+*/<BR>
+　　buf = escape(parent.document.referrer);<BR>
+　　ref = &quot;&quot;;<BR>
+　　for (i = 0; i &lt; buf.length; i++) {<BR>
+　　　　str = buf.charAt(i);<BR>
+　　　　ref += (str == &quot;+&quot;) ? &quot;%2B&quot;
+: str;<BR>
+　　}<BR>
+　　scr = screen.width+&quot;,&quot;+screen.height+&quot;,&quot;+screen.colorDepth;<BR>
+<BR>
+　　document.write('&lt;IMG SRC=&quot;<B><U><FONT color="#376f6f">./cgi-bin/fstat/fcount.cgi</FONT></U></B>?LOG=<B><U><FONT color="#353571">index</FONT></U></B>&amp;MODE=<B><FONT color="#a600a2"><U>h</U></FONT></B>&amp;DIGIT=<B><U><FONT color="#a60400">5</FONT></U></B>&amp;FONT=<B><U><FONT color="#376f6f">fuksan</FONT></U></B>&amp;REF=',ref,'&amp;SCR=',scr,'&quot; <B><U><FONT color="#4f00a6">width=&quot;60&quot; height=&quot;16&quot;
+border=&quot;0&quot; alt=&quot;総アクセス数&quot;</FONT></U></B>&gt;');<BR>
+// --&gt;<BR>
+&lt;/SCRIPT&gt;<BR>
+&lt;NOSCRIPT&gt;<BR>
+　　&lt;IMG src=&quot;<B><U><FONT color="#376f6f">./cgi-bin/fstat/fcount.cgi</FONT></U></B>?LOG=<B><U><FONT color="#353571">index</FONT></U></B>&amp;MODE=<B><FONT color="#a600a2"><U>h</U></FONT></B>&amp;DIGIT=<B><U><FONT color="#a60400">5</FONT></U></B>&amp;FONT=<FONT color="#376f6f"><B><U>fuksan</U></B></FONT>&amp;REF=noscript&amp;SCR=-&quot; <FONT color="#4f00a6"><B><U>width=&quot;60&quot; height=&quot;16&quot;
+border=&quot;0&quot; alt=&quot;総アクセス数&quot;</U></B></FONT>&gt;<BR>
+&lt;/NOSCRIPT&gt;</KBD></P>
+</DIV>
+<P>というタグを埋め込みます。　<B><U>太字で色の付いた下線</U></B>部分が変更箇所です。<BR>
+カットアンドペーストして使うと良いでしょう。</P>
+<P><U><B><FONT color="#376f6f">./cgi-bin/fstat/fcount.cgi</FONT></B></U> の部分は、呼び出すHTMLから見た fcount.cgi
+への相対パスを指定します。<BR>
+また、 <U><B><FONT color="#376f6f">http://www.hoge.ne.jp/~fuka/cgi-bin/fstat/fcount.cgi</FONT></B></U> のようなURLでの指定でも構いません。<BR>
+HTMLの置かれたサーバとは別の場所にefStatを設置した時に有効でしょう。<BR>
+(BIGLOBEのwww5aサーバやTikiTikiの様にCGIサーバが外部にあるプロバイダ、人にefStatをレンタルする場合など)</P>
+<P><B><FONT color="#353571"><U>index</U></FONT></B> の部分はログファイル名を指定します。</P>
+<P><B><FONT color="#a600a2"><U>a</U></FONT></B> は表示オプションを指定します。　<B><FONT color="#a600a2">a</FONT></B> , <B><FONT color="#a600a2">t</FONT></B> , <B><FONT color="#a600a2"><FONT color="#a600a2">y</FONT></FONT></B> , <B><FONT color="#a600a2">w</FONT></B> の４種類があります。<BR>
+省略すると <B><FONT color="#a600a2"><U>a</U></FONT></B> を指定したことになります。</P>
+<P><B><U><FONT color="#a60400">5</FONT></U></B> は表示桁数です。　ここでは「5桁表示する」という意味です。<BR>
+省略できます。</P>
+<P><B><U><FONT color="#376f6f">fuksan</FONT></U></B> は表示フォントを fuksan に指定する、という意味です。</P>
+<P><B><U><FONT color="#4f00a6">ALT=&quot;総アクセス数&quot; WIDTH=&quot;60&quot;
+HEIGHT=&quot;16&quot; BORDER=&quot;0&quot;<BR>
+</FONT></U></B>ですが、これはまさしく IMG タグの指定そのままです。<BR>
+お好きなように変更して下さい。<BR>
+他のブラウザではどうか知りませんが、少なくともNetscape
+Navigatorでは<B>IMGタグで画像サイズを指定しておかないと、その画像を読み込み終わるまで他の部分を読み込んでくれないという<FONT size="+1">仕様</FONT></B>があります。<BR>
+ですから、出来るだけ画像サイズは指定しておくようにして下さい。<BR>
+表示桁数を指定して桁数を固定すると、画像サイズの指定がしやすくなってイイカンジです。</P>
+<P>また、カウンタの存在を知られたくない、つまり隠しカウンタとして使いたい方は、ここで
+<B><U><FONT color="#4f00a6">WIDTH</FONT></U></B> と <FONT color="#4f00a6"><B><U>HEIGHT</U></B></FONT> を <FONT color="#4f00a6"><B><U>1</U></B></FONT> に指定します。<BR>
+要するに、1ドットしかないカウンタ画像を表示するよう指定します。　これならまず見つからないでしょう。　…ソースを見れば…なんてツッコミはなし(^^;</P>
+</DIV>
+</DIV>
+<DIV class="Chapter">
+<H3><A name="usage_ssi">SSI として動かす場合</A></H3>
+<DIV class="Quote">
+<TABLE class="Table_Normal" border="1" cellspacing="0">
+  <TBODY>
+    <TR>
+      <TD colspan="3">
+      <P><B>【書式】</B><BR>
+      <DFN>fcount.cgi?<FONT color="#353571">LOG=<VAR>[ログファイル名]</VAR></FONT>&amp;<FONT color="#a600a2">MODE=<VAR>[表示オプション]</VAR></FONT></DFN></P>
+      <P><EM>※　&lt;!--#include virtual=&quot;&quot;--&gt;
+      による呼び出しにのみ対応しています。<BR>
+      ※　オプション指定の順番は変えてはいけません。<BR>
+      ※　区切りには半角スペースを用います。</EM></P>
+      </TD>
+    </TR>
+    <TR>
+      <TD><FONT color="#353571"><VAR>[ログファイル名]</VAR></FONT></TD>
+      <TD colspan="2">カウントさせるログファイルの名前を指定します。<BR>
+      <EM>拡張子は指定する必要がありません。</EM><BR>
+      (というか、指定するとエラーになります)</TD>
+    </TR>
+    <TR>
+      <TD rowspan="3"><FONT color="#a600a2"><VAR>[表示オプション]</VAR></FONT><BR>
+      ※省略可</TD>
+      <TD><FONT color="#a600a2"><B>省略</B></FONT></TD>
+      <TD>通常動作します。　つまり、カウントした後にメッセージを表示します。<BR>
+      <FONT color="#a600a2"><B>&quot;-&quot; , &quot;h&quot;</B></FONT> 以外の文字を入力したときも強制的に通常動作します。</TD>
+    </TR>
+    <TR>
+      <TD><FONT color="#a600a2"><B>-</B></FONT></TD>
+      <TD>カウント値の表示は行いますが、カウントはしません。　つまり、表示のみを行います。<BR>
+      フレームを使ったページで有効でしょう。　例えば、
+      <DIV class="Quote">
+      <PRE class="Dirctory">index.html　(h オプションで記録を取る)<BR>　　　|----- menu.html<BR>　　　+----- main.html　(- オプションで表示だけさせる)</PRE>
+      </DIV>
+      といった使い方が考えられます。<BR>
+      これだと参照元を正確に記録できるだけでなく、フレーム内で表示もできて美味しいとこ取りです。</TD>
+    </TR>
+    <TR>
+      <TD><FONT color="#a600a2"><B>h</B></FONT></TD>
+      <TD>カウント値を表示せずにカウントします。　(<B><U>H</U></B>idden)<BR>
+      つまり、隠しカウンターとして動作します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+</DIV>
+<H4>《実際の導入例》</H4>
+<DIV class="Quote">
+<P>カウントしたいページのHTMLのどこか(出来れば&lt;BODY&gt;タグの直後など、ファイルの先頭の方が良いです)に、</P>
+<P class="Quote"><CODE>&lt;!--#include virtual=&quot;./cgi-bin/fcount/fcount.cgi?LOG=index&quot;--&gt;</CODE><BR>
+(カウント値を表示させる場合)</P>
+<P class="Quote"><CODE>&lt;!--#include virtual=&quot;./cgi-bin/fcount/fcount.cgi?LOG=index&amp;MODE=-&quot;--&gt;</CODE><BR>
+(カウント値を表示させるだけの場合)</P>
+<P class="Quote"><CODE>&lt;!--#include virtual=&quot;./cgi-bin/fcount/fcount.cgi?LOG=index&amp;MODE=h&quot;--&gt;</CODE><BR>
+(カウント値を表示させない場合)</P>
+<P>このようなタグを埋め込んで下さい。　カットアンドペーストして使うと良いでしょう。<BR>
+太字で色の付いた下線部分が変更箇所です。</P>
+<P>./cgi-bin/fstat/fcount.cgi の部分は、呼び出すHTMLから見た
+fcount.cgi への相対パスを指定します。<BR>
+/~fuka/cgi-bin/fstat/fcount.cgi のようなドキュメントルートからの絶対パス指定でも構いません。</P>
+</DIV>
+</DIV>
+<H4 class="Tips_Headline"><A name="tips_trouble">■ tips / トラブルシューティング</A></H4>
+<DIV class="Tips">
+<H3>＜SSI モード＞</H3>
+<H4>[efCount(SSI)]ログを開くことが出来ませんでした　と表示される</H4>
+<DIV class="Quote">読んで字の如くですが、ログファイルを開くことが出来ませんでした。<BR>
+ファイル名の指定に誤りがないか、パーミッションは正しいかを確認して下さい。</DIV>
+<H4>何も表示されない、または、エラーはないがログは記録されていない</H4>
+<DIV class="Quote">fcount.cgi を埋め込んだHTMLのソースをIEやネスケを使って表示させてみて下さい。</DIV>
+<H4>&lt;!--include virtual=&quot;～&quot;--&gt;のタグが残っている</H4>
+<DIV class="Quote">
+<P>タグが認識されていません(つまり、プログラムは実行されていません)。</P>
+<P>プロバイダによっては、SSI を実行可能にするために
+HTML ファイルの拡張子を変更する必要があります。<BR>
+大抵の場合は .shtml 、 .shtm にすると良いようですが、詳細は各プロバイダへお問い合わせ下さい。</P>
+<P>.htaccess ファイルを自分で書けば設定を変更できるプロバイダもあります。<BR>
+(.html ファイルでも SSI が実行できるようになります。)<BR>
+この辺を説明するのは本筋ではありませんので、先人のウェブサイトにて参照するか、ウェブサーバに関する書籍を買って勉強して下さい。</P>
+<P>また、プロバイダによっては &lt;!--exec cgi=&quot;～&quot;--&gt;
+でなければならない場合があります。<BR>
+そんな場合は素直に諦めて CGI モードで使うのが吉でしょう。</P>
+</DIV>
+<H4>&lt;!--include virtual=&quot;～&quot;--&gt;のタグは残っていないが、ブラウザには何も表示されていない<BR>
+[an error occurred while processing this
+directive] と表示されている(Apacheの場合)</H4>
+<DIV class="Quote">
+<P>タグは認識されていますが、何らかの原因で異常終了しました。</P>
+<OL>
+  <LI>パスを書き間違えている
+  <LI>fcount.cgi のパーミッションは実行可能(705)ですか？
+  <LI>ログディレクトリのパーミッションは読み取り可能(606)ですか？
+  <LI>その他、CGIモードのトラブルシューティングも参考に原因を探して下さい。
+</OL>
+</DIV>
+</DIV>
+<DIV class="Tips">
+<H3>＜CGI モード＞</H3>
+<H4>“e0000”という画像が表示された</H4>
+<DIV class="Quote">
+<P>ログファイルを開くことが出来ませんでした。<BR>
+ファイル名の指定に誤りがないか、パーミッションは正しいかを確認して下さい。</P>
+</DIV>
+<H4>“e0001”という画像が表示された</H4>
+<DIV class="Quote">
+<P>桁数の指定が間違っています。　20桁までにして下さい。</P>
+</DIV>
+<H4>画像が表示されない(破れたアイコンが表示される)</H4>
+<UL>
+  <LI>fcount.cgi が何らかの理由で実行されなかった
+  <OL>
+    <LI>fcount.cgi に実行権が与えられていない
+    <P>パーミッションは 705 にしましたか？</P>
+    
+    <LI>fcount.cgi が壊れている
+    <OL>
+      <LI>fcount.cgi をバイナリモードで送っていませんか？
+      <LI>極めてまれですが、色んなゴタゴタでファイルが損傷しているかも知れません。　ダウンロードしなおしてみましょう。
+    </OL>
+    
+    <LI>プログラムのバグ・サーバと相性が悪い
+    <P>素直に諦めましょう。　カウンタスクリプトなんて世の中に腐るほどあるし(^^;</P>
+    
+    <LI>gifcat.pl を呼び出せなかった
+    <OL>
+      <LI>gifcat.pl が壊れている
+      <P class="Quote">gifcat.pl をバイナリモードで送っていませんか？
+      <BR>
+      色々試したのにやっぱりおかしい、という場合は<A href="http://wakusei.cplaza.ne.jp/twn/cgi-bin/gifcat.txt">gifcat.pl配布元</A>にて、ダウンロードし直して下さい。</P>
+      
+      <LI>パーミッションは正しいですか？
+      <P class="Quote">少なくとも「他人」又は「所有者」が「読み込み可能」になっていなければなりません。</P>
+      
+    </OL>
+    
+  </OL>
+  
+  <LI>カウンタ用の画像に何か問題がある
+  <P class="Quote">画像を読み込むことができなかったようです。　画像の名前の指定は間違っていませんか？<BR>
+  または、画像自体に問題があるのかも知れません。　詳しくはこちらをご覧下さい。</P>
+  
+</UL>
+<H4>ERROR という文字が表示される(URL入力欄から直にカウンタを呼び出した場合)</H4>
+<DIV class="Quote">
+<P>カウンタ用の画像に何か問題があるようです。　詳しくはこちらをご覧下さい。</P>
+</DIV>
+<H4>カウンタの数字が最初の一桁しか表示されない</H4>
+<DIV class="Quote">
+<P>ブラウザが古いとこうなります。<BR>
+実はあのグラフィックはアニメGIFとして表示されています。　よって、アニメGIFに対応したブラウザが必要です。</P>
+<P>これは gifcat.pl の仕様です。　gifcat.pl
+を使う以上、これはどうしようもありません。<BR>
+ただし、他の方法を採るとUNISYS社の権利に抵触し、私が多額の使用料金を支払わねばなりません。<BR>
+ですから、今後もずっとアニメGIF未対応のブラウザに対応することはないでしょう。</P>
+</DIV>
+<H4>設置・設定は完璧なはずだが、どうしても動かないゾ！</H4>
+<DIV class="Quote">
+<P>様々な種類のOS やWeb サーバアプリケーション、Perl
+(インタプリタ型言語とはいえOSによって若干実装が異なる)と連携して動作するCGI
+アプリケーションは、Windows やMacintosh のような統一された環境とは違い、「あっちのプロバイダでは使えるが、こっちのプロバイダでは使えない」ということも十分に考えられます。</P>
+<P>眠れなくなるくらい悩むよりも、サックリと捨てて他の物を試してみる、というのも一つのテだと思います。</P>
+<P>実際、　「CGI がどれも動かなくて渡り歩いていたが、ふと拾ったefStat
+なら何となく動いたので使うことにした」　というメールはよく来ます。<BR>
+逆はできるだけ無くしたいなぁ…(^_^;</P>
+<P>どうしても諦めきれない人へのアドバイス：</P>
+<OL>
+  <LI>サーバの「クセ」は前もってプロバイダで告知されている場合があります。
+  <P class="Quote">まずはプロバイダのFAQや会員用掲示板に目を通してみましょう。</P>
+  
+  <LI>公開されていない貴重な「クセ」は先駆者(他の会員)が調べている場合があります。
+  <P class="Quote">同じプロバイダの会員でCGI の設置方法を解説している方のページを探してみましょう。</P>
+  
+  <LI>人間は「完璧だ」と思っている間が一番危険です(笑)
+  <P class="Quote">比較的コンピュータに明るい人を捕まえて、客観的に状態を調べてもらいましょう。　(できれば、作業を最初からやってもらう)<BR>
+  後でご飯をおごるのを忘れずに。</P>
+  
+  <LI>頭で悩むより、まずは体で試しましょう。
+  <LI>滅多にありませんが、不可思議絵の具の野郎がとんでもないポカミスをしていることがあります。<BR>
+  「有限工房」のサポート掲示板やトップページで思わぬ情報が転がっているかもしれません。
+</OL>
+</DIV>
+</DIV>
+<H4 class="Tips_Headline"><A name="tips_nocount">■ tips / 何故、カウントアップしない指定があるのか</A></H4>
+<DIV class="Tips">例えば、総合、本日、昨日のカウント数を一つのページに表示させるとします。　その場合、
+<P class="Quote"><KBD>総合：&lt;IMG src=&quot;./fcount.cgi?LOG=index&amp;MODE=a&quot;&gt;<BR>
+本日：&lt;IMG src=&quot;./fcount.cgi?LOG=index&amp;MODE=t&quot;&gt;<BR>
+昨日：&lt;IMG src=&quot;./fcount.cgi?LOG=index&amp;MODE=y&quot;&gt;</KBD></P>
+<P>このようにタグを打つはずですよね。　この時、3つのefCountはほぼ同時並行で作動します。<BR>
+普通は3回同時に呼び出されたと言うことで全体で一気に3人分のカウントをしてしまうことになりますが、IPアドレスを利用した重複アクセス防止機構でその問題は回避されます。</P>
+<P>しかし例えば、ほぼ同時にAさんとBさんがアクセスした場合、</P>
+<OL>
+  <LI>総合分のカウンタはAさんが呼び出し(AさんのIPを記録)
+  <LI>本日分のカウンタはBさんが呼び出し(BさんのIPを記録)
+  <LI>昨日分のカウンタはAさんが呼び出す(AさんのIPをまた記録してしまう)
+</OL>
+<P>…といった風に、アクセス1回分が無駄に記録されてしまう困った現象が起きてしまいます。<BR>
+そこで、飾りのカウンタには - (ハイフン)オプションを付けてカウントさせないように指示することを強く推奨します。</P>
+<P class="Quote"><KBD>総合：&lt;IMG src=&quot;./fcount.cgi?LOG=index&amp;MODE=a&quot;&gt;<BR>
+本日：&lt;IMG src=&quot;./fcount.cgi?LOG=index&amp;MODE=<EM>-t</EM>&quot;&gt;<BR>
+昨日：&lt;IMG src=&quot;./fcount.cgi?LOG=index&amp;MODE=<EM>-y</EM>&quot;&gt;</KBD></P>
+<P>つまり、タグをこんな風に書き換えます。<BR>
+記録を取るのは総合分のカウンタだけになり、その他のカウンタは記録を取らなくなります。<BR>
+代表のカウンタのみにカウントアップを行わせることによってカウンタの精度が格段に向上するはずです。　是非、お試しを。</P>
+</DIV>
+<H4 class="Tips_Headline"><A name="tips_gazou">■ tips / カウンタ用画像の入手場所</A></H4>
+<DIV class="Tips">
+<P>本カウンタではCGIとして動作させる場合、カウンタの表示の為にカウンタ用画像を必要とします。<BR>
+一応サンプルの画像が同梱されていますが、気に入らない人は自分のサイトのデザインに合う物を自力で別途入手して下さい。<BR>
+一緒に入れておきたいのは山々なんだけど、カウンタ用の画像にはそれぞれの作者サンの著作権があるので勝手に入れちゃいけないんです。</P>
+<P>カウンタ用の画像ファイルは<A href="http://www.kiwi-us.com/~hagi/digit/index-j.html">ここ掘れ！</A>や<A href="http://www.digitmania.holowww.com/">Digit Mania</A>、<A href="http://www10.big.or.jp/~gayou/nmr/nmrfacn/nmrfacn.html">なまらファクトリー内の「カウンター数字工房」</A>ココで入手すると良いでしょう。</P>
+<P>特に、なまらファクトリーのフォントは可愛くて実用性があってお奨め。<BR>
+なお、私のサイトにもユーザさんに寄贈していただいたフォントがいくつか用意してあります。<BR>
+これらは使われた実績がありますので、確実です。</P>
+</DIV>
+<H4 class="Tips_Headline"><A name="tips_kisoku">■ tips / カウンタ用画像ファイルの命名規則</A></H4>
+<DIV class="Tips">
+<P>efStat で使うカウンタ用画像(カウンタフォント)のファイル名は、「DigitMania」に準じた命名規則を持たせる必要があります。<BR>
+実例を挙げると、以下のようになります。</P>
+<TABLE class="Table_Normal">
+  <CAPTION>digit という名前のカウンタ用画像の場合のディレクトリ構成</CAPTION>
+  <TBODY>
+    <TR>
+      <TD>
+      <PRE>image/
+   |--- digit/
+   |       |-- 0digit.gif
+   |       |-- 1digit.gif
+   |       |-- 2digit.gif
+   |       |-- 3digit.gif
+   |       |-- 4digit.gif
+   |       |-- 5digit.gif
+   |       |-- 6digit.gif
+   |       |-- 7digit.gif
+   |       |-- 8digit.gif
+   |       |-- 9digit.gif
+   |       |-- adigit.gif (あれば)
+   |       |-- pdigit.gif (あれば)
+   |       +-- cdigit.gif (あれば)
+   |
+   |--- other_font_a/
+   |       |-- 0other_font_a.gif
+   |       |       ：
+   |       +-- cother_font_a.gif
+   |
+   |--- other_font_b/
+           |-- 0other_font_b.gif
+           |       ：
+           +-- cother_font_b.gif</PRE>
+      </TD>
+      <TD><B>規則： </B>
+      <OL>
+        <LI>画像のセットは半角英数字の[名前]を持つ
+        <LI>画像はその[名前]が名前のディレクトリに入っている
+        <LI>画像は <B>[数字][名前].gif</B> という名前を持つ
+        <LI>数字以外の画像の場合、
+        <UL>
+          <LI><B>a[名前].gif　(&quot;午前/am&quot;を意味する画像)</B>
+          <LI><B>p[名前].gif　(&quot;午後/pm&quot;を意味する画像)</B>
+          <LI><B>c[名前].gif　(&quot;コロン/:&quot;を意味する画像)</B>
+        </UL>
+        という名前を持つ
+        <LI>画像の一覧(表示サンプルなどに使う)は <B>[名前].gif</B> という名前を持つ
+      </OL>
+      </TD>
+    </TR>
+  </TBODY>
+</TABLE>
+</DIV>
+<H4 class="Tips_Headline"><A name="tips_seigen">■ tips / カウンタ用画像の制限</A></H4>
+<DIV class="Tips">
+<P>GIF画像連結ライブラリの gifcat.pl の制限により、使用できる画像には以下の制限があります。<BR>
+自分でカウンタ用画像をこしらえる人などは特に注意して下さい。</P>
+<P>また、 fcount.cgi の呼び出し方は間違っていないはずなのに、上手く行かない場合はこれらの可能性も疑ってみて下さい。</P>
+<UL>
+  <LI>カウンタ用画像にアニメGIFは使用できません。
+  <LI>アニメGIF対応のブラウザでなければ、最初の画像しか表示されません。
+  <LI>縦幅、横幅の異なるGIFファイルは使用できません。
+  <P class="Quote">(※gifcat.pl の1.55版より横幅の異なるGIFも連結できるようになりましたが、この可能性も疑って下さい)</P>
+  
+  <LI>全てのGIFファイルはパレットを統一させて下さい。<BR>
+  一つでもパレットが違うと正常に表示されません。
+</UL>
+<P>Susie (by たけちん氏) で、作ったファイルを連結させてみて、色が化けたりしないか試してみる方法が一番手軽でしょう。</P>
+</DIV>
+<H4 class="Tips_Headline"><A name="tips_watch">■ tips / 時計機能を使う場合の注意</A></H4>
+<DIV class="Tips">
+<P>この時計は24時間表記でしか表示できません。</P>
+<P>数字以外に : (コロン)を使います。　時計機能を使う場合は
+: の画像を用意して下さい。<BR>
+： の画像は必ず c[フォント名].gif というファイル名にして下さい。(これはカウンタ画像界(?)標準の約束事です)</P>
+<P>例えば fuksan というフォントであれば、 cfuksan.gif。　fdc
+というフォントであれば cfdc.gif という具合にして下さい。<BR>
+これを守らないと画像が表示されません。</P>
+<P>また、この時計の場合は24時間表記ですので、
+a[フォント名].gif (am) , p[フォント名].gif
+(pm) は必要ありません。</P>
+</DIV>
+<H4 class="Tips_Headline"><A name="tips_henkou">■ tips / カウント数の変更方法</A></H4>
+<DIV class="Tips">
+<P>今まで別のカウンタを使っていたので今までのカウント数を継続したい。<BR>
+そんな方にはログファイルを手直ししていただかねばなりません。</P>
+<P><A href="#log_jyunbi">ログファイルの準備</A>を読んでログファイルを準備し、<A href="#usage">実際の使用法</A>を読み、カウンタを動作させて、一度ログファイルを書き込んで(フォーマットして)下さい。</P>
+<P>とりあえず記録した、そのログファイルをテキストエディタで開いて下さい。</P>
+<PRE class="Dirctory">FC2 13Pvar <BR>13QSVn 5S2 client-16.test.or.jp <BR>       ↑<BR>     &lt;注目！&gt; <BR>(まだ続く)<BR>　　　： </PRE>
+<P>このようになっていると思います(多少の違いは気にしないで下さい)。</P>
+<P>ポイントは2行目、 空白(正確にはタブ文字)で区切られたマスの2番目の数字です。<BR>
+これが総ヒット数を表しています。　半角数字で好きな値に直して下さい。</P>
+<P>ただし、efStat ではカウント数など、冗長な数値を「62進数」(※)という物を使って表現、ログを圧縮しています。<BR>
+カウント数を変更したい方は下のフォームに現在のカウント数を入力し、62進数に変換してからefStat
+のログに書き込んで下さい。<BR>
+なお、数字以外、例えばアルファベットなどを誤って入力するとブラウザが固まります。　ご注意下さい。　(手抜き)</P>
+<FORM>
+<CENTER>
+<TABLE border="1" class="Table_Normal">
+  <TBODY>
+    <TR>
+      <TH colspan="2">今までのカウント数 : <INPUT size="20" type="text" name="num" value="0" maxlength="20"></TH>
+      <TH><INPUT type="button" value="→→→　62進数に変換する　→→→" onclick="getdata(this.form)"></TH>
+      <TH>62進数カウント数 : <INPUT size="20" type="text" name="TEXTAREA" maxlength="20" readonly></TH>
+    </TR>
+  </TBODY>
+</TABLE>
+</CENTER>
+</FORM>
+<P><EM>※この「62進数」は、私が勝手に作った基数(繰り上げ規則？)ですので、一般には通用しません。　ご注意下さい。</EM></P>
+<P>他の数値の意味については <A href="format.csv">format.csv</A> を参照下さい。</P>
+</DIV>
+<H4 class="Tips_Headline"><A name="tips_tessoku">■ tips / ログの取りこぼしを減らすための鉄則</A></H4>
+<DIV class="Tips">
+<P>(基本)</P>
+<OL>
+  <LI>極力SSI モードで使うべし
+  <P class="Quote">ハッキシ言って性能が全然違います。　画像解像度を取れないのは痛いけど。</P>
+  
+  <LI>呼び出しタグは極力HTMLファイルの頭の方に持ってくるべし
+  <P class="Quote">「見た目(画面配置)で上の方」ではありません。　「ソースの上の方」です。</P>
+  
+  <LI>本当に必要なログのみ取るべし
+  <LI>ログの最大保存数を極力抑えるべし
+</OL>
+<P>(番外)</P>
+<OL>
+  <LI>他のアクセス解析プログラムとの併用は控えるべし
+  <LI>極力軽いサーバを使うべし
+  <P class="Quote">CPU性能よりもディスクアクセス性能が左右します。</P>
+  
+  <LI>CGI は諦めて Analog を使うべし(ぉぃぉぃ
+</OL>
+</DIV>
+<H4 class="Tips_Headline"><A name="tips_genkai">■ tips / ログ最大保存数の限界値</A></H4>
+<DIV class="Tips">
+<P>良く質問で来るのは、「efStat はどの程度の規模のサイトまで使えるのか？」というものです。<BR>
+efCount 自身は理論上、8万ヒット/日程度のサイトでも十分大丈夫だと思われますが(安全マージンをかなり持たせた計算)、efStat
+の方は解析に多大なCPU時間を使いますし、ご覧の通りテーブルを多用した豪華な画面表示ですのでかなりのメモリを食います。　巨大なログを作るのは良くありません。<BR>
+全ての訪問者を記録しておきたいかもしれませんが、そこはグッと我慢をして下さい。<BR>
+あなたは訪問者一人一人のプライバシーには興味はなく、サイト運営に必要十分なサンプリングが行えればいいはずです。</P>
+<P>ログの最大保存数は、一日のヒット数・設置したログファイルの数・サーバの処理能力の兼ね合いで決まります。<BR>
+「カウンタが動く」という事は、その都度巨大なログを読み込むということです。<BR>
+サーバは、カウンタが動作した瞬間、50KB近いサイズ(1000件くらいのログの場合)のログファイルを読み書きしているのです。<BR>
+それを一日に何百～何千と繰り返すのです。　それは一人分のサイトでも凄まじい仕事量です。</P>
+<P>このプログラムは小～中規模の比較的アクセス数の少ないサイト(一万ヒット/日程度まで)で使うのに向いています。<BR>
+1000程度でも統計的に十分精度の高い結果が出ます。　普通は多くても1000程度に指定して下さい。<BR>
+とりわけこだわりがなければ、デフォルトの300にしておいて下さい。　(おすすめは300～500程度)<BR>
+もちろん、社内のイントラネットだったり、比較的アクセス数が落ち着いているような所だったり、殆ど自分専用で使っているようなWebサーバだったらもっと増やしてもいいとは思いますが。</P>
+<P>それ以上の規模と精度を求める…というのであれば
+Web サーバのログを直接解析する方法を採ることをお勧めします。<BR>
+(どのソフトがお奨めか、なんて野暮な事は聞かないで下さいね？(笑))</P>
+</DIV>
+<HR>
+<P align="right">&copy;1998-2001 不可思議絵の具<BR>
+(<A href="http://yugen.main.jp/">http://yugen.main.jp/</A>)</P>
+</BODY>
+</HTML>

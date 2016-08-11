@@ -1,0 +1,415 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM HomePage Builder 2000 V4.0.6  for Windows">
+<LINK rel="stylesheet" type="text/css" href="def.css">
+<TITLE>efStat改修履歴</TITLE>
+</HEAD>
+<BODY bgcolor="#ffffff" text="#7e2828" link="#7726c8" alink="5c4fff" vlink="ff5959"><FONT size="+3"><B>efStat改修履歴</B></FONT>
+<HR>
+<DIV align="right">アクセス解析パッケージ - efStat <IMG src="fstat.gif" width="88" height="31" border="0" align="top"></DIV>
+<BR>
+<TABLE width="95%" align="center" cellpadding="2" cellspacing="0" border="1" bgcolor="#ffdfe0">
+  <TBODY>
+    <TR nowrap valign="top">
+      <TD bgcolor="#ffc6c7" colspan="3">
+      <P><B><FONT size="+1">■ToDo</FONT></B></P>
+      </TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD colspan="3">
+      <UL>
+        <LI>プログラムを二重起動できないように排他処理を加える
+        <LI>英語版も用意したい
+        <LI>ダサいと好評の配色をモノトーン系に変える
+        <LI>設定を別ファイルに分離・Webからの修正
+        <LI>ソースの書き直し<BR>
+        オブジェクト指向の完遂は無理でも、それに近づこう！？
+        <UL>
+          <LI>ハッシュのハッシュなどを使ってデータを体系的にまとめる
+          <LI>変数の局所化・処理の局所化・機能別にパッケージを分けることを徹底する
+        </UL>
+        
+      </UL>
+      </TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<BR>
+<TABLE width="95%" align="center" cellpadding="2" cellspacing="0" border="1" bgcolor="#ffdfe0">
+  <TBODY>
+    <TR>
+      <TD>2002年頃？</TD>
+      <TD>2.1.4</TD>
+      <TD>
+      <UL>
+        <LI>利用OS統計にWindowsXP対応
+      </UL>
+      </TD>
+    </TR>
+    <TR>
+      <TD>2001/09/21</TD>
+      <TD>2.1.3</TD>
+      <TD>
+      <UL>
+        <LI>クッキーにセットしたパスワードの欄が反映されないのを修正
+        <LI>クッキーにセットしたリンク許可・設定情報保持の欄が反映されないのを修正
+        <LI>文字コードをEUCからS-JISに戻す(不評の為)
+        <LI>カウント集計の項目が少し気の利いたものになった
+        <LI>カウント集計に縦棒グラフを付けた
+        <LI>ファイルオープン時、読み込みロックを掛けるようにした
+        <LI>gTLDにbiz,info,name,pro,museum,aero,coopを追加
+        <LI>ccTLDにps(パレスチナ自治政府)を追加
+        <LI>検索エンジンの対応数を微妙に増やした＆修正
+      </UL>
+      </TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2001/01/12</TD>
+      <TD>2.1.2</TD>
+      <TD>修正
+      <UL>
+        <LI>ブラウザ統計の注釈が表示されなくなっていたのを修正
+        <LI>年度別集計が出力されていなかったのを修正　(…というより、今の今まで忘れていた)
+        <LI>小メニューにおいて、画面情報系が出力されていなかったのを修正
+        <LI>いくつかの無害なtypoを修正
+        <LI>小メニューを単色に統一
+      </UL>
+      保守
+      <UL>
+        <LI>参照元、InfoNaviとInfoWebをちゃんと区別するように
+        <LI>OS識別の優先順位を変更<BR>
+        私のページだけなのかも知れませんが、今やWin95よりもWin2000の方が普及しているみたいです。
+        <LI>Navigator の識別を強化
+        <LI>&quot;CacheFlow&quot;というAgentに対応。
+      </UL>
+      </TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2001/01/09</TD>
+      <TD>2.1.1</TD>
+      <TD>ログ一括表示モードにおいて、生ログの表示件数の指定が反映されなくなっていたのを修正
+      (2.1で発生)</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2001/01/04</TD>
+      <TD>2.1</TD>
+      <TD>自分の中ではこれで完成です。<BR>
+      当面、解析機能自体の機能追加は無いでしょう。<BR>
+      今回は自分自身が(リファレンス || Perl)の勉強をするために弄りました。<BR>
+      無理矢理こじつけて完成させたので、ソースを見て笑わないで下さいね。<BR>
+      <UL>
+        <LI>文字コードをEUCに変更<BR>
+        (初心者への敷居が更に高くなりましたが、サーチエンジン分析などの精度が向上したはずです)
+        <LI>参照元統計を強化
+        <UL>
+          <LI>任意のURLをまとめ上げる機能を追加
+        </UL>
+        
+        <LI>サーチエンジン分析を強化
+        <UL>
+          <LI>TINAMIのCharlotte(画像検索ページ)に対応
+          <LI>Yahooカテゴリに対応？(自分がYahooに入ってる訳ではないので成功したかは不明)
+          <LI>仕分けルーチンの最適化
+        </UL>
+        
+        <LI>OS統計を強化
+        <UL>
+          <LI>AOL版とMSN版のIEに限り、これも統計の対象となるように変更
+          <LI>Windows 3.1に対応させた
+        </UL>
+        
+        <LI>ブラウザ統計を強化
+        <UL>
+          <LI>NetCaptorに対応させた(自分が使っている故の贔屓という説もある:-)<BR>
+          Cuamなんかも多分イケるんじゃないだろうか…？(RFCへの対応を望む…)
+        </UL>
+        
+        <LI>ホスト仕分け処理を最適化
+        <UL>
+          <LI>ついでにgTLD/ccTLDテーブルを強化<BR>
+          (国コードはISO3166で規定されているそうですね。もう一度ちゃんと調べてみなければ)
+        </UL>
+        
+        <LI>各種変換テーブルを別ファイルに分離した <BR>
+        (これで、普通の人もメンテナンスしやすくなったかな？)
+        <LI>フォント指定をスタイルシートで行うようにした<BR>
+        (俄然、HTML信者が読むと死にたくなるようなHTMLソースだが)
+      </UL>
+      </TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2000/11/14</TD>
+      <TD>2.0.2</TD>
+      <TD>
+      <UL>
+        <LI>参照元へのリンクを無効にすると生ログで参照元が表示されなくなってしまう問題を修正
+      </UL>
+      </TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2000/11/12</TD>
+      <TD>2.0.1</TD>
+      <TD>パッチ当て。
+      <UL>
+        <LI>解析範囲を限定した場合に時間帯別集計がおかしくなるのを修正
+        <LI>Windows2000 + IE がOS統計から外れていたのを修正
+        <LI>色数を bit で表現するのみにした<BR>
+        (ちゃんと計算すると桁あふれの危険があるため)
+        <LI>何かともめ事の多いイタズラ対策(外部から実行不可にする)を潰す
+      </UL>
+      </TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2000/11/02</TD>
+      <TD>2.0</TD>
+      <TD>
+      <UL>
+        <LI>新ログ形式に対応した(efCount Ver.2.0形式)
+        <UL>
+          <LI>62進数に対応
+          <LI>年度別集計を追加
+          <LI>画面解像度・色数統計を追加
+        </UL>
+        
+        <LI>ログから { 全て | 本日 | 昨日 } の分を抜き出して分析できるようになった。<BR>
+        (アクセスの多いページでは、相応にログを大きくしないと意味がないと思う)
+        <LI>自サイトURLを複数指定できるようにした<BR>
+        (サイトが複数に分散されている時も「サイト内移動分析」が対応できるようになる)
+        <LI>パスワード制限できるようになった
+        <LI>TINAMIのカテゴリ更新に対応した
+        <LI>カウント値が6桁以上だと正常に表示されないバグを直した
+        <LI>ハッシュや型グロブ(Cで言うポインタ？)を利用できる局面(関数への引数渡しなど)では必ず使い、無駄な配列コピーを減らした<BR>
+        (処理速度が20%程高速化した。　まだ削れるような気がする)
+      </UL>
+      </TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2000/06/17</TD>
+      <TD>1.2</TD>
+      <TD>
+      <UL>
+        <LI>ブラウザ分析の挙動を変更。　(いい加減RFC読んで勉強せんとな～)
+        <UL>
+          <LI>エージェント名の振り分けを強化(現時点で最適のハズ)
+          <LI>純正IEと純正NNしかOSの統計は取らないようにする
+          <LI>OS統計にて、UNIX系も細かく分類するようにした(対象はX上のNetscapeのみ)
+          <LI>Windows2000も統計に入れる(Win2000+IE使用時のみ)
+        </UL>
+        
+        <LI>細かい見てくれを修正
+        <LI>CPU使用時間を表示(あくまでおまけ)
+      </UL>
+      </TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2000/05/17</TD>
+      <TD>1.1</TD>
+      <TD>自分のサイト内のお客さんの移動も表示できるようにした。(サイト内移動分析)<BR>
+      結構外人さんの来客率も馬鹿にならんカモ…？と米国ドメイン統計を追加。<BR>
+      グラフと数値の項目を結合。タグが圧縮されて、少しは表示が早くなるかと。<BR>
+      割合が同じ(同着)分については割合の表示を省略させるようにした。<BR>
+      月別ランキングでうっかり先月分を表示していたのを修正。<BR>
+      暫定的にNetscape Navigator6に対応。(シェアの表では5.0と表示されます)</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2000/04/05</TD>
+      <TD>1.0c</TD>
+      <TD>色々と揉めそうなので、NPHスクリプト形式をやめる。<BR>
+      恐らくこれでMacやネスケでも問題なく表示できるようになります。<BR>
+      サーチエンジンリストにTINAMI,MSN,jplaza(fresheyeミラー?)を追加・修正。</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2000/03/11</TD>
+      <TD>1.0b</TD>
+      <TD>環境変数TZを修正する処理を追加。(海外サーバ用)</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2000/02/19</TD>
+      <TD>1.0a</TD>
+      <TD>PERL4だと無限ループに陥るバグを修正<BR>
+      エラー処理を強化</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>2000/02/19</TD>
+      <TD>1.0</TD>
+      <TD>プログラム名称をWebstatからefStatに変更。　version表記も整理。<BR>
+      プログラムを一から作り直した。　大まかな改善テーマは以下の通り。
+      <UL>
+        <LI>他人が読みやすいソースを心がける<BR>
+        (変数(配列)名の体系化、関数の一本化、機能別にソースを分割)
+        <LI>ログをメモリに読み込まず、解析結果のみをメモリに展開する<BR>
+        (ログを上から下まで読みとったら解析結果が出来ている)
+        <LI>配列間のコピーを極力しない
+        <LI>配列を操作(copy,sort等)する前に不要な情報は削ぎ落とす
+        <LI>不要になった(連想)配列は逐次削除する
+        <LI>不要になった変換テーブルは逐次削除する
+        <LI>多機能な非汎用関数を用意し、処理の一本化(汎用化)を進める
+        <LI>コード変換ロジックの最適化
+      </UL>
+      以上の結果、大きな性能改善に繋がった。<BR>
+      以下、1500行のログを解析した場合の
+      time コマンドでの計測結果。<BR>
+      <BLOCKQUOTE>&gt; time ./webstat.cgi &gt; test.html<BR>
+      15.742u 0.062s 0:15.83 99.8% 538+2227k
+      0+2io
+      0pf+0w<BR>
+      &gt; time ./fstat.cgi &gt; test.html<BR>
+      1.350u 0.062s 0:01.42 99.2% 544+1627k
+      0+1io
+      0pf+0w</BLOCKQUOTE>
+      NPHスクリプト形式に変更<BR>
+      処理メニュー(ログ複数表示モード)を用意した<BR>
+      Webstat互換モード(ログ単体表示モード)を用意した</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<BR>
+<TABLE width="95%" align="center" cellpadding="2" cellspacing="0" border="1" bgcolor="#ffdfe0">
+  <TBODY>
+    <TR nowrap valign="top">
+      <TD colspan="3" bgcolor="#ffc6c7">
+      <P><B><FONT size="+1">■いにしえのWebstat時代</FONT></B></P>
+      </TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>1999/12/21</TD>
+      <TD>1.6.1</TD>
+      <TD>表示の指定を&lt;BODY&gt;タグ一つで一気に出来るようにした<BR>
+      jcode.plの存在チェックをやるようにした<BR>
+      エラーメッセージを少しだけ親切にした<BR>
+      TINAMIの検索ワードも統計取れるようにした<BR>
+      カウント値が0の時、0除算エラーが出てログが完全に表示されないバグを修正<BR>
+      (なんでこんなのが今まで見つからなかったんだ…(^_^;)</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>1999/08/20</TD>
+      <TD>1.6.0</TD>
+      <TD>[Surfers Paradice分析機能]を追加。<BR>
+      ブラウザ判別を強化。<BR>
+      リモートホストの取得をefCountにやらせる事にした。<BR>
+      (ログの溜め込み過ぎによるタイムアウトを回避するため)<BR>
+      参照元を生のままで保存することにした(以前はindex.htmlとかを消してた)</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>1999/07/04</TD>
+      <TD>1.5.1</TD>
+      <TD>環境変数TZを修正するのを忘れてました。　これで外国サーバでも使えます。</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>?</TD>
+      <TD>1.5.0</TD>
+      <TD>ある意味バージョンダウン(^^;<BR>
+      1.5.0αのバグ修正。</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>?</TD>
+      <TD>1.5.0β</TD>
+      <TD>機能追加(複数ログの同時読み込み)しようとしたけどプログラムがスパゲッティになって、自分でも訳が分からなくなったので一時中断(--;<BR>
+      そろそろ仕様をちゃんと決めてからでないとデタラメに弄れない規模になったと悟る。</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>?</TD>
+      <TD>1.5.0α</TD>
+      <TD>メニューを追加。</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>?</TD>
+      <TD>1.4.3</TD>
+      <TD>生ログの表示方法を変える。　異議あれば言って下さい。<BR>
+      テイストレスモードを追加</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>?</TD>
+      <TD>1.4.2</TD>
+      <TD>TINAMIカテゴリ・ホスト名・ブラウザ名変換処理を修正<BR>
+      表の足切り機能を付ける<BR>
+      定型処理を出来るだけ関数・マクロにしてプログラムサイズ縮小<BR>
+      無駄なタグを極力取り除き、表示がかなり高速化したはず</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>?</TD>
+      <TD>1.4.1</TD>
+      <TD>TINAMIから人が来ていない場合はTINAMI分析を表示しないようにした<BR>
+      fcount.cgiに対応。 - noscript処理追加</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>?</TD>
+      <TD>1.4.0</TD>
+      <TD>[国籍分析]に現在公開されている国情報(第一レベルドメイン)を全て追加。<BR>
+      文字列検索部分を簡素に。</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>?</TD>
+      <TD>1.3.0</TD>
+      <TD>[国内ドメイン分析](ac,ad,co,ed.go,gr,or,neで統計)を実装<BR>
+      perl version 4.0 for Linux だとエラーが出るポカを修正<BR>
+      TINAMIカテゴリ分析で割合の数値がおかしかったのを修正<BR>
+      [ブラウザ分析]での分類できるエージェントを結構いっぱい追加<BR>
+      [国籍分析]にイタリアを追加。　うーん。じぇらーと。<BR>
+      とある配列がメモリを解放していなかったポカを修正。　地球に優しくなる。</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>?</TD>
+      <TD>1.2.4</TD>
+      <TD>参照元へのリンクをON/OFFするスイッチを付けた</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>?</TD>
+      <TD>1.2.3α</TD>
+      <TD>国別ドメインの認識を強化</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>?</TD>
+      <TD>1.2.3</TD>
+      <TD>ブラウザの認識を強化・その辺のバグを一掃</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>?</TD>
+      <TD>1.2.2</TD>
+      <TD>動作モードを一括表示モード・ログ表示モード・ログ解析モードの3つに</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>?</TD>
+      <TD>1.2.1</TD>
+      <TD>グラフの表示を修正</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>?</TD>
+      <TD>1.2.0</TD>
+      <TD>TINAMIカテゴリ分析・ドメイン分析・ブラウザ分析機能追加</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>?</TD>
+      <TD>1.1.0</TD>
+      <TD>ログ表示モードとログ解析モードに分割</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>?</TD>
+      <TD>1.0.1</TD>
+      <TD>サーバにかなり負担を掛けてしまう大ポカを直した<BR>
+      お陰で実行時間が40秒から5秒へ大幅短縮(爆)</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>?</TD>
+      <TD>1.0.0</TD>
+      <TD>みてくれを良くして大幅パワーアップ。<BR>
+      acc_analyzerからWebstatへ名前変更</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD colspan="3">この間、暫く記録に残らない時が過ぎる…。</TD>
+    </TR>
+    <TR nowrap valign="top">
+      <TD>1998夏頃</TD>
+      <TD>0.0.1</TD>
+      <TD>CGIの勉強用にとりあえず作る。<BR>
+      表示はテイストレスだが軽かった</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<HR>
+<DIV align="right">&copy;1998-2001 不可思議絵の具<BR>
+(<A href="http://yugen.main.jp/">http://yugen.main.jp/</A>)</DIV>
+</BODY>
+</HTML>
