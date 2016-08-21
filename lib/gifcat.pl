@@ -1,57 +1,58 @@
 ;# ====================================================================
 ;#
-;# gifcat.pl: GIFƒtƒ@ƒCƒ‹˜AŒ‹ƒ‰ƒCƒuƒ‰ƒŠ Ver1.57
+;# gifcat.pl: GIFãƒ•ã‚¡ã‚¤ãƒ«é€£çµãƒ©ã‚¤ãƒ–ãƒ©ãƒª Ver1.61
 ;#
-;# Copyright (c) 1997,2000 http://wakusei.cplaza.ne.jp/twn/
+;# Copyright (c) 1997,2002 http://tohoho.wakusei.ne.jp/
 ;#
-;# ’˜ìŒ ‚Í•úŠü‚µ‚Ü‚¹‚ñ‚ªA©—R‚Ég—pE‰ü‘¢EÄ”z•z‰Â”\‚Å‚·B
+;# è‘—ä½œæ¨©ã¯æ”¾æ£„ã—ã¾ã›ã‚“ãŒã€è‡ªç”±ã«ä½¿ç”¨ãƒ»æ”¹é€ ãƒ»å†é…å¸ƒå¯èƒ½ã§ã™ã€‚
 ;#
-;# Šî–{“I‚Èg‚¢•û
+;# åŸºæœ¬çš„ãªä½¿ã„æ–¹
 ;#    require "gifcat.pl";
 ;#    open(OUT, "> out.gif");
-;#    binmode(OUT);    # MS-DOS ‚â Windows ‚Ìê‡‚É•K—v‚Å‚·B
+;#    binmode(OUT);    # MS-DOS ã‚„ Windows ã®å ´åˆã«å¿…è¦ã§ã™ã€‚
 ;#    print OUT &gifcat'gifcat("xx.gif", "yy.gif", "zz.gif");
 ;#    close(OUT);
 ;#
-;# ƒfƒoƒbƒO—p(GIF‚Ì‰ğÍo—Í)
+;# ãƒ‡ãƒãƒƒã‚°ç”¨(GIFã®è§£æå‡ºåŠ›)
 ;#    require "gifcat.pl";
 ;#    &gifcat'gifprint("xx.gif", "yy.gif", "zz.gif");
 ;#
-;# §ŒÀ–€
-;#    ƒAƒjƒGIF“¯m‚ğ˜AŒ‹‚·‚é‚±‚Æ‚Í‚Å‚«‚Ü‚¹‚ñB
-;#    ƒAƒjƒGIF‘Î‰‚Ìƒuƒ‰ƒEƒU‚Å‚È‚¯‚ê‚ÎAÅ‰‚Ì‰æ‘œ‚µ‚©•\¦‚³‚ê‚Ü‚¹‚ñB
-;#    ‚‚³‚ÌˆÙ‚È‚éGIFƒtƒ@ƒCƒ‹‚Í˜AŒ‹‚Å‚«‚Ü‚¹‚ñB
+;# åˆ¶é™äº‹é …
+;#    ã‚¢ãƒ‹ãƒ¡GIFåŒå£«ã‚’é€£çµã™ã‚‹ã“ã¨ã¯ã§ãã¾ã›ã‚“ã€‚
+;#    ã‚¢ãƒ‹ãƒ¡GIFå¯¾å¿œã®ãƒ–ãƒ©ã‚¦ã‚¶ã§ãªã‘ã‚Œã°ã€æœ€åˆã®ç”»åƒã—ã‹è¡¨ç¤ºã•ã‚Œã¾ã›ã‚“ã€‚
+;#    é«˜ã•ã®ç•°ãªã‚‹GIFãƒ•ã‚¡ã‚¤ãƒ«ã¯é€£çµã§ãã¾ã›ã‚“ã€‚
 ;#
-;# ÅV”Å“üèæ
-;#    http://wakusei.cplaza.ne.jp/twn/cgi-bin/gifcat.txt
+;# æœ€æ–°ç‰ˆå…¥æ‰‹å…ˆ
+;#    http://tohoho.wakusei.ne.jp/wwwsoft.htm
 ;#
-;# XV—š—ğ:
-;#    1997.05.03 ‰”ÅB
-;#    1997.05.10 ƒXƒyƒ‹ƒ~ƒXC³B
-;#    1997.05.29 ƒTƒCƒY‚ÌˆÙ‚È‚éƒJƒ‰[ƒe[ƒuƒ‹‚É‘Î‰B
-;#    1997.07.07 ƒGƒ‰[”­¶‚Éexit()‚µ‚È‚¢‚æ‚¤‚ÉC³B
-;#    1998.05.05 Trailer‚ğ‚½‚È‚¢GIFƒtƒ@ƒCƒ‹‚ğ˜AŒ‹‚Å‚«‚È‚¢ƒoƒO‚ğC³B
-;#    1998.05.05 ‰¡•‚ª256‚ğ’´‚¦‚éGIF‚Ìo—Í‚ª‚Å‚«‚È‚¢ƒoƒO‚ğC³B
-;#    1998.05.05 gifprint()‚Å˜AŒ‹Œ‹‰Ê‚ğo—Í‚µ‚È‚¢‚æ‚¤‚ÉC³B
-;#    1998.05.10 ˜AŒ‹‚Å‚«‚È‚¢GIF‰æ‘œ‚ª‚ ‚é‚Æ‚¢‚¤ƒoƒO‚ğC³B
-;#    1998.08.20 Ver1.50 •Ï”‚Ì‰Šú‰»‚ğs‚¤‚æ‚¤‚ÉC³B
-;#    1998.08.20 Ver1.50 “§‰ßGIF‚É‘Î‰B
-;#    1999.05.30 Ver1.51 “®ì‚É‚ÍŠÖŒW‚È‚¢ƒ^ƒCƒvƒ~ƒXC³B
-;#    1999.10.11 Ver1.52 ƒRƒƒ“ƒg‚ÌC³
-;#    2000.05.21 Ver1.53 •‚ÌˆÙ‚È‚éGIF‚Ì˜AŒ‹‚É‘Î‰
-;#    2000.06.04 Ver1.54 perl -wc‚Ìwarning‘Î‰
-;#    2000.06.04 Ver1.55 ƒCƒ“ƒ^ƒŒ[ƒXGIF•”‚ÌƒR[ƒhƒ~ƒX‚ğC³B
-;#    2000.09.17 Ver1.56 ˜A‘±ŒÄ‚Ño‚µ‚ÌÛ‚ÌƒoƒOC³
-;#    2000.11.28 Ver1.57 ƒCƒ“ƒ^ƒŒ[ƒXGIF•”‚ÌƒR[ƒhƒ~ƒX‚ğC³B
+;# æ›´æ–°å±¥æ­´:
+;#    1997.05.03 åˆç‰ˆã€‚
+;#    1997.05.10 ã‚¹ãƒšãƒ«ãƒŸã‚¹ä¿®æ­£ã€‚
+;#    1997.05.29 ã‚µã‚¤ã‚ºã®ç•°ãªã‚‹ã‚«ãƒ©ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«ã«å¯¾å¿œã€‚
+;#    1997.07.07 ã‚¨ãƒ©ãƒ¼ç™ºç”Ÿæ™‚ã«exit()ã—ãªã„ã‚ˆã†ã«ä¿®æ­£ã€‚
+;#    1998.05.05 Trailerã‚’æŒãŸãªã„GIFãƒ•ã‚¡ã‚¤ãƒ«ã‚’é€£çµã§ããªã„ãƒã‚°ã‚’ä¿®æ­£ã€‚
+;#    1998.05.05 æ¨ªå¹…ãŒ256ã‚’è¶…ãˆã‚‹GIFã®å‡ºåŠ›ãŒã§ããªã„ãƒã‚°ã‚’ä¿®æ­£ã€‚
+;#    1998.05.05 gifprint()ã§é€£çµçµæœã‚’å‡ºåŠ›ã—ãªã„ã‚ˆã†ã«ä¿®æ­£ã€‚
+;#    1998.05.10 é€£çµã§ããªã„GIFç”»åƒãŒã‚ã‚‹ã¨ã„ã†ãƒã‚°ã‚’ä¿®æ­£ã€‚
+;#    1998.08.20 Ver1.50 å¤‰æ•°ã®åˆæœŸåŒ–ã‚’è¡Œã†ã‚ˆã†ã«ä¿®æ­£ã€‚
+;#    1998.08.20 Ver1.50 é€éGIFã«å¯¾å¿œã€‚
+;#    1999.05.30 Ver1.51 å‹•ä½œã«ã¯é–¢ä¿‚ãªã„ã‚¿ã‚¤ãƒ—ãƒŸã‚¹ä¿®æ­£ã€‚
+;#    1999.10.11 Ver1.52 ã‚³ãƒ¡ãƒ³ãƒˆã®ä¿®æ­£
+;#    2000.05.21 Ver1.53 å¹…ã®ç•°ãªã‚‹GIFã®é€£çµã«å¯¾å¿œ
+;#    2000.06.04 Ver1.54 perl -wcã®warningå¯¾å¿œ
+;#    2000.06.04 Ver1.55 ã‚¤ãƒ³ã‚¿ãƒ¬ãƒ¼ã‚¹GIFéƒ¨ã®ã‚³ãƒ¼ãƒ‰ãƒŸã‚¹ã‚’ä¿®æ­£ã€‚
+;#    2000.09.17 Ver1.56 é€£ç¶šå‘¼ã³å‡ºã—ã®éš›ã®ãƒã‚°ä¿®æ­£
+;#    2000.11.28 Ver1.57 ã‚¤ãƒ³ã‚¿ãƒ¬ãƒ¼ã‚¹GIFéƒ¨ã®ã‚³ãƒ¼ãƒ‰ãƒŸã‚¹ã‚’ä¿®æ­£ã€‚
+;#    2001.09.14 Ver1.58 gifcatã‚’é€£ç¶šã§å‘¼ã³å‡ºã™éš›ã®ä¸å…·åˆä¿®æ­£ã€‚
+;#    2001.10.04 Ver1.59 åŒä¸Šã€‚
+;#    2001.11.25 Ver1.60 gifprintã®ä¸å…·åˆä¿®æ­£ã€‚
+;#    2002.06.10 Ver1.61 Netscape 6.*ã§1æ¡ç›®ãŒè¡¨ç¤ºã•ã‚Œãªã„å•é¡Œã«å¯¾å¿œã€‚
 ;#
 ;# ====================================================================
 
 package gifcat;
 
-$pflag = 0;
-$LeftPos = 0;
-$logicalScreenWidth = 0;
-$logicalScreenHeight = 0;
+$pflag = 0;					# print flag
 
 ;# =====================================================
 ;# gifcat'gifprint() - print out GIF diagnostics.
@@ -59,6 +60,7 @@ $logicalScreenHeight = 0;
 sub gifprint {
 	$pflag = 1;
 	&gifcat(@_);
+	$pflag = 0;
 }
 
 ;# =====================================================
@@ -67,12 +69,16 @@ sub gifprint {
 sub gifcat {
 	@files = @_;
 	$Gif = 0;
+	$leftpos = 0;
+	$logicalScreenWidth = 0;
+	$logicalScreenHeight = 0;
 	$useLocalColorTable = 0;
-	for $file (@files) {
+	
+	foreach $file (@files) {
 		$size = -s $file;
-		open(IN, "$file");
+		open(IN, "$file") || return("ERROR");
 		binmode(IN);
-		sysread(IN, $buf, $size);
+		read(IN, $buf, $size) || return("ERROR");
 		close(IN);
 
 		$cnt = 0;
@@ -125,33 +131,34 @@ sub gifcat {
 	if ($useLocalColorTable == 0) {
 		$GifImage .= $globalColorTable[0];
 	}
-	for ($i = 0; $i < $Gif; $i++) {
+	for ($i = -1; $i < $Gif; $i++) {
+		$j = ($i == -1) ? 0 : $i;
 		$GifImage .= pack("CCC", 0x21, 0xf9, 0x04);
-		$GifImage .= pack("C", $PackedFields23 | $TransparentColorFlag[$i]);
+		$GifImage .= pack("C", $PackedFields23 | $TransparentColorFlag[$j]);
 		$GifImage .= pack("CC", 0x00, 0x00);
-		$GifImage .= pack("C", $TransparentColorIndex[$i]);
+		$GifImage .= pack("C", $TransparentColorIndex[$j]);
 		$GifImage .= pack("C", 0x00);
 		$GifImage .= pack("C", 0x2c);
-		$n = $LeftPos;
-		$LeftPos += $ImageWidth[$i];
+		$n = $leftpos;
+		$leftpos += ($i == -1) ? 0 : $ImageWidth[$j];
 		$GifImage .= pack("C", $n & 0x00ff);
 		$GifImage .= pack("C", ($n & 0xff00) >> 8);
 		$GifImage .= pack("CC", 0x00, 0x00);
-		$GifImage .= pack("C", $ImageWidth[$i] & 0x00ff);
-		$GifImage .= pack("C", ($ImageWidth[$i] & 0xff00) >> 8);
+		$GifImage .= pack("C", $ImageWidth[$j] & 0x00ff);
+		$GifImage .= pack("C", ($ImageWidth[$j] & 0xff00) >> 8);
 		$GifImage .= pack("C", $ImageHeight & 0x00ff);
 		$GifImage .= pack("C", ($ImageHeight & 0xff00) >> 8);
 		if ($useLocalColorTable) {
-			$PackedFields20[$i] |= 0x80;
-			$PackedFields20[$i] &= ~0x07;
-			$PackedFields20[$i] |= ($PackedFields18[$i] & 0x07);
-			$GifImage .= pack("C", $PackedFields20[$i]);
-			$GifImage .= $globalColorTable[$i];
+			$PackedFields20[$j] |= 0x80;
+			$PackedFields20[$j] &= ~0x07;
+			$PackedFields20[$j] |= ($PackedFields18[$j] & 0x07);
+			$GifImage .= pack("C", $PackedFields20[$j]);
+			$GifImage .= $globalColorTable[$j];
 		} else {
-			$GifImage .= pack("C", $PackedFields20[$i]);
+			$GifImage .= pack("C", $PackedFields20[$j]);
 		}
-		$GifImage .= pack("C", $LzwMinimumCodeSize[$i]);
-		$GifImage .= $ImageData[$i];
+		$GifImage .= pack("C", $LzwMinimumCodeSize[$j]);
+		$GifImage .= $ImageData[$j];
 	}
 	$GifImage .= pack("C", 0x3b);
 
@@ -180,6 +187,8 @@ sub GifHeader {
 		$GlobalColorTable 
 			= substr($buf, $cnt, $SizeOfGlobalColorTable * 3);
 		$cnt += $SizeOfGlobalColorTable * 3;
+	} else {
+		$GlobalColorTable = "";
 	}
 
 	$logicalScreenWidth += $LogicalScreenWidth;
@@ -206,10 +215,11 @@ sub GifHeader {
 		printf("Global Color Table Flag:       %d\n", $GlobalColorTableFlag);
 		printf("Color Resolution:              %d\n", $ColorResolution);
 		printf("Sort Flag:                     %d\n", $SortFlag);
-		printf("Size of Global Color Table:    %d\n", $SizeOfGlobalColorTable);
+		printf("Size of Global Color Table:    %d * 3\n", $SizeOfGlobalColorTable);
 		printf("Background Color Index:        %d\n", $BackgroundColorIndex);
 		printf("Pixel Aspect Ratio:            %d\n", $PixelAspectRatio);
-		printf("Global Color Table:            ...\n");
+		printf("Global Color Table:            \n");
+		Dump($GlobalColorTable);
 	}
 }
 
@@ -231,9 +241,13 @@ sub ImageBlock {
 	$InterlaceFlag         = ($PackedFields20[$Gif] & 0x40) >> 6;
 	$SortFlag              = ($PackedFields20[$Gif] & 0x20) >> 5;
 	$Reserved              = ($PackedFields20[$Gif] & 0x18) >> 3;
-	$SizeOfLocalColorTable = 2 ** (($PackedFields20[$Gif] & 0x07) + 1);
 	if ($LocalColorTableFlag) {
+		$SizeOfLocalColorTable = 2 ** (($PackedFields20[$Gif] & 0x07) + 1);
+		$LocalColorTable = substr($buf, $cnt, $SizeOfLocalColorTable);
 		$cnt += $SizeOfLocalColorTable * 3;
+	} else {
+		$SizeOfLocalColorTable = 0;
+		$LocalColorTable = "";
 	}
 	$LzwMinimumCodeSize[$Gif] = ord(substr($buf, $cnt, 1)); $cnt++;
 	$ImageData[$Gif] = &DataSubBlock();
@@ -252,9 +266,11 @@ sub ImageBlock {
 		printf("Sort Flag:                     %d\n", $SortFlag);
 		printf("Reserved:                      --\n");
 		printf("Size of Local Color Table:     %d\n", $SizeOfLocalColorTable);
-		printf("Local Color Table:             ...\n");
+		printf("Local Color Table:             \n");
+		Dump($LocalColorTable);
 		printf("LZW Minimum Code Size:         %d\n", $LzwMinimumCodeSize[$Gif]);
-		printf("Image Data:                    ...\n");
+		printf("Image Data:                    \n");
+		Dump($ImageData[$Gif]);
 		printf("Block Terminator:              0x00\n");
 	}
 }
@@ -407,7 +423,29 @@ sub DataSubBlock {
 	return(substr($buf, $from, $cnt - $from));
 }
 
+;# =====================================
+;# Memory Dump
+;# =====================================
+sub Dump {
+	local($buf) = @_;
+	my($i);
+
+	if (length($buf) == 0) {
+		return;
+	}
+	for ($i = 0; $i < length($buf); $i++) {
+		if (($i % 16) == 0) {
+			printf("  ");
+		}
+		printf("%02X ", ord(substr($buf, $i, 1)));
+		if (($i % 16) == 15) {
+			printf("\n");
+		}
+	}
+	if (($i % 16) != 0) {
+		printf("\n");
+	}
+}
+
 1;
-
-
 

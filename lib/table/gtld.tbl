@@ -1,27 +1,26 @@
-### gTLD�ơ��֥� - 2000/01/05 / Ver.3
-com	��ȡ��Ŀ͡�Ǥ������
-edu	���餪��ӳؽѵ���
-gov	�����ȿ�
-int	����ȿ�
-mil	���ط��ȿ�
-net	�ͥåȥ�������ȿ�
-org	Ǥ�դ�����
-arpa	ARPANET
+### gTLDテーブル - 2016/08/12 / Ver.3
+com	企業・個人・任意団体
+edu	教育および学術機関
+gov	政府組織
+int	国際組織
+mil	軍関係組織
+net	ネットワーク管理組織
+org	任意の団体
 nato	NATO
 
-# ICANN��ǧ��ʪ
-biz	�ӥ��ͥ�
-info	���󥵡��ӥ�
-name	�Ŀ�̾
-pro	���翦
-museum	��ʪ��
-aero	�Ҷ�
-coop	Ϣ���ȿ�
-
-# �ɤ��ʤä���
-firm	�ӥ��ͥ�
-store	�����֥���å�
-web	WWW�˴ؤ����ư����ǰ���Ƥ����ȿ�
-arts	ʸ���ȸ��
-rec	�쥯�ꥨ��������ư
-nom	�Ŀͥ�����
+# 他
+aero	航空業界
+arpa	ARPANET
+asia	アジア太平洋地域
+biz	ビジネス
+cat	カタルーニャ
+coop	協同組合
+info	情報サービス
+jobs	雇用
+mobi	モバイル
+museum	博物館
+name	個人名
+pro	専門職
+tel	通信関連
+travel	旅行関連
+xxx	アダルト関連

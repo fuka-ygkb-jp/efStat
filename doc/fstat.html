@@ -1,46 +1,46 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
 <HTML>
 <HEAD>
-<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <META http-equiv="Content-Style-Type" content="text/css">
-<TITLE>efStat / efStat�戵������</TITLE>
+<TITLE>efStat / efStat取扱説明書</TITLE>
 <LINK rel="stylesheet" href="default.css">
 </HEAD>
 <BODY>
-<H1>efStat�戵������</H1>
+<H1>efStat取扱説明書</H1>
 <HR>
-<P align="right">�A�N�Z�X��̓p�b�P�[�W - efStat<IMG src="fstat.gif" width="88" height="31" border="0" align="top"></P>
-<H2 class="Chapter_Headline">��������</H2>
+<P align="right">アクセス解析パッケージ - efStat<IMG src="fstat.gif" width="88" height="31" border="0" align="top"></P>
+<H2 class="Chapter_Headline">■もくじ</H2>
 <DIV class="Chapter">
-<P>���̐������ł̓��O�r���[�A�AefStat �ɂ��Đ������܂��B<BR>
-efStat �p�b�P�[�W�̒��������ł��B</P>
+<P>この説明書ではログビューア、efStat について説明します。<BR>
+efStat パッケージの中枢部分です。</P>
 <TABLE>
   <TBODY>
     <TR>
       <TD>
       <UL>
-        <LI><A href="#settei">�v���O�������̐ݒ� </A>
+        <LI><A href="#settei">プログラム側の設定 </A>
         <UL>
-          <LI><A href="#settei_zettai">��΂ɕK�v�Ȑݒ�</A>
-          <LI><A href="#settei_hyouji">�\���I�v�V����</A>
-          <LI><A href="#settei_asikiri">�\�̑��؂�ݒ�</A>
-          <LI><A href="#settei_sonota">���̑��w��</A>
+          <LI><A href="#settei_zettai">絶対に必要な設定</A>
+          <LI><A href="#settei_hyouji">表示オプション</A>
+          <LI><A href="#settei_asikiri">表の足切り設定</A>
+          <LI><A href="#settei_sonota">その他指定</A>
         </UL>
         
-        <LI><A href="#log_jyunbi">���O�t�@�C���̏���</A>
+        <LI><A href="#log_jyunbi">ログファイルの準備</A>
       </UL>
       </TD>
       <TD>
       <UL>
-        <LI><A href="#usage">���O�r���[�A�̎g���� </A>
+        <LI><A href="#usage">ログビューアの使い方 </A>
         <UL>
-          <LI><A href="#usage_option">�g�p�@</A>
-          <LI><A href="#usage_all">�ꊇ�\�����[�h</A>
-          <LI><A href="#usage_solo">���O�P�̕\�����[�h</A>
+          <LI><A href="#usage_option">使用法</A>
+          <LI><A href="#usage_all">一括表示モード</A>
+          <LI><A href="#usage_solo">ログ単体表示モード</A>
         </UL>
         
-        <LI><A href="#mikata">���O�r���[�A�̌���</A>
-        <LI><A href="#trouble">�g���u���V���[�e�B���O</A>
+        <LI><A href="#mikata">ログビューアの見方</A>
+        <LI><A href="#trouble">トラブルシューティング</A>
       </UL>
       </TD>
     </TR>
@@ -48,502 +48,476 @@ efStat �p�b�P�[�W�̒��������ł��B</P>
 </TABLE>
 
 </DIV>
-<H2 class="Chapter_Headline"><A name="settei">���v���O�������̐ݒ�</A></H2>
+<H2 class="Chapter_Headline"><A name="settei">■プログラム側の設定</A></H2>
 <DIV class="Chapter">
-<P>fstat.cgi ���e�L�X�g�G�f�B�^�ŊJ���ĉ������B<BR>
-�ݒ�͑傫��������</P>
+<P>fstat.cgi をテキストエディタで開いて下さい。<BR>
+設定は大きく分けて</P>
 <UL>
-  <LI><A href="#settei_zettai">��΂ɕK�v�Ȑݒ�</A>
-  <LI><A href="#settei_hyouji">�\���I�v�V����</A>
-  <LI><A href="#settei_asikiri">�\�̑��؂�ݒ�</A>
-  <LI><A href="#settei_sonota">���̑��w��</A>
+  <LI><A href="#settei_zettai">絶対に必要な設定</A>
+  <LI><A href="#settei_hyouji">表示オプション</A>
+  <LI><A href="#settei_asikiri">表の足切り設定</A>
+  <LI><A href="#settei_sonota">その他指定</A>
 </UL>
-<P>�Ƃ���4�̃u���b�N�ɕ�����Ă��܂��B<BR>
-���̂����A�u�\���I�v�V�����v�Ɓu�\�̑��؂�ݒ�v�Ɋւ��Ắw���O�P�̕\�����[�h�x�ł̂ݗL���ł��B</P>
+<P>という4つのブロックに分かれています。<BR>
+このうち、「表示オプション」と「表の足切り設定」に関しては『ログ単体表示モード』でのみ有効です。</P>
 </DIV>
 <DIV class="Chapter">
-<H3><A name="settei_zettai">��΂ɕK�v�Ȑݒ�</A></H3>
-<H4>��perl�̃p�X��</H4>
+<H3><A name="settei_zettai">絶対に必要な設定</A></H3>
+<H4>＜perlのパス＞</H4>
 <DIV class="Quote">
-<P>fstat.cgi �̈�s�ڂ�Perl�ւ̃p�X�������g���̃v���o�C�_�ɍ��킹�ď��������܂��B<BR>
-�����Aperl�̃p�X�� /usr/bin/perl ��������A</P>
+<P>fstat.cgi の一行目のPerlへのパスををお使いのプロバイダに合わせて書き換えます。<BR>
+もし、perlのパスが /usr/bin/perl だったら、</P>
 <DIV class="Quote"><KBD>#!/usr/bin/perl</KBD></DIV>
-<P>�Ə��������ĉ������B ����#!�͏����Ă͂����܂���B</P>
+<P>と書き換えて下さい。 頭の#!は消してはいけません。</P>
 </DIV>
-<H4>�����O�t�@�C�����u����Ă���f�B���N�g����</H4>
+<H4>＜ログファイルが置かれているディレクトリ＞</H4>
 <DIV class="Quote">
-<P>���O�t�@�C�����i�[�����f�B���N�g���̖��O����͂��܂��B�@(�f�t�H���g��
+<P>ログファイルを格納したディレクトリの名前を入力します。　(デフォルトは
 log )<BR>
-�������A���O�p�f�B���N�g���� efStat ���C���X�g�[�������f�B���N�g���̒�(�z��)�ɂȂ���΂Ȃ�܂���B</P>
-<P>�z�z�����܂܂̏�Ԃŉ^�p����Ȃ�΃f�t�H���g��
-log �̂܂܂�OK�ł����A�����A���̖��O�̃f�B���N�g���ɒu�����ꍇ�͂��̖��O�ɕύX���ĉ������B</P>
+ただし、ログ用ディレクトリは efStat をインストールしたディレクトリの中(配下)になければなりません。</P>
+<P>配布したままの状態で運用するならばデフォルトの
+log のままでOKですが、もし、他の名前のディレクトリに置いた場合はその名前に変更して下さい。</P>
 </DIV>
-<H4>�����Ȃ��̃T�C�g��URL��</H4>
+<H4>＜あなたのサイトのURL＞</H4>
 <DIV class="Quote">
-<P>�Ȃ��Ă��\���܂��񂪁A�u�T�C�g���ړ����́v�@�\��L���ɂ��邽�߂ɂ͕K�v�ł��B<BR>
-(�u�T�C�g���ړ����́v�ŁA���q���񂪂ǂ̃y�[�W����ǂ̃y�[�W�Ɉړ������̂���������悤�ɂȂ�܂�)</P>
-<P>�R�R���󗓂ɂ��Ă���Ɛ��퓮�삵�܂���(�o�O)�B<BR>
-�����̂Ȃ��l���A�K���ɉ����𖄂߂Ă����ĉ������B</P>
+<P>なくても構いませんが、「サイト内移動分析」機能を有効にするためには必要です。<BR>
+(「サイト内移動分析」で、お客さんがどのページからどのページに移動したのかが分かるようになります)</P>
+<P>ココを空欄にしていると正常動作しません(バグ)。<BR>
+興味のない人も、適当に何かを埋めておいて下さい。</P>
 </DIV>
-<H4>���p�X���[�h�ŉ{���������邩�E���Ȃ�����<BR>
-�����̏ꍇ�̃p�X���[�h��</H4>
+<H4>＜パスワードで閲覧制限するか・しないか＞<BR>
+＜その場合のパスワード＞</H4>
 <DIV class="Quote">
-<P>�u����(1)�v�ɂ���ƁA�p�X���[�h�̓��͖����ɂ͉�͂��ł��Ȃ��悤�ɂȂ�܂��B�@(�����̎d���͌�q)<BR>
-�܂��A���̃p�X���[�h���R�R�Őݒ肵�܂��B<BR>
-�����璷���Ă��\��Ȃ��Ƃ͎v���܂���(�����Ă��Ȃ�)�A�����Ă����X10�������x�̉p�������w�肵�ĉ������B</P>
+<P>「する(1)」にすると、パスワードの入力無しには解析ができないようになります。　(解除の仕方は後述)<BR>
+また、そのパスワードもココで設定します。<BR>
+いくら長くても構わないとは思いますが(試していない)、長くても精々10文字程度の英数字を指定して下さい。</P>
 <TABLE class="Caution">
   <TBODY>
     <TR>
-      <TD style="font-size : 500%;">�I</TD>
-      <TD>���́u�p�X���[�h�v�́A�����܂ŋC�x�ߒ��x�̕��ł��B
-      �Í����Ȃǂ̕ی�͑S������܂���B<BR>
-      �ڂ����l�Ԃɂ�����Ό��j��̂͊ȒP�ł��傤�B<BR>
-      ��΂ɑ��̃v���O�����E�T�[�r�X(�v���o�C�_�F�ؓ�)�̃p�X���[�h�Ɠ��������g���Ă͂����܂���B</TD>
+      <TD style="font-size : 500%;">！</TD>
+      <TD>この「パスワード」は、あくまで気休め程度の物です。
+      暗号化などの保護は全くされません。<BR>
+      詳しい人間にかかれば見破るのは簡単でしょう。<BR>
+      絶対に他のプログラム・サービス(プロバイダ認証等)のパスワードと同じ物を使ってはいけません。</TD>
     </TR>
   </TBODY>
 </TABLE>
 </DIV>
-<H4>���܂Ƃ߂���URL��</H4>
+<H4>＜まとめたいURL＞</H4>
 <DIV class="Quote">
 <DIV>
-<P>�����Ŏw�肵�������URL�́A�Q�ƌ����v�ɂ����Ďw�肵��������ɕϊ�����܂��B
+<P>ここで指定した特定のURLは、参照元統計において指定した文字列に変換されます。
 <BR>
-���́uURL�܂Ƃߋ@�\�v�́AefStat�ɓo�^����Ă��Ȃ��T�[�`�G���W����A�����N�W�nCGI����̃����N�������y�[�W�Ɍ����Ă��܂��B<BR>
-�����悤��URL���\�̖w�ǂ��߂č����Ă�����͐��񎎂��Ă݂ĉ������B
+この「URLまとめ機能」は、efStatに登録されていないサーチエンジンや、リンク集系CGIからのリンクが多いページに向いています。<BR>
+似たようなURLが表の殆どを占めて困っている方は是非試してみて下さい。
 <BR>
-(���ǂ��̃y�[�W��o�^���邾���ł��y�������ł����)</P>
-<DIV class="Quote"><DFN>[ '<VAR>�ϊ���������URL������</VAR>', '<VAR>�ϊ���̕�����</VAR>' ],</DFN></DIV>
-<P>�Ƃ��������Œǉ��E�C�����ĉ������B</P>
-<P>�ϊ���������URL������ ���܂�URL�����v�Ɋ܂܂�Ă���Ƃ��A
-�ϊ���̕����� �ɕϊ�����܂��B<BR>
-�Ⴆ�΁A</P>
-<DIV class="Quote"><SAMP>[ '<EM><VAR>http://www.skipup.com/~fuka/</VAR></EM>', '<VAR>�L���H�[</VAR>' ],</SAMP></DIV>
-<P>�Ǝw�肵���Ƃ��܂��B�@���̂Ƃ��A</P>
-<DIV class="Quote"><SAMP><EM>http://www.skipup.com/~fuka/</EM></SAMP><BR>
-<EM><SAMP>http://www.skipup.com/~fuka/</SAMP></EM><SAMP>cgi-bin/search.cgi?key=test</SAMP><BR>
-<SAMP><EM>http://www.skipup.com/~fuka/</EM>link.html</SAMP></DIV>
-<P>�Ȃǂ�URL�͑S�� <SAMP><VAR>�L���H�[</VAR></SAMP> �Ƃ��Ă܂Ƃߏグ���܂��B�@�����E�C�^���b�N
-�̕�������v���Ă���̂���������ł��傤���H</P>
-<P>�������A���̕��Q�Ƃ���</P>
-<SAMP class="Quote">http://www.goo.ne.jp/cgi-bin/redirect?URL=<EM>http://www.skipup.com/~fuka/</EM>&amp;OPT=IE5</SAMP>
+(仲良しのページを登録するだけでも楽しそうですよね)</P>
+<DIV class="Quote"><DFN>[ '<VAR>変換させたいURL文字列</VAR>', '<VAR>変換後の文字列</VAR>' ],</DFN></DIV>
+<P>という書式で追加・修正して下さい。</P>
+<P>変換させたいURL文字列 を含むURLが統計に含まれているとき、
+変換後の文字列 に変換されます。<BR>
+例えば、</P>
+<DIV class="Quote"><SAMP>[ '<EM><VAR>http://ygkb.jp/</VAR></EM>', '<VAR>有限工房</VAR>' ],</SAMP></DIV>
+<P>と指定したとします。　このとき、</P>
+<DIV class="Quote"><SAMP><EM>http://ygkb.jp/</EM></SAMP><BR>
+<EM><SAMP>http://ygkb.jp/</SAMP></EM><SAMP>cgi-bin/search.cgi?key=test</SAMP><BR>
+<SAMP><EM>http://ygkb.jp/</EM>link.html</SAMP></DIV>
+<P>などのURLは全て <SAMP><VAR>有限工房</VAR></SAMP> としてまとめ上げられます。　太字・イタリック
+の部分が一致しているのがお分かりでしょうか？</P>
+<P>しかし、その弊害として</P>
+<SAMP class="Quote">http://www.goo.ne.jp/cgi-bin/redirect?URL=<EM>http://ygkb.jp/</EM>&amp;OPT=IE5</SAMP>
 </DIV>
-<P>�̂悤�ȁA�S���֌W�Ȃ�URL�� �L���H�[ �̈�Ƃ��Đ������Ă��܂��܂��B�@(�܁A�����������͖ő��ɂ���܂���)</P>
-<P>������t��Ɏ���</P>
+<P>のような、全く関係ないURLも 有限工房 の一つとして数えられてしまいます。　(ま、こういう事は滅多にありませんが)</P>
+<P>これを逆手に取ると</P>
 <DIV class="Quote">
-<P><SAMP>[ 'tbookmark.cgi', 'TBookmark����' ], # TBookmark����̃A�N�Z�X��S�Ă܂Ƃ߂�<BR>
-[ '.2ch.net.', '2ch����' ], # *.2ch.net����̃A�N�Z�X��S�Ă܂Ƃ߂�<BR>
+<P><SAMP>[ 'tbookmark.cgi', 'TBookmarkから' ], # TBookmarkからのアクセスを全てまとめる<BR>
+[ '.2ch.net.', '2chから' ], # *.2ch.netからのアクセスを全てまとめる<BR>
 </SAMP></P>
 </DIV>
-<P>�̂悤�Ȏ����ł��܂��B<BR>
-���̑��̃R�c�Ƃ��ẮA</P>
+<P>のような事ができます。<BR>
+その他のコツとしては、</P>
 <UL>
-  <LI>�ϊ���������URL������ ���o���邾����������@(��ϊ�������)
-  <LI>������̓����͌������Ȃ��@(��ϊ�������)
-  <LI>���X�g�����I����B�@���Ӗ��ȕ��͓o�^���Ȃ��@(�������x�ɉe�����܂�)
-  <LI>�悭���������郊���N�قǃ��X�g�̏�̕��ɔz�u����@(�������x�ɉe�����܂�)
+  <LI>変換させたいURL文字列 を出来るだけ長くする　(誤変換が減る)
+  <LI>文字列の特徴は見逃さない　(誤変換が減る)
+  <LI>リストを厳選する。　無意味な物は登録しない　(処理速度に影響します)
+  <LI>よく引っかかるリンクほどリストの上の方に配置する　(処理速度に影響します)
 </UL>
-<P>�c���Ăȏ��ł��傤���B�@�g���C���G���[�ŐF�X�Ǝ����Ă݂ĉ������B</P>
+<P>…ってな所でしょうか。　トライ＆エラーで色々と試してみて下さい。</P>
 </DIV>
 </DIV>
 <DIV class="Chapter">
-<H3><A name="settei_hyouji">�\���I�v�V����</A></H3>
-<P>(�������ł̎w��́u���O�P�̕\�����[�h�v�ł̂ݗL���ł�)</P>
-<H4>���Q�ƌ��ւ̃����N��L���ɂ��邩�E���Ȃ�����</H4>
+<H3><A name="settei_hyouji">表示オプション</A></H3>
+<P>(※ここでの指定は「ログ単体表示モード」でのみ有効です)</P>
+<H4>＜参照元へのリンクを有効にするか・しないか＞</H4>
 <DIV class="Quote">
-<P>�����N�𖳌��ɂ���Ɛ����O��Q�ƌ���͂̕����ŃA�h���X���n�C�p�[�����N�ł͂Ȃ��A�����̕����ɂȂ�܂��B<BR>
-�Q�ƌ����m�F���������͂��̃A�h���X���R�s�[���A�u���E�U�̃E�C���h�E��V���ɊJ���AURL
-���͗��ɐ�قǃR�s�[�����A�h���X�𒣂�t���ĉ������B<BR>
-����ŁAefStat �̑��݂�m���邱�ƂȂ��Q�ƌ��̃y�[�W��`���܂��B</P>
-<P>�܂��A�����N��L���ɂ��Ă��Ă��A���̔�т���URL�̏�ŉE�N���b�N���A�u�����N�̏ꏊ���R�s�[�v(
-Netscape Navigator �̏ꍇ)����Γ������Ȃ̂ł����B</P>
-<P>�܂��A����p�Ƃ��ďo�͂����HTML�t�@�C���̗e�ʂ����Ȃ�팸����܂��B<BR>
-�����ł��\�����y�����������́u���Ȃ��v�������Ă݂܂��傤�B</P>
+<P>リンクを無効にすると生ログや参照元解析の部分でアドレスがハイパーリンクではなく、ただの文字になります。<BR>
+参照元を確認したい時はそのアドレスをコピーし、ブラウザのウインドウを新たに開き、URL
+入力欄に先ほどコピーしたアドレスを張り付けて下さい。<BR>
+これで、efStat の存在を知られることなく参照元のページを覗けます。</P>
+<P>まあ、リンクを有効にしていても、その飛びたいURLの上で右クリックし、「リンクの場所をコピー」(
+Netscape Navigator の場合)すれば同じ事なのですが。</P>
+<P>また、副作用として出力されるHTMLファイルの容量がかなり削減されます。<BR>
+少しでも表示を軽くしたい方は「しない」を試してみましょう。</P>
 </DIV>
-<H4>���\�����e�C�X�g���X�ɂ��邩�E���Ȃ�����</H4>
+<H4>＜表示をテイストレスにするか・しないか＞</H4>
 <DIV class="Quote">
-<P>�u�ǂ��ɂ������ɂ��\�����d���I �ӔC�ҏo�Ă����I�v�Ƃ����ꍇ�́A���̃I�v�V�������I���ɂ��邱�Ƃŕ\�������������܂�(�����ɂ͏o�͂����HTML�̃T�C�Y���k�܂�)�B<BR>
-�������A�\�ɐF���t���Ȃ��Ȃ�܂�(�^�����ȕ\���ɂȂ�܂�)�B</P>
-<P>���O���傫����Α傫���قǌ��ʂ��傫���Ȃ�܂��B</P>
+<P>「どうにもこうにも表示が重い！ 責任者出てこい！」という場合は、このオプションをオンにすることで表示が高速化します(厳密には出力されるHTMLのサイズが縮まる)。<BR>
+ただし、表に色が付かなくなります(真っ白な表示になります)。</P>
+<P>ログが大きければ大きいほど効果が大きくなります。</P>
 </DIV>
-<H4>���O���t��\�������邩�E�����Ȃ�����</H4>
+<H4>＜グラフを表示させるか・させないか＞</H4>
 <DIV class="Quote">
-<P>�O���t��\�������Ȃ��Ƃ��Ȃ�\���������Ȃ�͂��ł��B(HTML�̃T�C�Y�����Ȃ�k�݂܂�)<BR>
-�O���t�����Ӗ��Ɏv������A�v���؂��ĕ\����؂��Ă݂܂��傤�B</P>
+<P>グラフを表示させないとかなり表示が早くなるはずです。(HTMLのサイズがかなり縮みます)<BR>
+グラフが無意味に思えたら、思い切って表示を切ってみましょう。</P>
 </DIV>
 </DIV>
 <DIV class="Chapter">
-<H3><A name="settei_asikiri">�\�̑��؂�ݒ�(�\�����~�b�^)</A></H3>
-<P>(�������ł̎w��́u���O�P�̕\�����[�h�v�ł̂ݗL���ł�)</P>
-<DIV class="Quote">�u�����O�\���v�u�Q�ƌ���́v�u�z�X�g����́v�u�u���E�U��́v�ŁA�����Ŏw�肵�����ȉ��̍��ڂ͕\������܂���B<BR>
-���l��傫������Α傫������قǕ\���������ɂȂ�܂����A�K�v�ȏ��ʂ�����Ƃ������_������܂��B<BR>
-���R�A���O���傫����Α傫���قǌ��ʂ��傫���Ȃ�܂��B<BR>
-�������̃T�C�g�̋K�͂ɍ��킹�Ē������ĉ������B</DIV>
+<H3><A name="settei_asikiri">表の足切り設定(表示リミッタ)</A></H3>
+<P>(※ここでの指定は「ログ単体表示モード」でのみ有効です)</P>
+<DIV class="Quote">「生ログ表示」「参照元解析」「ホスト名解析」「ブラウザ解析」で、ここで指定した数以下の項目は表示されません。<BR>
+数値を大きくすれば大きくするほど表示が高速になりますが、必要な情報量が減るという欠点もあります。<BR>
+当然、ログが大きければ大きいほど効果が大きくなります。<BR>
+ご自分のサイトの規模に合わせて調整して下さい。</DIV>
 </DIV>
 <DIV class="Chapter">
-<H3><A name="settei_sonota">���̑��w��</A></H3>
-<DIV class="Quote">�c��̕����̓��O�\����ʂ̕\���F�Ɋւ���ݒ�ł��B<BR>
-�����܂܂ł��̂ŁA�J�X�^�}�C�Y�������l�͂Ƃ肠�����ύX���Ă݂āA�̂Ŋo���ĉ�����(^^�G<BR>
-�e�[�u���F�� bgcolor ����n�߂Ă��鎖�����������悤�ɁA���R
-background ���g���܂��B<BR>
-�ґ�Ȋ��̐l�́A�Z���̔w�i���摜�ɂ��ċC�����S�[�W���X�ɂ��Ă݂悤�I(��)</DIV>
-<H4>���H��</H4>
+<H3><A name="settei_sonota">その他指定</A></H3>
+<DIV class="Quote">残りの部分はログ表示画面の表示色に関する設定です。<BR>
+見たままですので、カスタマイズしたい人はとりあえず変更してみて、体で覚えて下さい(^^；<BR>
+テーブル色は bgcolor から始めている事からも分かるように、当然
+background も使えます。<BR>
+贅沢な環境の人は、セルの背景を画像にして気分をゴージャスにしてみよう！(笑)</DIV>
+<H4>＜？＞</H4>
 <DIV class="Quote">
-<P>���܂��B�@�ǂ�����CPU�̃x���`�}�[�N������悤�ɂȂ�I�v�V����������܂��B<BR>
-����͎����̊J���̂��߂ɂ��郂�m�ł����A�����̃}�V���ɖO�����炸�A�v���o�C�_�̃}�V���̏������x�܂Ōv���Ă��܂������X�s�[�h���̕��͂ǂ���(��)</P>
-<P>���Ȃ݂ɃE�`�@(Pentium-133 / 48MB / FreeBSD
-2.2.7R / jperl5 / ���[�U1�l)�@���ƁA</P>
+<P>おまけ。　どこかにCPUのベンチマークを取れるようになるオプションがあります。<BR>
+これは自分の開発のためにあるモノですが、自分のマシンに飽きたらず、プロバイダのマシンの処理速度まで計ってしまいたいスピード狂の方はどうぞ(笑)</P>
+<P>ちなみにウチ　(Pentium-133 / 48MB / FreeBSD
+2.2.7R / jperl5 / ユーザ1人)　だと、</P>
 <UL>
-  <LI>���O�P�̕\�����[�h�E�S�Ă̍��ڂ�\��(300��)�Ŗ�0.9�b
-  <LI>���O�ꊇ�\�����[�h�E�S�Ă̍��ڂ�\��(3369��)�Ŗ�10�b�������
+  <LI>ログ単体表示モード・全ての項目を表示(300件)で約0.9秒
+  <LI>ログ一括表示モード・全ての項目を表示(3369件)で約10秒ちょっと
 </UL>
-<P>�ł��B�@���Ȃ��̃v���o�C�_�̃T�[�o�̋����͂ǂ��ł��傤�H(��)</P>
-<P>�I���ɂ���ƌ��ʕ\���̈�ԉ��A�R�s�[���C�g�̒�����Ɍv�Z�Ɋ|���������Ԃ��\������܂��B</P>
+<P>です。　あなたのプロバイダのサーバの強さはどうでしょう？(笑)</P>
+<P>オンにすると結果表示の一番下、コピーライトの直ぐ上に計算に掛かった時間が表示されます。</P>
 </DIV>
 </DIV>
-<H2 class="Chapter_Headline"><A name="log_jyunbi">�����O�t�@�C���̏���</A></H2>
+<H2 class="Chapter_Headline"><A name="log_jyunbi">■ログファイルの準備</A></H2>
 <DIV class="Chapter">
-<P><A href="fcount.html">efCount�戵������</A>�Ƀ��O�t�@�C���̍����������Ă���܂��̂ŁA��������Q�l�ɂ��ĉ������B<BR>
-���߂���͊��Ƀ��O�t�@�C��������A�L�^����Ă�����̂Ƃ��Ęb��i�߂Ă䂫�܂��B</P>
+<P><A href="fcount.html">efCount取扱説明書</A>にログファイルの作り方が書いてありますので、そちらを参考にして下さい。<BR>
+次節からは既にログファイルがあり、記録されているものとして話を進めてゆきます。</P>
 </DIV>
-<H2 class="Chapter_Headline"><A name="usage">�����O�r���[�A�̎g����</A></H2>
+<H2 class="Chapter_Headline"><A name="usage">■ログビューアの使い方</A></H2>
 <DIV class="Chapter">
 <UL>
-  <LI><A href="#usage_option">�g�p�@</A>
-  <LI><A href="#usage_all">�ꊇ�\�����[�h</A>
-  <LI><A href="#usage_solo">���O�P�̕\�����[�h</A>
+  <LI><A href="#usage_option">使用法</A>
+  <LI><A href="#usage_all">一括表示モード</A>
+  <LI><A href="#usage_solo">ログ単体表示モード</A>
 </UL>
 </DIV>
 <DIV class="Chapter">
-<H3><A name="usage_option">�g�p�@</A></H3>
-�܂��AefStat���Ăяo�����߂ɕK�v�Ȉ����Ɋւ�����������܂��B<BR>
-���ꂼ��̈Ӗ��͎��̐߂ł������Ɛ������܂��̂ŁA������Ɖ䖝���ē��ɒu���Ă݂ĉ������B
+<H3><A name="usage_option">使用法</A></H3>
+まず、efStatを呼び出すために必要な引数に関する情報を示します。<BR>
+それぞれの意味は次の節でゆっくりと説明しますので、ちょっと我慢して頭に置いてみて下さい。
 <DIV class="Quote">
-<P><STRONG>�y�����z</STRONG><BR>
+<P><STRONG>【書式】</STRONG><BR>
 <B><DFN>fstat.cgi?<FONT color="#0c9900">logfile</FONT>&amp;<FONT color="#000099">m=0</FONT>&amp;<FONT color="#ff00ff">d=t</FONT>&amp;<FONT color="#ff2709">PASS=abc</FONT></DFN></B></P>
 <TABLE border="1" class="Table_Normal" cellspacing="0">
   <TBODY>
     <TR>
       <TD><FONT color="#0c9900"><DFN><STRONG>logfile</STRONG></DFN></FONT></TD>
-      <TD>���O�t�@�C���̖��O</TD>
+      <TD>ログファイルの名前</TD>
     </TR>
     <TR>
       <TD><FONT color="#000099"><DFN><STRONG>m</STRONG></DFN></FONT></TD>
-      <TD>���샂�[�h�̎w�� (Execute <B><U>M</U></B>ode)<BR>
-      <FONT color="#000099"><B>�w�薳��(�ȗ�)</B></FONT>�ňꊇ�\���B <B><FONT color="#000099">m=0</FONT></B>�Ő����O�̂ݕ\���B <B><FONT color="#000099">m=1</FONT></B>�Ń��O�̉�͌��ʂ̂ݕ\���B</TD>
+      <TD>動作モードの指定 (Execute <B><U>M</U></B>ode)<BR>
+      <FONT color="#000099"><B>指定無し(省略)</B></FONT>で一括表示。 <B><FONT color="#000099">m=0</FONT></B>で生ログのみ表示。 <B><FONT color="#000099">m=1</FONT></B>でログの解析結果のみ表示。</TD>
     </TR>
     <TR>
       <TD><FONT color="#ff00ff"><DFN><STRONG>d</STRONG></DFN></FONT></TD>
-      <TD>��͂���͈͂̎w�� (<B><U>D</U></B>ay)<BR>
-      <B><FONT color="#ff00ff">�w�薳��(�ȗ�)</FONT></B>�őS�ĕ\���B�@<B><FONT color="#ff00ff">d=t</FONT></B>�Ŗ{�����̂ݕ\���B�@<B><FONT color="#ff00ff">d=y</FONT></B>�ō�����̂ݕ\���B</TD>
+      <TD>解析する範囲の指定 (<B><U>D</U></B>ay)<BR>
+      <B><FONT color="#ff00ff">指定無し(省略)</FONT></B>で全て表示。　<B><FONT color="#ff00ff">d=t</FONT></B>で本日分のみ表示。　<B><FONT color="#ff00ff">d=y</FONT></B>で昨日分のみ表示。</TD>
     </TR>
     <TR>
       <TD><FONT color="#ff2709"><DFN><STRONG>PASS</STRONG></DFN></FONT></TD>
-      <TD>�p�X���[�h�̎w�� (<B><U>PASS</U></B>word)�@(<B>���啶���ł��邱�Ƃɒ��ӂ��ĉ�����</B>)<BR>
-      <A href="#settei_zettai">�p�X���[�h��ݒ肵�Ă���</A>�ꍇ�A�K�����̃I�v�V������t���Ȃ���΂Ȃ�܂���B</TD>
+      <TD>パスワードの指定 (<B><U>PASS</U></B>word)　(<B>※大文字であることに注意して下さい</B>)<BR>
+      <A href="#settei_zettai">パスワードを設定している</A>場合、必ずこのオプションを付けなければなりません。</TD>
     </TR>
   </TBODY>
 </TABLE>
 </DIV>
-<H4>�܂��͌Ăяo���Ă݂悤</H4>
+<H4>まずは呼び出してみよう</H4>
 <DIV class="Quote">
-<P>�u���E�U��URL���͗���</P>
+<P>ブラウザのURL入力欄に</P>
 <KBD class="Quote">http://<FONT color="#000099">???</FONT>/~<FONT color="#8000ff">username</FONT>/<FONT color="#8080c0">cgi-bin</FONT>/<FONT color="#8080ff">fstat</FONT>/fstat.cgi</KBD>
-<P>�Ɠ��͂��Ă݂ĉ������B<BR>
-�i�y�[�W�̂���T�[�o�� <KBD><FONT color="#000099">???</FONT></KBD> �ŁA���Ȃ��̃��[�U���� <KBD><FONT color="#8000ff">username</FONT></KBD>�A<KBD><FONT color="#8080c0">cgi-bin</FONT></KBD> �Ƃ����f�B���N�g���̒��� <KBD><FONT color="#8080ff">fstat</FONT></KBD> ��u���Ă���ꍇ�j</P>
-<P>���j���[��ʂ͕\������܂������H�i�������Ԃ�������ꍇ������܂��j<BR>
-�\�����ꂽ�炻�̂܂ܒ��q�ɏ���Ď��߂֐i�݂܂��傤�B</P>
-<P>�\������Ȃ�������c������ǋy���Ă����܂��傤�B�@(�N���b�N����Ɓu�g���u���V���[�e�B���O�v�̍��ڂɔ�т܂�)</P>
+<P>と入力してみて下さい。<BR>
+（ページのあるサーバが <KBD><FONT color="#000099">???</FONT></KBD> で、あなたのユーザ名が <KBD><FONT color="#8000ff">username</FONT></KBD>、<KBD><FONT color="#8080c0">cgi-bin</FONT></KBD> というディレクトリの中に <KBD><FONT color="#8080ff">fstat</FONT></KBD> を置いている場合）</P>
+<P>メニュー画面は表示されましたか？（多少時間がかかる場合があります）<BR>
+表示されたらそのまま調子に乗って次節へ進みましょう。</P>
+<P>表示されなかったら…原因を追及していきましょう。　(クリックすると「トラブルシューティング」の項目に飛びます)</P>
 </DIV>
 </DIV>
 <DIV class="Chapter">
-<H3><A name="usage_all">�ꊇ�\�����[�h</A></H3>
-<P>��̗�̂悤�ɁA�����I�v�V������t�����ɋN������ƃ��j���[��ʂ��\������܂��B<BR>
-���̃��j���[��ʂ��g���ă��O��\��������ꍇ�A�S�Ẵ��O�ɑ΂��ďW�v���s���܂��B</P>
-<P>���j���[��ʂ���S�ẴI�v�V�������w��ł���悤�ɂȂ��Ă��܂��B�@�M���̂��D�݂ɒ������ĉ������B<BR>
-�I�v�V�������ڂ̏ڍׂɊւ��ẮA�y�v���O�������̐ݒ�z���Q�Ƃ��ĉ������B<BR>
-�Ȃ��A�����̎w��̓N�b�L�[�ɕۑ�����܂��̂ŁA���x���w�肵������Ԃ͂���܂���B</P>
-<P>�p�X���[�h����͂�(�ݒ�Łu�p�X���[�h�����v��L���ɂ����ꍇ)�A�\�������鍀�ڂ����W�I�{�^��(<INPUT type="radio">)���Ŏw�肵����A <INPUT type="submit" value="�ȏ�̏����Ń��O��\��">�{�^���������ĉ������B<BR>
-�Ȃ��A�p�X���[�h�͈�x���͂���Γ����̊Ԋo���Ă����Ǝv���܂��̂ŁA���x���ł������K�v�͂���܂���B</P>
-<P>�W�v�ɂ͎��Ԃ�������܂��B�@�Ȃ��Ȃ���ʂ��؂�ւ��Ȃ��Ă��A�{�^����A�ł��Ȃ��ŉ������B<BR>
-�v���O���������d�ɋN�����A�T�[�o�ɕ��S��������΂��肩�A���ʕ\�����t�ɒx��܂��B</P>
+<H3><A name="usage_all">一括表示モード</A></H3>
+<P>上の例のように、何もオプションを付けずに起動するとメニュー画面が表示されます。<BR>
+このメニュー画面を使ってログを表示させる場合、全てのログに対して集計を行います。</P>
+<P>メニュー画面から全てのオプションを指定できるようになっています。　貴方のお好みに調整して下さい。<BR>
+オプション項目の詳細に関しては、【プログラム側の設定】を参照して下さい。<BR>
+なお、これらの指定はクッキーに保存されますので、何度も指定し直す手間はありません。</P>
+<P>パスワードを入力し(設定で「パスワード制限」を有効にした場合)、表示させる項目をラジオボタン(<INPUT type="radio">)等で指定したら、 <INPUT type="submit" value="以上の条件でログを表示">ボタンを押して下さい。<BR>
+なお、パスワードは一度入力すれば当分の間覚えてくれると思いますので、何度も打ち直す必要はありません。</P>
+<P>集計には時間がかかります。　なかなか画面が切り替わらなくても、ボタンを連打しないで下さい。<BR>
+プログラムが多重に起動し、サーバに負担をかけるばかりか、結果表示も逆に遅れます。</P>
 </DIV>
 <DIV class="Chapter">
-<H3><A name="usage_solo">���O�P�̕\�����[�h</A></H3>
+<H3><A name="usage_solo">ログ単体表示モード</A></H3>
 <DIV class="Quote">
-<P>���̃��[�h�ł̓��O��������I��ŏW�v���܂��B<BR>
-���i�̓g�b�v�y�[�W�̏󋵂���������Ώ\���ł�����ˁB</P>
-<P>�u���E�U��URL���͗���</P>
+<P>このモードではログを一つだけ選んで集計します。<BR>
+普段はトップページの状況だけ分かれば十分ですからね。</P>
+<P>ブラウザのURL入力欄に</P>
 <KBD class="Quote">http://???/~username/cgi-bin/fstat/fstat.cgi?logfile</KBD>
-<P>�Ɠ��͂��Ă݂ĉ������B�@�n�e�i�}�[�N�� <KBD>logfile</KBD> �Ƃ����̂��������܂����ˁB</P>
-<P>logfile �͋M�����y���O�t�@�C���̏����z�ō�������O�t�@�C�������w�肵�ĉ������B<BR>
-��̗�ł� ??? �Ƃ����v���o�C�_�ɂĂ��Ȃ���
-username �Ƃ����A�J�E���g�����擾���A cgi-bin
-�Ƃ����f�B���N�g���̒��� efStat ���C���X�g�[�����Ă���Ƃ������ƂɂȂ�܂��B</P>
-<P>���Ȃ݂ɁA��L�w��ł͊g���q�͂���܂��񂪁AefStat
-�̃��O�t�@�C���ɂ́u .log �v�Ƃ����g���q���K�{�ł��B<BR>
-���O�t�@�C�����쐬����ۂɂ͒��ӂ��ĉ������ˁB</P>
-<P>���āA�W�v���ʂ͕\������܂����ł��傤���H<BR>
-�\������Ȃ�������c������ǋy���Ă����܂��傤�B�@(���u�g���u���V���[�e�B���O�v)</P>
+<P>と入力してみて下さい。　ハテナマークと <KBD>logfile</KBD> というのがくっつきましたね。</P>
+<P>logfile は貴方が【ログファイルの準備】で作ったログファイル名を指定して下さい。<BR>
+上の例では ??? というプロバイダにてあなたが
+username というアカウント名を取得し、 cgi-bin
+というディレクトリの中に efStat をインストールしているということになります。</P>
+<P>ちなみに、上記指定では拡張子はありませんが、efStat
+のログファイルには「 .log 」という拡張子が必須です。<BR>
+ログファイルを作成する際には注意して下さいね。</P>
+<P>さて、集計結果は表示されましたでしょうか？<BR>
+表示されなかったら…原因を追及していきましょう。　(→「トラブルシューティング」)</P>
 </DIV>
-<H4>���\�����[�h�̎w�聙</H4>
+<H4>☆表示モードの指定☆</H4>
 <DIV class="Quote">
-<P>���āA���̂܂܂ł��\���g����̂ł����A���O���傫���Ȃ��Ă���Ɖ�ʕ\�����d���Ȃ��Ă��Đh���Ȃ��Ă��邱�Ƃ�����Ǝv���܂��B<BR>
-���������Ƃ��́A</P>
+<P>さて、このままでも十分使えるのですが、ログが大きくなってくると画面表示が重くなってきて辛くなってくることもあると思います。<BR>
+そういうときは、</P>
 <P class="Quote"><KBD>http://???/~username/cgi-bin/fstat/fstat.cgi?logfile&amp;m=0</KBD><BR>
-�i�Ō�� &amp;(�A���h/�A���p�T���h)m=0(�[��)
-�����������j</P>
-<P>�Ǝw�肷��ƁA�����O�����\�����܂���(�����O�\�����[�h)�B</P>
+（最後に &amp;(アンド/アンパサンド)m=0(ゼロ)
+がくっついた）</P>
+<P>と指定すると、生ログしか表示しません(生ログ表示モード)。</P>
 <P class="Quote"><KBD>http://???/~username/cgi-bin/fstat/fstat.cgi?logfile&amp;m=1</KBD><BR>
-�i�Ō�� &amp;m=1 �����������j</P>
-<P>�Ǝw�肷��ƁA��́E���͌��ʂ����\�����܂���(��͌��ʕ\�����[�h)�B</P>
+（最後に &amp;m=1 がくっついた）</P>
+<P>と指定すると、解析・分析結果しか表示しません(解析結果表示モード)。</P>
 </DIV>
-<H4>����͔͈͂̎w�聙</H4>
+<H4>☆解析範囲の指定☆</H4>
 <DIV class="Quote">
-<P>�u�����̕��̉�͌��ʂ�����\�����������v�A�u����̕��̉�͌��ʂ�����\�����������v�Ƃ����ꍇ������܂���ˁB<BR>
-���������Ƃ��́A</P>
+<P>「今日の分の解析結果だけを表示させたい」、「昨日の分の解析結果だけを表示させたい」という場合がありますよね。<BR>
+そういうときは、</P>
 <P><KBD class="Quote">http://???/~username/cgi-bin/fstat/fstat.cgi?logfile&amp;d=t</KBD></P>
-<P>�Ǝw�肷��ƁA�{���������\�����܂���B</P>
+<P>と指定すると、本日分しか表示しません。</P>
 <P class="Quote"><KBD>http://???/~username/cgi-bin/fstat/fstat.cgi?logfile&amp;d=y</KBD></P>
-<P>�Ǝw�肷��ƁA����������\�����܂���B<BR>
-�Ȃ��A��͔͈͂��w�肵���ꍇ�A�J�E���g���W�v�̒��ł͎��ԑѕʏW�v�̂݌��ʂ����f����܂��B</P>
-<H4>���p�X���[�h��ݒ肵�Ă���ꍇ��</H4>
-<P>�p�X���[�h��ݒ肵�Ă���ꍇ�ɂ́A����ɃI�v�V�����̒ǉ����K�v�ɂȂ�܂��B</P>
+<P>と指定すると、昨日分しか表示しません。<BR>
+なお、解析範囲を指定した場合、カウント数集計の中では時間帯別集計のみ結果が反映されます。</P>
+<H4>☆パスワードを設定している場合☆</H4>
+<P>パスワードを設定している場合には、さらにオプションの追加が必要になります。</P>
 <P><KBD class="Quote">http://???/~username/cgi-bin/fstat/fstat.cgi?logfile&amp;PASS=abc</KBD></P>
-<P><KBD>abc</KBD>�̕����͂��Ȃ����ݒ肵���C�ӂ̃p�X���[�h�ł��B�@���_�A</P>
+<P><KBD>abc</KBD>の部分はあなたが設定した任意のパスワードです。　無論、</P>
 <P><KBD class="Quote">http://???/~username/cgi-bin/fstat/fstat.cgi?logfile&amp;m=1&amp;d=t&amp;PASS=abc</KBD></P>
-<P>�����������킹�Z���ł��܂��B</P>
+<P>こういう合わせ技もできます。</P>
 <TABLE class="Caution">
   <TBODY>
     <TR>
-      <TD style="font-size : 500%;">�I</TD>
-      <TD>���O�P�̃��[�h��GET���\�b�h�𗘗p���Ă��܂��B<BR>
-      �p�X���[�h����͂�����Ԃŉ�͌��ʂ�\�������A���̒��̃����N���瑼�̃y�[�W�֔�ԂƁA���葤�y�[�W�ŎQ�ƌ����L�^���Ă���ꍇ�A�p�X���[�h���������Ă��܂��܂��B<BR>
-      �p�X���[�h���w�肵�Ă�����͏\���ɒ��ӂ��ĉ������B<BR>
-      �Ȃ��APOST���\�b�h�𗘗p�����u���O�ꊇ�\�����[�h�v�ł͂��̖��͂���܂���B</TD>
+      <TD style="font-size : 500%;">！</TD>
+      <TD>ログ単体モードはGETメソッドを利用しています。<BR>
+      パスワードを入力した状態で解析結果を表示させ、その中のリンクから他のページへ飛ぶと、相手側ページで参照元を記録している場合、パスワードが分かってしまいます。<BR>
+      パスワードを指定している方は十分に注意して下さい。<BR>
+      なお、POSTメソッドを利用した「ログ一括表示モード」ではこの問題はありません。</TD>
     </TR>
   </TBODY>
 </TABLE>
-<P>�����܂ŏ�肭�s�����l�́A��������Ԏg����Ԃ��u�b�N�}�[�N�Ƃ��ēo�^���Ă����Ɨǂ��ł��傤�B</P>
+<P>ここまで上手く行った人は、自分が一番使う状態をブックマークとして登録しておくと良いでしょう。</P>
 </DIV>
 </DIV>
-<H2 class="Chapter_Headline"><A name="mikata">�����O�r���[�A�̌���</A></H2>
+<H2 class="Chapter_Headline"><A name="mikata">■ログビューアの見方</A></H2>
 <DIV class="Chapter">
-<H3>�����j���[</H3>
-<DIV class="Quote">�e���ڂփW�����v�ł��܂��B<BR>
-�����j���[�֖߂�ɂ͊e���ڂ̃^�C�g�����N���b�N���ĉ������B</DIV>
-<H3>���O�ɂ��Ă̏��</H3>
+<H3>小メニュー</H3>
+<DIV class="Quote">各項目へジャンプできます。<BR>
+小メニューへ戻るには各項目のタイトルをクリックして下さい。</DIV>
+<H3>ログについての情報</H3>
 <DIV class="Quote">
-<P>�Ώۃ��O�t�@�C�� ���ݕ\�����Ă��郍�O�t�@�C���̖��O�ł��B
+<P>対象ログファイル 現在表示しているログファイルの名前です。
 <BR>
-�������� ��͂����͈͂�\���Ă��܂��B<BR>
-�w�肳�ꂽ�͈͂̒��ŁA��ԌÂ����O�����ԐV�������O�܂ŁB
+調査期間 解析した範囲を表しています。<BR>
+指定された範囲の中で、一番古いログから一番新しいログまで。
 <BR>
-���q�b�g�� ���̂܂܂ł��ˁB <BR>
-�A�N�Z�X���ڈ� �K��̃A�N�Z�X��(�ő働�O�ۑ���)�ɒB����܂łɉ���������̂����܂��ɗ\�����܂��B</P>
+総ヒット数 そのままですね。 <BR>
+アクセス数目安 規定のアクセス数(最大ログ保存数)に達するまでに何日かかるのかを大まかに予測します。</P>
 </DIV>
-<H3>�����O</H3>
+<H3>生ログ</H3>
 <DIV class="Quote">
-<P>���O�Ɏ��ۂɋL�^����Ă�����e���A�l�Ԃ����₷���悤�ɐ��`���ĕ\�������܂��B<BR>
-�����Ŏ��ۂ̐l�̓����𒲂ׂ܂��B�@(���񂾃J�E���g�A�K�⎞���A���p�z�X�g�Ȃǂ��琄��)</P>
-</DIV>
-</DIV>
-<DIV class="Chapter">
-<H3>���ԑѕʏW�v</H3>
-<DIV class="Quote">
-<P>���鎞�ԑтɁA�̂׉��l���q���񂪗������B<BR>
-�u�T�C�g�v�v�ŁA�T�C�g�S�̂̎��ԕʏW�v�ƂȂ�܂��B</P>
-</DIV>
-<H3>�j���ʏW�v</H3>
-<DIV class="Quote">
-<P>����j���ɁA�̂׉��l���q���񂪗������B<BR>
-�u���A���A�؂͒�����݂Ŕ��ăl�b�g���Ȃ��񂾂ȁ`�v�Ƃ����͂ł��܂�(��)<BR>
-�u�T�C�g�v�v�ŁA�T�C�g�S�̗̂j���ʏW�v�ƂȂ�܂��B</P>
-</DIV>
-<H3>���ʏW�v</H3>
-<DIV class="Quote">
-<P>����ɉ��l���q���񂪗������B �ߋ���T��+1���܂ł��L�^���܂��B<BR>
-�u0���O�v�͖{����\���܂��B<BR>
-�u7���O�v�͐�T�̓����j����\���܂��B�@�Q�l�f�[�^�Ƃ������Ƃ���ł��傤���B<BR>
-�u�y�[�W�v�v�̗��ň�T��+1���̖K��Ґ��A�u�T�C�g�v�v�ň���ɃT�C�g�S�̂ŉ��l�̐l���������Ƃ�������������܂��B</P>
-</DIV>
-<H3>�T�ʏW�v</H3>
-<DIV class="Quote">
-<P>�T���l���q���񂪗������B �ߋ��T�T�O�܂ŋL�^���܂��B<BR>
-�u0�T�O�v�͍��T��\���܂��B<BR>
-�u5�T�O�v�͈ꃖ���O�̓����T(������ɂ�����)��\���܂��B�@�����̎Q�l�ɂ��ĉ������B<BR>
-�v���O�����̓s����A���j,���j,�`,�y�j�̈�T�Ԃ��u��T�v�Ƃ���̂ł͂Ȃ��A1��1�����琔�����u�ʎZ�T�v�Ōv�Z���Ă��܂��B�@���������Y��Ȃ��悤�B�@(����āA���ʏW�v�̍s�̍��v�Ƃ͕ς���Ă��܂�)</P>
-</DIV>
-<H3>���ʏW�v</H3>
-<DIV class="Quote">
-<P>�ꌎ�ɉ��l���q���񂪗������B 1�`12���A��N�Ԃ����ċL�^���܂�(��)<BR>
-�u�T�C�g�v�v�ŁA�T�C�g�S�̂̌��ʏW�v�ƂȂ�܂��B<BR>
-<BR>
-��ʂɁA�q�̗��ꂩ�猩�Ėʔ����T�C�g�Ƃ����̂͂��̐��l���E���オ��ɂȂ��čs���X��������܂��B<BR>
-�����A���Ȃ��̃y�[�W�������l�����̐l�Ɋ��߂��肷���ł��傤�ˁB<BR>
-�t�ɁA�����Ɖ������̃T�C�g�͌Œ�w�ɂ͎x������Ă��܂����A�V�K�q�����ɗ��Ă����̖w�ǂ��C�`�Q������ŁA�T�C�g�̓��e���p���`�Ɍ�����̂����m��܂���(���֌����T�C�g�łȂ��Ƃ���Ȃ��)�B</P>
-</DIV>
-<H3>�N�x�W�v</H3>
-<DIV class="Quote">
-<P>��N�ɂɉ��l���q���񂪗������B �ߋ��ܔN�Ԃ܂ŕۑ����Ă��܂��B<BR>
-�u�T�C�g�v�v�ŁA�T�C�g�S�̂̌��ʏW�v�ƂȂ�܂��B</P>
-</DIV>
-<H3>���������L���O</H3>
-<DIV class="Quote">
-<P>�y�[�W�̑��q�b�g���̏��ʂł��B<BR>
-�y�[�W�̎����I�Ȑl�C�̏��ʂɂȂ�܂��B<BR>
-�u�T���v�������v����A�T�C�g�S�̂ŁA�̂׉��l���q���񂪗������̖ڈ���������܂��B</P>
-</DIV>
-<H3>���ԃ����L���O</H3>
-<DIV class="Quote">
-<P>�y�[�W�̌��Ԃł̏��ʂł��B<BR>
-�u�T���v�������v����A�T�C�g�S�̂ō����A���l���q���񂪗������̖ڈ���������܂��B</P>
-</DIV>
-<H3>�T�ԃ����L���O</H3>
-<DIV class="Quote">
-<P>�y�[�W�̏T�Ԃł̏��ʂł��B<BR>
-�u�T���v�������v����A�T�C�g�S�̂ō��T�A���l���q���񂪗������̖ڈ���������܂��B</P>
-</DIV>
-<H3>�{�������L���O</H3>
-<DIV class="Quote">
-<P>�y�[�W�̓����ł̏��ʂł��B<BR>
-�u�T���v�������v����A�T�C�g�S�̂ō����A���l���q���񂪗������̖ڈ���������܂��B</P>
+<P>ログに実際に記録されている内容を、人間が見やすいように整形して表示させます。<BR>
+ここで実際の人の動きを調べます。　(踏んだカウント、訪問時刻、利用ホストなどから推測)</P>
 </DIV>
 </DIV>
 <DIV class="Chapter">
-<H3>�Q�ƌ����v</H3>
-<DIV class="Quote">
-<P>��L�����O����Q�ƌ������݂̂𔲂��o���A�񐔂𐔂��ď��ʂɂ������̂ł��B<BR>
-�ǂ̃y�[�W�̃����N����Ԃ̏㓾�ӗl��������܂��B<BR>
-�������AefStat �ɓo�^����Ă���T�[�`�G���W���⎩�T�C�g������̈ړ��͏��O����܂��B</P>
-<P>�܂Ƃ߂���URL���w�肵�Ă���ꍇ�A�����Ɉ�v����URL��<BR>
-<SAMP>[User] �ϊ���̕�����</SAMP><BR>
-�Ƃ����`�ŕ\����܂��B</P>
-</DIV>
-<H3>�T�C�g���ړ�����</H3>
-<DIV class="Quote">
-<P>�����̃T�C�g���̂ǂ̃y�[�W����ǂ̃y�[�W�ֈړ������̂��A�Ƃ������v������Ă��܂��B<BR>
-�Ⴆ�΁A���q���� illust.html �Ƃ����y�[�W�̃n�C�p�[�����N����
-melody.html �ɔ�񂾏ꍇ�A<BR>
-<SAMP>�uillust.html &gt;&gt; melody�v</SAMP><BR>
-�Ƃ������ɕ\�L����܂��B</P>
-<P>�������A�����Ō��� melody.html �Ȃǂ̔탊���N��ł�
-fcount.cgi �Ń��O������Ă���K�v������܂��B<BR>
-(���q���� illust.html ���� mellody.html
-�ɔ�񂾂Ƃ������́A melody.html �𒲂ׂȂ��ƕ�����Ȃ�����)<BR>
-�܂��Amelody�̕��͂����܂Ń��O�t�@�C���̖��̂ł��̂ŁAmelody�Ə�����Ă��Ă����ۂ�HTML�t�@�C����
-nekomimi.html �̎������m��܂���:-)</P>
-<P>index.html �Ȃǂ��Ō�ɕt��URL�̏ꍇ�͂��ꂪ�ȗ�����A�P�Ɂu<SAMP>/</SAMP>�v�ƕ\������܂��B<BR>
-�Ⴆ�΁A�u<SAMP>http://www.hoge.com/~fuka/</SAMP>�v��u<SAMP>http://www.hoge.com/~fuka/index.html</SAMP>�v�́u<SAMP>/</SAMP>�v�ƁA<BR>
-�u<SAMP>http://www.hoge.com/~fuka/link/</SAMP>�v��u<SAMP>http://www.hoge.com/~fuka/link/index.html</SAMP>�v�́u<SAMP>link/</SAMP>�v�ƕ\�L����܂��B</P>
-<P>�w�u���T�C�g�������T�C�g���v�̃J�E���g�x�́A�w�S�́x�ɑ΂��銄����������΍����قǁA���q���񂪃T�C�g����ϋɓI�ɂ��낤�낵�Ă���Ă���A�F�X�ƌ��ĉ���Ă���Ă���A�Ƃ����w�W�ɂȂ�܂��B<BR>
-�����A���܂芄���������̂��l��������(^_^�G</P>
-</DIV>
-<H3>�T�[�`�G���W���V�F�A</H3>
-<DIV class="Quote">
-<P>���q���񂪂ǂ̃T�[�`�G���W�����g���ė����̂��̓��v�ł��B<BR>
-�u�T�[�`�G���W������v�̊�����������Α����قǁA�q�̐V��ӂ��������A�܂��э��݂̋q�������Ƃ����w�W�ɂȂ�܂��B</P>
-</DIV>
-<H3>�T�[�`�G���W������</H3>
-<DIV class="Quote">
-<P>���q���񂪃T�[�`�G���W�����g�����Ƃ��ɓ��͂����L�[���[�h�̓��v�ł��B<BR>
-�F����A���Ȃ�I���ȃL�[���[�h�ōU�߂Ă��邱�Ƃ����Ď��܂�(��)</P>
-<P>�u�T���v�������v���u�T�[�`�G���W������v�ɖ����Ȃ��ꍇ�����X����܂��B<BR>
-����́A�o�^���ꂽ�T�[�`�G���W�����痈�����Ƃ͔F���ł����̂ł����A�L�[���[�h���擾�ł��Ȃ�������A�q���L�[���[�h��m��ꂽ���Ȃ�����(?)�ɃT�[�`�G���W���̃��_�C���N�^���g�����肵���ꍇ�ɂ����������󋵂ɂȂ�܂��B<BR>
-(����InfoWeb Search�Ȃǂ͖w�ǂ��S�~�f�[�^��������G���R�[�h�ł��Ȃ��f�[�^�������肷��̂Ō��\�؂�̂ĂĂ܂�)</P>
-</DIV>
-<H3>TINAMI�J�e�S������</H3>
-<DIV class="Quote">
-<P>TINAMI ������ł������q����̌����L�[���[�h�E�I���J�e�S���𐔂��A���ʂɂ������̂ł��B<BR>
-�u<SAMP>[C] ������</SAMP>�v�Ƃ������ڂ͂��q����ɂ���đI�΂ꂽ�J�e�S���ł��B<BR>
-���Ȃ��� TINAMI �ɓo�^�����Ƃ��̃J�e�S�����ڂ��Ă���Ǝv���܂��B<BR>
-Charlotte �ɂ�錟���̏ꍇ�A�u<SAMP>[Charlotte] ������</SAMP>�v�ƕ\������܂��B<BR>
-���̑��́A���q���񂪎��R�ɓ��͂����L�[���[�h�ł��B<BR>
-������W��������͂ނƂ��ɂ��𗧂ĉ������B
-<BR>
-TINAMI �ɓo�^���Ă��Ȃ��T�C�g��TINAMI ����N�����ł��Ă��Ȃ��ꍇ�͕\������܂���B</P>
-</DIV>
-<H3>Surfers Paradice����</H3>
-<DIV class="Quote">
-<P>Surfers Paradice (SP) ������ł������q���񂪁A�ǂ̃W�������A�L�[���[�h����͂��Ă����̂��𐔂��A���ʂɂ������̂ł��B<BR>
-������W��������͂ނƂ��ɂ��𗧂ĉ������B
-<BR>
-SP �ɓo�^���Ă��Ȃ��T�C�g��SP ����N�����ł��Ă��Ȃ��ꍇ�͕\������܂���B</P>
-</DIV>
+	<H3>時間帯別集計</H3>
+	<DIV class="Quote">
+	<P>ある時間帯に、のべ何人お客さんが来たか。<BR>
+	「サイト計」で、サイト全体の時間別集計となります。</P>
+	</DIV>
+	<H3>曜日別集計</H3>
+	<DIV class="Quote">
+	<P>ある曜日に、のべ何人お客さんが来たか。<BR>
+	「あ、水、木は中だるみで疲れてネットやらないんだな～」とか分析できます(笑)<BR>
+	「サイト計」で、サイト全体の曜日別集計となります。</P>
+	</DIV>
+	<H3>日別集計</H3>
+	<DIV class="Quote">
+	<P>一日に何人お客さんが来たか。 過去一週間+1日までを記録します。<BR>
+	「0日前」は本日を表します。<BR>
+	「7日前」は先週の同じ曜日を表します。　参考データといったところでしょうか。<BR>
+	「ページ計」の欄で一週間+1日の訪問者数、「サイト計」で一日にサイト全体で何人の人が来たかという事が分かります。</P>
+	</DIV>
+	<H3>週別集計</H3>
+	<DIV class="Quote">
+	<P>週何人お客さんが来たか。 過去５週前まで記録します。<BR>
+	「0週前」は今週を表します。<BR>
+	「5週前」は一ヶ月前の同じ週(分かりにくいな)を表します。　増減の参考にして下さい。<BR>
+	プログラムの都合上、日曜,月曜,～,土曜の一週間を「一週」とするのではなく、1月1日から数えた「通算週」で計算しています。　そこをお忘れなきよう。　(よって、日別集計の行の合計とは変わってきます)</P>
+	</DIV>
+	<H3>月別集計</H3>
+	<DIV class="Quote">
+	<P>一月に何人お客さんが来たか。 1～12月、一年間かけて記録します(笑)<BR>
+	「サイト計」で、サイト全体の月別集計となります。<BR>
+	<BR>
+	一般に、客の立場から見て面白いサイトというのはこの数値が右肩上がりになって行く傾向があります。<BR>
+	多分、あなたのページを見た人が他の人に勧めたりするんでしょうね。<BR>
+	逆に、ずっと横這いのサイトは固定層には支持されていますが、新規客が見に来てもその殆どがイチゲンさんで、サイトの内容がパンチに欠けるのかも知れません(内輪向けサイトでないとするならば)。</P>
+	</DIV>
+	<H3>年度集計</H3>
+	<DIV class="Quote">
+	<P>一年にに何人お客さんが来たか。 過去五年間まで保存しています。<BR>
+	「サイト計」で、サイト全体の月別集計となります。</P>
+	</DIV>
+	<H3>総合ランキング</H3>
+	<DIV class="Quote">
+	<P>ページの総ヒット数の順位です。<BR>
+	ページの実質的な人気の順位になります。<BR>
+	「サンプル総数」から、サイト全体で、のべ何人お客さんが来たかの目安が分かります。</P>
+	</DIV>
+	<H3>月間ランキング</H3>
+	<DIV class="Quote">
+	<P>ページの月間での順位です。<BR>
+	「サンプル総数」から、サイト全体で今月、何人お客さんが来たかの目安が分かります。</P>
+	</DIV>
+	<H3>週間ランキング</H3>
+	<DIV class="Quote">
+	<P>ページの週間での順位です。<BR>
+	「サンプル総数」から、サイト全体で今週、何人お客さんが来たかの目安が分かります。</P>
+	</DIV>
+	<H3>本日ランキング</H3>
+	<DIV class="Quote">
+	<P>ページの当日での順位です。<BR>
+	「サンプル総数」から、サイト全体で今日、何人お客さんが来たかの目安が分かります。</P>
+	</DIV>
+	</DIV>
+	<DIV class="Chapter">
+	<H3>参照元統計</H3>
+	<DIV class="Quote">
+	<P>上記生ログから参照元部分のみを抜き出し、回数を数えて順位にしたものです。<BR>
+	どのページのリンクが一番の上得意様か分かります。<BR>
+	ただし、efStat に登録されているサーチエンジンや自サイト内からの移動は除外されます。</P>
+	<P>まとめたいURLを指定している場合、条件に一致したURLは<BR>
+	<SAMP>[User] 変換後の文字列</SAMP><BR>
+	という形で表されます。</P>
+	</DIV>
+	<H3>サイト内移動分析</H3>
+	<DIV class="Quote">
+	<P>自分のサイト内のどのページからどのページへ移動したのか、という統計を取っています。<BR>
+	例えば、お客さんが illust.html というページのハイパーリンクから
+	melody.html に飛んだ場合、<BR>
+	<SAMP>「illust.html &gt;&gt; melody」</SAMP><BR>
+	という風に表記されます。</P>
+	<P>ただし、ここで言う melody.html などの被リンク先では
+	fcount.cgi でログを取っている必要があります。<BR>
+	(お客さんが illust.html から mellody.html
+	に飛んだという情報は、 melody.html を調べないと分からないため)<BR>
+	また、melodyの方はあくまでログファイルの名称ですので、melodyと書かれていても実際のHTMLファイルは
+	nekomimi.html の事かも知れません:-)</P>
+	<P>index.html などが最後に付くURLの場合はそれが省略され、単に「<SAMP>/</SAMP>」と表示されます。<BR>
+	例えば、「<SAMP>http://www.hoge.com/~fuka/</SAMP>」や「<SAMP>http://www.hoge.com/~fuka/index.html</SAMP>」は「<SAMP>/</SAMP>」と、<BR>
+	「<SAMP>http://www.hoge.com/~fuka/link/</SAMP>」や「<SAMP>http://www.hoge.com/~fuka/link/index.html</SAMP>」は「<SAMP>link/</SAMP>」と表記されます。</P>
+	<P>『「自サイト内→自サイト内」のカウント』の、『全体』に対する割合が高ければ高いほど、お客さんがサイト内を積極的にうろうろしてくれている、色々と見て回ってくれている、という指標になります。<BR>
+	ただ、あまり割合が高いのも考え物かも(^_^；</P>
+	</DIV>
+	<H3>サーチエンジンシェア</H3>
+	<DIV class="Quote">
+	<P>お客さんがどのサーチエンジンを使って来たのかの統計です。<BR>
+	「サーチエンジンから」の割合が多ければ多いほど、客の新陳代謝が激しい、つまり飛び込みの客が多いという指標になります。</P>
+	</DIV>
+	<H3>サーチエンジン分析</H3>
+	<DIV class="Quote">
+	<P>お客さんがサーチエンジンを使ったときに入力したキーワードの統計です。<BR>
+	皆さん、かなり露骨なキーワードで攻めてくることが見て取れます(笑)</P>
+	<P>「サンプル総数」が「サーチエンジンから」に満たない場合が多々あります。<BR>
+	これは、登録されたサーチエンジンから来たことは認識できたのですが、キーワードが取得できなかったり、客がキーワードを知られたくないため(?)にサーチエンジンのリダイレクタを使ったりした場合にこういった状況になります。<BR>
+	(特にInfoWeb Searchなどは殆どがゴミデータだったりエンコードできないデータだったりするので結構切り捨ててます)</P>
+	</DIV>
 </DIV>
 <DIV class="Chapter">
-<H3>�z�X�g���v</H3>
+<H3>ホスト統計</H3>
 <DIV class="Quote">
-<P>��L�����O����z�X�g�������݂̂𔲂��o���A�񐔂𐔂��ď��ʂɂ������̂ł��B<BR>
-�ǂ̃v���o�C�_�̐l�����񗈂Ă��邩�A�Ђ��Ă͏�A���񂪉��񂭂炢���Ă��邩�̖ڈ��ɂȂ�܂��B</P>
+<P>上記生ログからホスト名部分のみを抜き出し、回数を数えて順位にしたものです。<BR>
+どのプロバイダの人が何回来ているか、ひいては常連さんが何回くらい来ているかの目安になります。</P>
 </DIV>
-<H3>���Е���</H3>
+<H3>国籍分析</H3>
 <DIV class="Quote">
-<P>���q����̍��Ђ̓��v������Ă��܂��B<BR>
-�z�X�g�����擾�ł��Ȃ��������̂ɂ��Ắu�h���C�����ʂł����v�Ƃ����\�L�ɂȂ�܂��B<BR>
+<P>お客さんの国籍の統計を取っています。<BR>
+ホスト名が取得できなかったものについては「ドメイン判別できず」という表記になります。<BR>
 <BR>
-�w[�x��] IP�L�^�����x�Ƃ����\�L����������v���ӂł��B<BR>
-���炩�̕��@��IP���B��������ATELNET�ȂǂŃJ�E���^�𒼐ړ��������肷��Ƃ����Ȃ�܂��B<BR>
-�܁A�N���b�N�������ƁA�u���Ă���X�N���v�g���킴�킴���s���Ă݂�l�͋��Ȃ��悤�ȋC�����܂����c�B</P>
+『[警告] IP記録無し』という表記があったら要注意です。<BR>
+何らかの方法でIPを隠蔽したり、TELNETなどでカウンタを直接動かしたりするとこうなります。<BR>
+ま、クラックしたあと、置いてあるスクリプトをわざわざ実行してみる人は居ないような気がしますが…。</P>
 </DIV>
-<H3>�����h���C������</H3>
+<H3>国内ドメイン分析</H3>
 <DIV class="Quote">
-<P>���݁A</P>
+<P>現在、</P>
 <UL>
-  <LI>ac(��w)
-  <LI>ad(�l�b�g���[�N�Ǘ��g�D)
-  <LI>co(���)
-  <LI>ed(����g�D)
-  <LI>gr(�C�Ӓc��)
-  <LI>go(���{�g�D)
-  <LI>ne(�v���o�C�_)
-  <LI>or(�C�Ӓc��)
-  <LI>kek(���G�l���M�[�����팤���@�\)
+  <LI>ac(大学)
+  <LI>ad(ネットワーク管理組織)
+  <LI>co(会社)
+  <LI>ed(教育組織)
+  <LI>gr(任意団体)
+  <LI>go(政府組織)
+  <LI>ne(プロバイダ)
+  <LI>or(任意団体)
+  <LI>kek(高エネルギー加速器研究機構)
 </UL>
-<P>���o�^����Ă��܂��B<BR>
-�e���ɏ�������l�b�g���[�N�Ɋւ��Ă̓��[�}���\�L�Ō�����������Ă���Ǝv���܂��B</P>
+<P>が登録されています。<BR>
+各県に所属するネットワークに関してはローマ字表記で県名が書かれていると思います。</P>
 </DIV>
 </DIV>
 <DIV class="Chapter">
-<H3>�u���E�U���v</H3>
+<H3>ブラウザ統計</H3>
 <DIV class="Quote">
-<P>��L�����O����u���E�U(�G�[�W�F���g- Agent)�������݂̂𔲂��o���A�񐔂𐔂��ď��ʂɂ������̂ł��B<BR>
-�ȑO�̃u���E�U���v�����A���A������Ղ����ɂȂ����̂ł͂Ǝ������Ă��܂��B</P>
-<P>�L���ȃG�[�W�F���g�Ɋւ��Ă͂�����x���߂��t���Ă��܂��B<BR>
-�u[R] �����v�Ƃ������߂��t���Ă���G�[�W�F���g�̓��{�b�g�ł��B�@��ɃT�[�`�G���W���̃��{�b�g���Ǝv���܂��B</P>
-<P>�G�[�W�F���g�ɂ��Ă����Əڂ����m�肽���I�@�Ƃ����l��
-<BR>
-Some Gripes on User-Agent / Kabe���@(���f�����N���炵�܂�)<BR>
-���Q�Ƃ���ƃC�C�ł��傤�B�@������A����Ƀ��T�Q�ȃy�[�W����������ł��������Ȃ��Ă܂����c�B</P>
+<P>
+上記生ログからブラウザ(エージェント- Agent)名部分のみを抜き出し、回数を数えて順位にしたものです。<BR>
+</P>
+<P>有名なエージェントに関してはある程度注釈が付いています。<BR>
+「[R] ○○」という注釈が付いているエージェントはロボットです。　主にサーチエンジンのロボットだと思われます。</P>
 </DIV>
-<H3>IE���m�̃V�F�A</H3>
+<H3>IE同士のシェア</H3>
 <DIV class="Quote">
-<P>Internet Explorer���m�̃o�[�W�����̓��v�ł��B<BR>
-�X�^�C���V�[�g��Javascript�A�u���E�U�ˑ��^�O���g���Ƃ��̎Q�l�ɂ��ĉ������B</P>
+<P>Internet Explorer同士のバージョンの統計です。<BR>
+スタイルシートやJavascript、ブラウザ依存タグを使うときの参考にして下さい。</P>
 </DIV>
-<H3>NN���m�̃V�F�A</H3>
+<H3>利用OS統計</H3>
 <DIV class="Quote">
-<P>Netscape Navigator���m�̃o�[�W�����̓��v�ł��B<BR>
-�X�^�C���V�[�g��Javascript�A�u���E�U�ˑ��^�O���g���Ƃ��̎Q�l�ɂ��ĉ������B</P>
+<P>ブラウザ名から判断できる分だけでお客さんの使用しているOSの統計を取ります。<BR>
+JAVAScriptをかまして取得しているわけではないので、どうしても不正確ですが、まあ、困らない程度の誤差でしょう。</P>
 </DIV>
-<H3>���pOS���v</H3>
+<H3>画面情報統計</H3>
 <DIV class="Quote">
-<P>�u���E�U�����画�f�ł��镪�����ł��q����̎g�p���Ă���OS�̓��v�����܂��B<BR>
-JAVAScript�����܂��Ď擾���Ă���킯�ł͂Ȃ��̂ŁA�ǂ����Ă��s���m�ł����A�܂��A����Ȃ����x�̌덷�ł��傤�B</P>
+<P>画面横幅・縦幅・色深度(最大同時発色数)を全てひっくるめた上での統計です。<BR>
+お客さんがどういう画面環境でページを見ているのかが分かります。</P>
 </DIV>
-<H3>��ʏ�񓝌v</H3>
+<H3>サイズ別統計</H3>
 <DIV class="Quote">
-<P>��ʉ����E�c���E�F�[�x(�ő哯�����F��)��S�ĂЂ�����߂���ł̓��v�ł��B<BR>
-���q���񂪂ǂ�������ʊ��Ńy�[�W�����Ă���̂���������܂��B</P>
+<P>画面横幅・縦幅のみを取りだした統計です。<BR>
+純粋に、どれくらいのサイズでページを作ればいいのかという参考に使って下さい。</P>
 </DIV>
-<H3>�T�C�Y�ʓ��v</H3>
+<H3>色深度別統計</H3>
 <DIV class="Quote">
-<P>��ʉ����E�c���݂̂���肾�������v�ł��B<BR>
-�����ɁA�ǂꂭ�炢�̃T�C�Y�Ńy�[�W�����΂����̂��Ƃ����Q�l�Ɏg���ĉ������B</P>
-</DIV>
-<H3>�F�[�x�ʓ��v</H3>
-<DIV class="Quote">
-<P>�F�[�x�݂̂���肾�������v�ł��B<BR>
-�摜�Ȃǂ���舵���ꍇ�A�ǂꂭ�炢�̐F���̉摜���g���ėǂ��̂��𒲂ׂ�Ƃ��Ɏg���ĉ������B</P>
+<P>色深度のみを取りだした統計です。<BR>
+画像などを取り扱う場合、どれくらいの色数の画像を使って良いのかを調べるときに使って下さい。</P>
 <DIV class="Quote">
 <H4 class="Tips_Headline">Tips</H4>
 <DIV class="Tips">
@@ -551,30 +525,30 @@ JAVAScript�����܂��Ď擾���Ă���킯�ł͂Ȃ��̂ŁA�ǂ����Ă��s���m�ł����A�܂��A
   <TBODY>
     <TR>
       <TD>
-      <P>�p�\�R���̃J�^���O�Ȃǂ����Ă������̕��͑����Ǝv���܂����A�ő哯�����F����
-      2 �� n ��ŕ\������܂��B<BR>
-      �u8�r�b�g�J���[�\���v�Ƃ����\����2��8��A�܂�u256�F����x�ɕ\���ł���v�Ƃ����Ӗ��������܂��B</P>
-      <P>�܂��ACG������Ă���l�ɂ͎߉ނɐ��@����(^x^;</P>
+      <P>パソコンのカタログなどを見てご存じの方は多いと思いますが、最大同時発色数は
+      2 の n 乗で表現されます。<BR>
+      「8ビットカラー表示」という表現は2の8乗、つまり「256色を一度に表現できる」という意味を持ちます。</P>
+      <P>まっ、CGをやっている人には釈迦に説法かな(^x^;</P>
       </TD>
       <TD>
       <TABLE border="1" class="Table_Normal" cellspacing="0">
-        <CAPTION>�F�������\</CAPTION>
+        <CAPTION>色数早見表</CAPTION>
         <TBODY>
           <TR>
             <TD>8bit</TD>
-            <TD>256�F</TD>
+            <TD>256色</TD>
           </TR>
           <TR>
             <TD>16bit</TD>
-            <TD>65536�F</TD>
+            <TD>65536色</TD>
           </TR>
           <TR>
             <TD>24bit</TD>
-            <TD>��1677���F</TD>
+            <TD>約1677万色</TD>
           </TR>
           <TR>
             <TD>32bit</TD>
-            <TD>��42���F</TD>
+            <TD>約42億色</TD>
           </TR>
         </TBODY>
       </TABLE>
@@ -586,56 +560,54 @@ JAVAScript�����܂��Ď擾���Ă���킯�ł͂Ȃ��̂ŁA�ǂ����Ă��s���m�ł����A�܂��A
 </DIV>
 </DIV>
 </DIV>
-<H2 class="Tips_Headline"><A name="trouble">���g���u���V���[�e�B���O</A></H2>
+<H2 class="Tips_Headline"><A name="trouble">■トラブルシューティング</A></H2>
 <DIV class="Tips">
-<H4>��u�w�肳�ꂽ���O�f�B���N�g�� (<VAR>�f�B���N�g����</VAR>) �͑��݂��܂���B�v�ƕ\�����ꂽ��</H4>
-<DIV class="Quote">�v���O�������̐ݒ�̐�΂ɕK�v�Ȑݒ�Ŏw�肵�����O�f�B���N�g���̏ꏊ������Ă��܂��B</DIV>
-<H4>��u���O�f�B���N�g�����ǂݏo���֎~�����ɂȂ��Ă��܂��B�v�ƕ\�����ꂽ��</H4>
-<DIV class="Quote">�w�肳�ꂽ�f�B���N�g���͓ǂݏo�����֎~����Ă��邽�߁A�f�B���N�g�����J�����Ƃ��o���܂���ł����B<BR>
-chmod �œǂݍ��݃r�b�g�𗧂ĂĂ���ĉ������B<BR>
-���ƁA�����A���̃G���[�͏o�܂���(�܃ց܁G�@���ʂ͓ǂݍ��ݕs�ł�
-b. ���o��񂶂�Ȃ����ȁc�H</DIV>
-<H4>��u�A�N�Z�X���O (<VAR>���O�t�@�C����</VAR>) ���J�����Ƃ��o���܂���ł����B�v�ƕ\�����ꂽ��</H4>
+<H4>≪「指定されたログディレクトリ (<VAR>ディレクトリ名</VAR>) は存在しません。」と表示された≫</H4>
+<DIV class="Quote">プログラム側の設定の絶対に必要な設定で指定したログディレクトリの場所が違っています。</DIV>
+<H4>≪「ログディレクトリが読み出し禁止属性になっています。」と表示された≫</H4>
+<DIV class="Quote">指定されたディレクトリは読み出しが禁止されているため、ディレクトリを開くことが出来ませんでした。<BR>
+chmod で読み取り属性をONにして下さい。<BR>
+</DIV>
+<H4>≪「アクセスログ (<VAR>ログファイル名</VAR>) を開くことが出来ませんでした。」と表示された≫</H4>
 <DIV class="Quote">
-<P>�v���O�����͐���ɓ��삵�Ă��܂����A���O�t�@�C�����ɉ�����肪����悤�ł��B</P>
+<P>プログラムは正常に動作していますが、ログファイル側に何か問題があるようです。</P>
 <OL>
-  <LI>���̃��O�t�@�C���͖{���ɑ��݂��Ă��邩�H
-  <LI>���O��ł����݊ԈႦ�Ă��Ȃ����H
-  <LI>���O�t�@�C���������ƋL�^����Ă��邩�H
-  <LI>���O�t�@�C���̃p�[�~�b�V�����͐������ݒ肳��Ă��邩�H
-  <LI>���O�t�@�C�����A�X�L�[���[�h�œ]������̂�Y��Ă���H
+  <LI>そのログファイルは本当に存在しているか？
+  <LI>名前を打ち込み間違えていないか？
+  <LI>ログファイルがちゃんと記録されているか？
+  <LI>ログファイルのパーミッションは正しく設定されているか？
+  <LI>ログファイルをアスキーモードで転送するのを忘れている？
 </OL>
 </DIV>
-<H4>��ujcode.pl ��ǂݍ��ނ��Ƃ��ł��܂���ł����B�v�ƕ\�����ꂽ��</H4>
+<H4>≪「jacode.pl を読み込むことができませんでした。」と表示された≫</H4>
 <DIV class="Quote">
-<P>jcode.pl �̏ꏊ�̎w�肪����Ă��܂��B�@�ύX�s�̏ꏊ�ɂ���ݒ��M��܂���ł������H<BR>
-����Ȏ��͂��Ă��Ȃ��]�A�Ƃ����ꍇ�Alib �f�B���N�g���̒���
-jcode.pl ���{���ɖ�����������܂���B</P>
+<P>jacode.pl の場所の指定が違っています。　変更不可の場所にある設定を弄りませんでしたか？<BR>
+そんな事はしていないゾ、という場合、lib ディレクトリの中に
+jacode.pl が本当に無いかもしれません。</P>
 </DIV>
-<H4>�Ⴂ����҂��Ă��E���Ƃ��X���Ƃ�����Ȃ���<BR>
-��u500 Internal Server Error�v�Ȃǂƕ\��������</H4>
+<H4>≪いくら待ってもウンともスンとも言わない≫<BR>
+≪「500 Internal Server Error」などと表示される≫</H4>
 <DIV class="Quote">
-<P>���炩�̌����ɂ��A�v���O�������̂��N���ł��܂���ł����B<BR>
-�ȉ��̓_���`�F�b�N���ĉ������B</P>
+<P>何らかの原因により、プログラム自体が起動できませんでした。<BR>
+以下の点をチェックして下さい。</P>
 <UL>
-  <LI>perl�ւ̃p�X�͂����Ɛݒ肳��Ă��邩�H
-  <LI>fstat.cgi�A���̑��t�@�C���̃p�[�~�b�V�����͐��������H
-  <P class="Quote">�u�����������v���Q�Ƃ��ĉ������B</P>
+  <LI>perlへのパスはちゃんと設定されているか？
+  <LI>fstat.cgi、その他ファイルのパーミッションは正しいか？
+  <P class="Quote">「総合説明書」を参照して下さい。</P>
   
-  <LI>���̑��̃t�@�C���͑��݂��Ă��邩�H
-  <LI>fstat.cgi ���A�X�L�[���[�h�œ]������̂�Y��Ă���B
-  <LI>�\�[�X��M��Ƃ��ɕ��@�ԈႢ�������N�������B
-  <P class="Quote">����ݒ�̎��ȂǁA��؂ȕ���(�s�̍Ō�� ;
-  ��A���������� ' &quot;)�܂ō폜�����肵�Ă��܂��񂩁H</P>
+  <LI>その他のファイルは存在しているか？
+  <LI>fstat.cgi をアスキーモードで転送するのを忘れている。
+  <LI>ソースを弄るときに文法間違いを引き起こした。
+  <P class="Quote">動作設定の時など、大切な文字(行の最後の ;
+  や、文字を括る ' &quot;)まで削除したりしていませんか？</P>
   
-  <LI>���O�̐���e�ʂ����܂�ɂ��c��ȈׁA�v���o�C�_�Ɏ��s�������~�߂�ꂽ
-  <P class="Quote">������C���^�[�l�b�g�Ȃǂł́ACGI�ɂ��̐������ۂ��Ă��邻���ł��B</P>
+  <LI>ログの数や容量があまりにも膨大な為、プロバイダに実行を差し止められた
+  <P class="Quote">さくらインターネットなどでは、CGIにこの制限を課しているそうです。</P>
   
 </UL>
 </DIV>
 </DIV>
 <HR>
-<P align="right">&copy;1998-2001 �s�v�c�G�̋�<BR>
-(<A href="http://yugen.main.jp/">http://yugen.main.jp/</A>)</P>
+<P align="right"><A href="http://ygkb.jp/">&copy;1998-2016 不可思議絵の具</A></P>
 </BODY>
 </HTML>

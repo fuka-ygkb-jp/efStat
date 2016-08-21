@@ -1,83 +1,77 @@
 ;#+------------------------------------------------------------------------
 ;#|efStat
-;#|½é´ü¥á¥Ë¥å¡¼
+;#|åˆæœŸãƒ¡ãƒ‹ãƒ¥ãƒ¼
 ;#+------------------------------------------------------------------------
 print <<"_END_";
 <FORM action=\"${self}\" method=\"POST\">
 <CENTER><TABLE border=\"1\" cellpadding=\"2\" cellspacing=\"0\"><TBODY><TR>
-		<TH colspan=\"4\"${tbc[0]}>É½\¼¨¤µ¤»¤ë¹àÌÜ</TH>
+		<TH colspan=\"4\"${tbc[0]}>è¡¨ç¤ºã•ã›ã‚‹é …ç›®</TH>
 	</TR><TR>
-		<TD${tbc[5]}><INPUT type=\"radio\" name=\"MODE\" value=\"rawlog\" checked>À¸¥í¥°</TD>
-		<TD${tbc[6]}><INPUT type=\"radio\" name=\"MODE\" value=\"count\">¥«¥¦¥ó¥È¿ô½¸·×</TD>
-		<TD${tbc[7]}><INPUT type=\"radio\" name=\"MODE\" value=\"all\">Á´¤ÆÉ½\¼¨</TD>
-		<TD${tbc[8]}>¡¡</TD>
+		<TD${tbc[5]}><INPUT type=\"radio\" name=\"MODE\" value=\"rawlog\" checked>ç”Ÿãƒ­ã‚°</TD>
+		<TD${tbc[6]}><INPUT type=\"radio\" name=\"MODE\" value=\"count\">ã‚«ã‚¦ãƒ³ãƒˆæ•°é›†è¨ˆ</TD>
+		<TD${tbc[7]}><INPUT type=\"radio\" name=\"MODE\" value=\"all\">å…¨ã¦è¡¨ç¤º</TD>
+		<TD${tbc[8]}>ã€€</TD>
 	</TR><TR>
-		<TD${tbc[5]}><INPUT type=\"radio\" name=\"MODE\" value=\"ref\">»²¾È¸µÅý·×(·Ï)</TD>
-		<TD${tbc[6]}><INPUT type=\"radio\" name=\"MODE\" value=\"host\">¥Û¥¹¥ÈÅý·×(·Ï)</TD>
-		<TD${tbc[7]}><INPUT type=\"radio\" name=\"MODE\" value=\"ua\">¥Ö¥é¥¦¥¶Åý·×(·Ï)</TD>
-		<TD${tbc[8]}><INPUT type=\"radio\" name=\"MODE\" value=\"screen\">²èÌÌ¾ðÊóÅý·×(·Ï)</TD>
+		<TD${tbc[5]}><INPUT type=\"radio\" name=\"MODE\" value=\"ref\">å‚ç…§å…ƒçµ±è¨ˆ(ç³»)</TD>
+		<TD${tbc[6]}><INPUT type=\"radio\" name=\"MODE\" value=\"host\">ãƒ›ã‚¹ãƒˆçµ±è¨ˆ(ç³»)</TD>
+		<TD${tbc[7]}><INPUT type=\"radio\" name=\"MODE\" value=\"ua\">ãƒ–ãƒ©ã‚¦ã‚¶çµ±è¨ˆ(ç³»)</TD>
+		<TD${tbc[8]}><INPUT type=\"radio\" name=\"MODE\" value=\"screen\">ç”»é¢æƒ…å ±çµ±è¨ˆ(ç³»)</TD>
 </TR></TBODY></TABLE></CENTER>
 <BR>
 <CENTER><TABLE border=\"0\" cellpadding=\"4\" cellspacing=\"0\"><TBODY><TR><TD valign=\"top\">
 	<TABLE border=\"1\" cellpadding=\"1\" cellspacing=\"0\"><TBODY><TR>
-			<TH colspan=\"3\"${tbc[0]}>É½\¼¨¥ê¥ß¥Ã¥¿ (È¾³Ñ¿ô»ú¤Ç»ØÄê)</TH>
+			<TH colspan=\"3\"${tbc[0]}>è¡¨ç¤ºãƒªãƒŸãƒƒã‚¿ (åŠè§’æ•°å­—ã§æŒ‡å®š)</TH>
 		</TR><TR${tbc[5]}>
-			<TH${tbc[1]}>É½\¼¨ÈÏ°Ï»ØÄê</TH>
-			<TD colspan=\"2\"><SELECT name=\"d\"><OPTION VALUE=a>Á´¤Æ<OPTION VALUE=t>ËÜÆü<OPTION VALUE=y>ºòÆü</SELECT></TD>
+			<TH${tbc[1]}>è¡¨ç¤ºç¯„å›²æŒ‡å®š</TH>
+			<TD colspan=\"2\"><SELECT name=\"d\"><OPTION VALUE=a>å…¨ã¦<OPTION VALUE=t>æœ¬æ—¥<OPTION VALUE=y>æ˜¨æ—¥</SELECT></TD>
 		</TR><TR${tbc[5]}>
-			<TH${tbc[1]}>À¸¥í¥°</TH>
-			<TD>À¸¥í¥°</TD>
+			<TH${tbc[1]}>ç”Ÿãƒ­ã‚°</TH>
+			<TD>ç”Ÿãƒ­ã‚°</TD>
 			<TD><INPUT size=\"3\" type=\"text\" name=\"LM_raw\" value=\"$COOKIE{'LM_raw'}\" maxlength=\"3\"></TD>
 		</TR><TR${tbc[6]}>
-			<TH rowspan=\"4\"${tbc[2]}>»²¾È¸µ·Ï</TH>
-			<TD>»²¾È¸µ</TD>
+			<TH rowspan=\"2\"${tbc[2]}>å‚ç…§å…ƒç³»</TH>
+			<TD>å‚ç…§å…ƒ</TD>
 			<TD><INPUT size=\"3\" type=\"text\" name=\"LM_ref\" value=\"$COOKIE{'LM_ref'}\" maxlength=\"3\"></TD>
 		</TR><TR${tbc[6]}>
-			<TD>TINAMIÊ¬ÀÏ</TD>
-			<TD><INPUT size=\"3\" type=\"text\" name=\"LM_tnm\" value=\"$COOKIE{'LM_tnm'}\" maxlength=\"3\"></TD>
-		</TR><TR${tbc[6]}>
-			<TD>Surfers ParadiceÊ¬ÀÏ</TD>
-			<TD><INPUT size=\"3\" type=\"text\" name=\"LM_sp\" value=\"$COOKIE{'LM_sp'}\" maxlength=\"3\"></TD>
-		</TR><TR${tbc[6]}>
-			<TD>¥µ¡¼¥Á¥¨¥ó¥¸¥óÊ¬ÀÏ</TD>
+			<TD>ã‚µãƒ¼ãƒã‚¨ãƒ³ã‚¸ãƒ³åˆ†æž</TD>
 			<TD><INPUT size=\"3\" type=\"text\" name=\"LM_key\" value=\"$COOKIE{'LM_key'}\" maxlength=\"3\"></TD>
 		</TR><TR${tbc[7]}>
-			<TH rowspan=\"2\"${tbc[3]}>¥Û¥¹¥È·Ï</TH>
-			<TD>¥Û¥¹¥ÈÌ¾</TD>
+			<TH rowspan=\"2\"${tbc[3]}>ãƒ›ã‚¹ãƒˆç³»</TH>
+			<TD>ãƒ›ã‚¹ãƒˆå</TD>
 			<TD><INPUT size=\"3\" type=\"text\" name=\"LM_hst\" value=\"$COOKIE{'LM_hst'}\" maxlength=\"3\"></TD>
 		</TR><TR${tbc[7]}>
-			<TD>¹ñÀÒÊÌÅý·×</TD>
+			<TD>å›½ç±åˆ¥çµ±è¨ˆ</TD>
 			<TD><INPUT size=\"3\" type=\"text\" name=\"LM_dm\" value=\"$COOKIE{'LM_dm'}\" maxlength=\"3\"></TD>
 		</TR><TR${tbc[8]}>
-			<TH${tbc[4]}>¥Ö¥é¥¦¥¶·Ï</TH>
-			<TD>¥Ö¥é¥¦¥¶Ì¾</TD>
+			<TH${tbc[4]}>ãƒ–ãƒ©ã‚¦ã‚¶ç³»</TH>
+			<TD>ãƒ–ãƒ©ã‚¦ã‚¶å</TD>
 			<TD><INPUT size=\"3\" type=\"text\" name=\"LM_ua\" value=\"$COOKIE{'LM_ua'}\" maxlength=\"3\"></TD>
 	</TR></TBODY></TABLE>
 </TD><TD valign=\"top\" align=\"center\">
 	<TABLE border=\"1\" cellpadding=\"1\" cellspacing=\"0\"><TBODY><TR>
-			<TH colspan=\"3\"${tbc[0]}>¥ª¥×¥·¥ç¥ó</TH>
+			<TH colspan=\"3\"${tbc[0]}>ã‚ªãƒ—ã‚·ãƒ§ãƒ³</TH>
 		</TR><TR${tbc[5]}>
-			<TH align=\"right\"${tbc[1]}>¥Æ¥¤¥¹¥È¥ì¥¹¥â¡¼¥É¤ÇÉ½\¼¨</TH>
-			<TD><INPUT type=\"radio\" name=\"OPT_tl\" value=\"1\"$check_tl0>¤µ¤»¤ë</TD>
-			<TD><INPUT type=\"radio\" name=\"OPT_tl\" value=\"0\"$check_tl1>¤µ¤»¤Ê¤¤</TD>
+			<TH align=\"right\"${tbc[1]}>ãƒ†ã‚¤ã‚¹ãƒˆãƒ¬ã‚¹ãƒ¢ãƒ¼ãƒ‰ã§è¡¨ç¤º</TH>
+			<TD><INPUT type=\"radio\" name=\"OPT_tl\" value=\"1\"$check_tl0>ã•ã›ã‚‹</TD>
+			<TD><INPUT type=\"radio\" name=\"OPT_tl\" value=\"0\"$check_tl1>ã•ã›ãªã„</TD>
 		</TR><TR${tbc[6]}>
-			<TH align=\"right\"${tbc[2]}>¥°¥é¥Õ¤òÉ½\¼¨</TH>
-			<TD><INPUT type=\"radio\" name=\"OPT_gr\" value=\"1\"$check_gr0>¤µ¤»¤ë</TD>
-			<TD><INPUT type=\"radio\" name=\"OPT_gr\" value=\"0\"$check_gr1>¤µ¤»¤Ê¤¤</TD>
+			<TH align=\"right\"${tbc[2]}>ã‚°ãƒ©ãƒ•ã‚’è¡¨ç¤º</TH>
+			<TD><INPUT type=\"radio\" name=\"OPT_gr\" value=\"1\"$check_gr0>ã•ã›ã‚‹</TD>
+			<TD><INPUT type=\"radio\" name=\"OPT_gr\" value=\"0\"$check_gr1>ã•ã›ãªã„</TD>
 		</TR><TR${tbc[7]}>
-			<TH align=\"right\"${tbc[3]}>»²¾È¸µ¤Ø¤Î¥ê¥ó¥¯¤òµö²Ä</TH>
-			<TD><INPUT type=\"radio\" name=\"OPT_lk\" value=\"1\"$check_lk0>¤¹¤ë</TD>
-			<TD><INPUT type=\"radio\" name=\"OPT_lk\" value=\"0\"$check_lk1>¤·¤Ê¤¤</TD>
+			<TH align=\"right\"${tbc[3]}>å‚ç…§å…ƒã¸ã®ãƒªãƒ³ã‚¯ã‚’è¨±å¯</TH>
+			<TD><INPUT type=\"radio\" name=\"OPT_lk\" value=\"1\"$check_lk0>ã™ã‚‹</TD>
+			<TD><INPUT type=\"radio\" name=\"OPT_lk\" value=\"0\"$check_lk1>ã—ãªã„</TD>
 		</TR><TR${tbc[8]}>
-			<TH align=\"right\"${tbc[4]}>¤³¤ì¤éÀßÄê¾ðÊó¤òÊÝ»ý</TH>
-			<TD><INPUT type=\"radio\" name=\"OPT_ck\" value=\"1\"$check_ck0>¤¹¤ë</TD>
-			<TD><INPUT type=\"radio\" name=\"OPT_ck\" value=\"0\"$check_ck1>¤·¤Ê¤¤</TD>
+			<TH align=\"right\"${tbc[4]}>ã“ã‚Œã‚‰è¨­å®šæƒ…å ±ã‚’ä¿æŒ</TH>
+			<TD><INPUT type=\"radio\" name=\"OPT_ck\" value=\"1\"$check_ck0>ã™ã‚‹</TD>
+			<TD><INPUT type=\"radio\" name=\"OPT_ck\" value=\"0\"$check_ck1>ã—ãªã„</TD>
 _END_
 
 if ($DoPass) {
 print <<"_END_";
 			</TR><TR${tbc[8]}>
-			<TH align=\"right\"${tbc[4]}>¥Ñ¥¹¥ï¡¼¥É</TH>
+			<TH align=\"right\"${tbc[4]}>ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰</TH>
 			<TD colspan=\"2\"><INPUT type=\"password\" name=\"PASS\" value=\"$COOKIE{'PASS'}\"size=\"10\" maxlength=\"10\"></TD>
 _END_
 }
@@ -86,10 +80,10 @@ print <<"_END_";
 	</TR></TBODY></TABLE>
 	<BR><BR>
 	<CENTER>
-		<INPUT type=\"submit\" value=\"°Ê¾å¤Î¾ò·ï¤Ç¥í¥°¤òÉ½\¼¨\"><BR><BR>
-		·ë²Ì¤ÎÉ½\¼¨¤Ë¤Ï»þ´Ö¤¬¤«¤«¤ê¤Þ¤¹¡£<BR>
-		¥Ü¥¿¥ó¤ò²¡¤·¤¿¸å<BR>
-		¤·¤Ð¤é¤¯¤½¤Î¤Þ¤Þ¤Ç¤ªÂÔ¤Á²¼¤µ¤¤¡£
+		<INPUT type=\"submit\" value=\"ä»¥ä¸Šã®æ¡ä»¶ã§ãƒ­ã‚°ã‚’è¡¨ç¤º\"><BR><BR>
+		çµæžœã®è¡¨ç¤ºã«ã¯æ™‚é–“ãŒã‹ã‹ã‚Šã¾ã™ã€‚<BR>
+		ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸå¾Œ<BR>
+		ã—ã°ã‚‰ããã®ã¾ã¾ã§ãŠå¾…ã¡ä¸‹ã•ã„ã€‚
 	</CENTER>
 </TD></TR></TBODY></TABLE></CENTER>
 </FORM>

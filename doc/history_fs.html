@@ -1,50 +1,48 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
 <HTML>
 <HEAD>
-<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
-<META name="GENERATOR" content="IBM HomePage Builder 2000 V4.0.6  for Windows">
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <LINK rel="stylesheet" type="text/css" href="def.css">
-<TITLE>efStat���C����</TITLE>
+<TITLE>efStat改修履歴</TITLE>
 </HEAD>
-<BODY bgcolor="#ffffff" text="#7e2828" link="#7726c8" alink="5c4fff" vlink="ff5959"><FONT size="+3"><B>efStat���C����</B></FONT>
+<BODY bgcolor="#ffffff" text="#7e2828" link="#7726c8" alink="5c4fff" vlink="ff5959"><FONT size="+3"><B>efStat改修履歴</B></FONT>
 <HR>
-<DIV align="right">�A�N�Z�X��̓p�b�P�[�W - efStat <IMG src="fstat.gif" width="88" height="31" border="0" align="top"></DIV>
-<BR>
-<TABLE width="95%" align="center" cellpadding="2" cellspacing="0" border="1" bgcolor="#ffdfe0">
-  <TBODY>
-    <TR nowrap valign="top">
-      <TD bgcolor="#ffc6c7" colspan="3">
-      <P><B><FONT size="+1">��ToDo</FONT></B></P>
-      </TD>
-    </TR>
-    <TR nowrap valign="top">
-      <TD colspan="3">
-      <UL>
-        <LI>�v���O�������d�N���ł��Ȃ��悤�ɔr��������������
-        <LI>�p��ł��p�ӂ�����
-        <LI>�_�T���ƍD�]�̔z�F�����m�g�[���n�ɕς���
-        <LI>�ݒ��ʃt�@�C���ɕ����EWeb����̏C��
-        <LI>�\�[�X�̏�������<BR>
-        �I�u�W�F�N�g�w���̊����͖����ł��A����ɋ߂Â����I�H
-        <UL>
-          <LI>�n�b�V���̃n�b�V���Ȃǂ��g���ăf�[�^��̌n�I�ɂ܂Ƃ߂�
-          <LI>�ϐ��̋Ǐ����E�����̋Ǐ����E�@�\�ʂɃp�b�P�[�W�𕪂��邱�Ƃ�O�ꂷ��
-        </UL>
-        
-      </UL>
-      </TD>
-    </TR>
-  </TBODY>
-</TABLE>
+<DIV align="right">アクセス解析パッケージ - efStat <IMG src="fstat.gif" width="88" height="31" border="0" align="top"></DIV>
 <BR>
 <TABLE width="95%" align="center" cellpadding="2" cellspacing="0" border="1" bgcolor="#ffdfe0">
   <TBODY>
     <TR>
-      <TD>2002�N���H</TD>
+      <TD>2016/08/12</TD>
+      <TD>2.2</TD>
+      <TD>
+		構成変更<br>
+		<UL>
+			<LI>Perl5.14.4に対応し、「さくらのレンタルサーバ」等で動作するようにした
+			<LI>文字コード変換ライブラリをjcode.plからjacode.plに変更
+			<LI>文字コードをUTF-8に変更
+		</UL>
+		
+		機能変更<br>
+		昨今、ブラウザの違いを意識する必要が無くなってきましたので結果の見せ方を少し変えました。<br>
+		<UL>
+			<LI>サーチエンジン分析…UTF-8に対応
+			<LI>TINAMI分析…廃止
+			<LI>Surfersparadise分析…廃止
+			<LI>国籍別統計／国内ドメイン統計／米国ドメイン統計…変換表を最新化
+			<LI>ブラウザ統計…Chrome/Firefox/Safari/Edgeに対応
+			<LI>IE同士のシェア…Ver.8/9/10/11に対応
+			<LI>Netscape Navigater同士のシェア…廃止
+			<LI>利用OS統計…iPhone/iPad/iPodに対応
+			<LI>利用OS統計…バージョン別の集計をやめた
+		</UL>
+      </TD>
+    </TR>
+    <TR>
+      <TD>2002年頃？</TD>
       <TD>2.1.4</TD>
       <TD>
       <UL>
-        <LI>���pOS���v��WindowsXP�Ή�
+        <LI>利用OS統計にWindowsXP対応
       </UL>
       </TD>
     </TR>
@@ -53,89 +51,89 @@
       <TD>2.1.3</TD>
       <TD>
       <UL>
-        <LI>�N�b�L�[�ɃZ�b�g�����p�X���[�h�̗������f����Ȃ��̂��C��
-        <LI>�N�b�L�[�ɃZ�b�g���������N���E�ݒ���ێ��̗������f����Ȃ��̂��C��
-        <LI>�����R�[�h��EUC����S-JIS�ɖ߂�(�s�]�̈�)
-        <LI>�J�E���g�W�v�̍��ڂ������C�̗��������̂ɂȂ���
-        <LI>�J�E���g�W�v�ɏc�_�O���t��t����
-        <LI>�t�@�C���I�[�v�����A�ǂݍ��݃��b�N���|����悤�ɂ���
-        <LI>gTLD��biz,info,name,pro,museum,aero,coop��ǉ�
-        <LI>ccTLD��ps(�p���X�`�i�������{)��ǉ�
-        <LI>�����G���W���̑Ή���������ɑ��₵�����C��
+        <LI>クッキーにセットしたパスワードの欄が反映されないのを修正
+        <LI>クッキーにセットしたリンク許可・設定情報保持の欄が反映されないのを修正
+        <LI>文字コードをEUCからS-JISに戻す(不評の為)
+        <LI>カウント集計の項目が少し気の利いたものになった
+        <LI>カウント集計に縦棒グラフを付けた
+        <LI>ファイルオープン時、読み込みロックを掛けるようにした
+        <LI>gTLDにbiz,info,name,pro,museum,aero,coopを追加
+        <LI>ccTLDにps(パレスチナ自治政府)を追加
+        <LI>検索エンジンの対応数を微妙に増やした＆修正
       </UL>
       </TD>
     </TR>
     <TR nowrap valign="top">
       <TD>2001/01/12</TD>
       <TD>2.1.2</TD>
-      <TD>�C��
+      <TD>修正
       <UL>
-        <LI>�u���E�U���v�̒��߂��\������Ȃ��Ȃ��Ă����̂��C��
-        <LI>�N�x�ʏW�v���o�͂���Ă��Ȃ������̂��C���@(�c�Ƃ������A���̍��܂ŖY��Ă���)
-        <LI>�����j���[�ɂ����āA��ʏ��n���o�͂���Ă��Ȃ������̂��C��
-        <LI>�������̖��Q��typo���C��
-        <LI>�����j���[��P�F�ɓ���
+        <LI>ブラウザ統計の注釈が表示されなくなっていたのを修正
+        <LI>年度別集計が出力されていなかったのを修正　(…というより、今の今まで忘れていた)
+        <LI>小メニューにおいて、画面情報系が出力されていなかったのを修正
+        <LI>いくつかの無害なtypoを修正
+        <LI>小メニューを単色に統一
       </UL>
-      �ێ�
+      保守
       <UL>
-        <LI>�Q�ƌ��AInfoNavi��InfoWeb�������Ƌ�ʂ���悤��
-        <LI>OS���ʂ̗D�揇�ʂ�ύX<BR>
-        ���̃y�[�W�����Ȃ̂����m��܂��񂪁A����Win95����Win2000�̕������y���Ă���݂����ł��B
-        <LI>Navigator �̎��ʂ�����
-        <LI>&quot;CacheFlow&quot;�Ƃ���Agent�ɑΉ��B
+        <LI>参照元、InfoNaviとInfoWebをちゃんと区別するように
+        <LI>OS識別の優先順位を変更<BR>
+        私のページだけなのかも知れませんが、今やWin95よりもWin2000の方が普及しているみたいです。
+        <LI>Navigator の識別を強化
+        <LI>&quot;CacheFlow&quot;というAgentに対応。
       </UL>
       </TD>
     </TR>
     <TR nowrap valign="top">
       <TD>2001/01/09</TD>
       <TD>2.1.1</TD>
-      <TD>���O�ꊇ�\�����[�h�ɂ����āA�����O�̕\�������̎w�肪���f����Ȃ��Ȃ��Ă����̂��C��
-      (2.1�Ŕ���)</TD>
+      <TD>ログ一括表示モードにおいて、生ログの表示件数の指定が反映されなくなっていたのを修正
+      (2.1で発生)</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>2001/01/04</TD>
       <TD>2.1</TD>
-      <TD>�����̒��ł͂���Ŋ����ł��B<BR>
-      ���ʁA��͋@�\���̂̋@�\�ǉ��͖����ł��傤�B<BR>
-      ����͎������g��(���t�@�����X || Perl)�̕׋������邽�߂ɘM��܂����B<BR>
-      ������������Ċ����������̂ŁA�\�[�X�����ď΂�Ȃ��ŉ������ˁB<BR>
+      <TD>自分の中ではこれで完成です。<BR>
+      当面、解析機能自体の機能追加は無いでしょう。<BR>
+      今回は自分自身が(リファレンス || Perl)の勉強をするために弄りました。<BR>
+      無理矢理こじつけて完成させたので、ソースを見て笑わないで下さいね。<BR>
       <UL>
-        <LI>�����R�[�h��EUC�ɕύX<BR>
-        (���S�҂ւ̕~�����X�ɍ����Ȃ�܂������A�T�[�`�G���W�����͂Ȃǂ̐��x�����サ���͂��ł�)
-        <LI>�Q�ƌ����v������
+        <LI>文字コードをEUCに変更<BR>
+        (初心者への敷居が更に高くなりましたが、サーチエンジン分析などの精度が向上したはずです)
+        <LI>参照元統計を強化
         <UL>
-          <LI>�C�ӂ�URL���܂Ƃߏグ��@�\��ǉ�
+          <LI>任意のURLをまとめ上げる機能を追加
         </UL>
         
-        <LI>�T�[�`�G���W�����͂�����
+        <LI>サーチエンジン分析を強化
         <UL>
-          <LI>TINAMI��Charlotte(�摜�����y�[�W)�ɑΉ�
-          <LI>Yahoo�J�e�S���ɑΉ��H(������Yahoo�ɓ����Ă��ł͂Ȃ��̂Ő����������͕s��)
-          <LI>�d�������[�`���̍œK��
+          <LI>TINAMIのCharlotte(画像検索ページ)に対応
+          <LI>Yahooカテゴリに対応？(自分がYahooに入ってる訳ではないので成功したかは不明)
+          <LI>仕分けルーチンの最適化
         </UL>
         
-        <LI>OS���v������
+        <LI>OS統計を強化
         <UL>
-          <LI>AOL�ł�MSN�ł�IE�Ɍ���A��������v�̑ΏۂƂȂ�悤�ɕύX
-          <LI>Windows 3.1�ɑΉ�������
+          <LI>AOL版とMSN版のIEに限り、これも統計の対象となるように変更
+          <LI>Windows 3.1に対応させた
         </UL>
         
-        <LI>�u���E�U���v������
+        <LI>ブラウザ統計を強化
         <UL>
-          <LI>NetCaptor�ɑΉ�������(�������g���Ă���̂��ۛ��Ƃ�����������:-)<BR>
-          Cuam�Ȃ񂩂������C�P��񂶂�Ȃ����낤���c�H(RFC�ւ̑Ή���]�ށc)
+          <LI>NetCaptorに対応させた(自分が使っている故の贔屓という説もある:-)<BR>
+          Cuamなんかも多分イケるんじゃないだろうか…？(RFCへの対応を望む…)
         </UL>
         
-        <LI>�z�X�g�d�����������œK��
+        <LI>ホスト仕分け処理を最適化
         <UL>
-          <LI>���ł�gTLD/ccTLD�e�[�u��������<BR>
-          (���R�[�h��ISO3166�ŋK�肳��Ă��邻���ł��ˁB������x�����ƒ��ׂĂ݂Ȃ����)
+          <LI>ついでにgTLD/ccTLDテーブルを強化<BR>
+          (国コードはISO3166で規定されているそうですね。もう一度ちゃんと調べてみなければ)
         </UL>
         
-        <LI>�e��ϊ��e�[�u����ʃt�@�C���ɕ������� <BR>
-        (����ŁA���ʂ̐l�������e�i���X���₷���Ȃ������ȁH)
-        <LI>�t�H���g�w����X�^�C���V�[�g�ōs���悤�ɂ���<BR>
-        (��R�AHTML�M�҂��ǂނƎ��ɂ����Ȃ�悤��HTML�\�[�X����)
+        <LI>各種変換テーブルを別ファイルに分離した <BR>
+        (これで、普通の人もメンテナンスしやすくなったかな？)
+        <LI>フォント指定をスタイルシートで行うようにした<BR>
+        (俄然、HTML信者が読むと死にたくなるようなHTMLソースだが)
       </UL>
       </TD>
     </TR>
@@ -144,20 +142,20 @@
       <TD>2.0.2</TD>
       <TD>
       <UL>
-        <LI>�Q�ƌ��ւ̃����N�𖳌��ɂ���Ɛ����O�ŎQ�ƌ����\������Ȃ��Ȃ��Ă��܂������C��
+        <LI>参照元へのリンクを無効にすると生ログで参照元が表示されなくなってしまう問題を修正
       </UL>
       </TD>
     </TR>
     <TR nowrap valign="top">
       <TD>2000/11/12</TD>
       <TD>2.0.1</TD>
-      <TD>�p�b�`���āB
+      <TD>パッチ当て。
       <UL>
-        <LI>��͔͈͂����肵���ꍇ�Ɏ��ԑѕʏW�v�����������Ȃ�̂��C��
-        <LI>Windows2000 + IE ��OS���v����O��Ă����̂��C��
-        <LI>�F���� bit �ŕ\������݂̂ɂ���<BR>
-        (�����ƌv�Z����ƌ����ӂ�̊댯�����邽��)
-        <LI>�����Ƃ��ߎ��̑����C�^�Y���΍�(�O��������s�s�ɂ���)��ׂ�
+        <LI>解析範囲を限定した場合に時間帯別集計がおかしくなるのを修正
+        <LI>Windows2000 + IE がOS統計から外れていたのを修正
+        <LI>色数を bit で表現するのみにした<BR>
+        (ちゃんと計算すると桁あふれの危険があるため)
+        <LI>何かともめ事の多いイタズラ対策(外部から実行不可にする)を潰す
       </UL>
       </TD>
     </TR>
@@ -166,22 +164,22 @@
       <TD>2.0</TD>
       <TD>
       <UL>
-        <LI>�V���O�`���ɑΉ�����(efCount Ver.2.0�`��)
+        <LI>新ログ形式に対応した(efCount Ver.2.0形式)
         <UL>
-          <LI>62�i���ɑΉ�
-          <LI>�N�x�ʏW�v��ǉ�
-          <LI>��ʉ𑜓x�E�F�����v��ǉ�
+          <LI>62進数に対応
+          <LI>年度別集計を追加
+          <LI>画面解像度・色数統計を追加
         </UL>
         
-        <LI>���O���� { �S�� | �{�� | ��� } �̕��𔲂��o���ĕ��͂ł���悤�ɂȂ����B<BR>
-        (�A�N�Z�X�̑����y�[�W�ł́A�����Ƀ��O��傫�����Ȃ��ƈӖ����Ȃ��Ǝv��)
-        <LI>���T�C�gURL�𕡐��w��ł���悤�ɂ���<BR>
-        (�T�C�g�������ɕ��U����Ă��鎞���u�T�C�g���ړ����́v���Ή��ł���悤�ɂȂ�)
-        <LI>�p�X���[�h�����ł���悤�ɂȂ���
-        <LI>TINAMI�̃J�e�S���X�V�ɑΉ�����
-        <LI>�J�E���g�l��6���ȏゾ�Ɛ���ɕ\������Ȃ��o�O�𒼂���
-        <LI>�n�b�V����^�O���u(C�Ō����|�C���^�H)�𗘗p�ł���ǖ�(�֐��ւ̈����n���Ȃ�)�ł͕K���g���A���ʂȔz��R�s�[�����炵��<BR>
-        (�������x��20%�������������B�@�܂�����悤�ȋC������)
+        <LI>ログから { 全て | 本日 | 昨日 } の分を抜き出して分析できるようになった。<BR>
+        (アクセスの多いページでは、相応にログを大きくしないと意味がないと思う)
+        <LI>自サイトURLを複数指定できるようにした<BR>
+        (サイトが複数に分散されている時も「サイト内移動分析」が対応できるようになる)
+        <LI>パスワード制限できるようになった
+        <LI>TINAMIのカテゴリ更新に対応した
+        <LI>カウント値が6桁以上だと正常に表示されないバグを直した
+        <LI>ハッシュや型グロブ(Cで言うポインタ？)を利用できる局面(関数への引数渡しなど)では必ず使い、無駄な配列コピーを減らした<BR>
+        (処理速度が20%程高速化した。　まだ削れるような気がする)
       </UL>
       </TD>
     </TR>
@@ -190,67 +188,67 @@
       <TD>1.2</TD>
       <TD>
       <UL>
-        <LI>�u���E�U���͂̋�����ύX�B�@(��������RFC�ǂ�ŕ׋�����Ƃȁ`)
+        <LI>ブラウザ分析の挙動を変更。　(いい加減RFC読んで勉強せんとな～)
         <UL>
-          <LI>�G�[�W�F���g���̐U�蕪��������(�����_�ōœK�̃n�Y)
-          <LI>����IE�Ə���NN����OS�̓��v�͎��Ȃ��悤�ɂ���
-          <LI>OS���v�ɂāAUNIX�n���ׂ������ނ���悤�ɂ���(�Ώۂ�X���Netscape�̂�)
-          <LI>Windows2000�����v�ɓ����(Win2000+IE�g�p���̂�)
+          <LI>エージェント名の振り分けを強化(現時点で最適のハズ)
+          <LI>純正IEと純正NNしかOSの統計は取らないようにする
+          <LI>OS統計にて、UNIX系も細かく分類するようにした(対象はX上のNetscapeのみ)
+          <LI>Windows2000も統計に入れる(Win2000+IE使用時のみ)
         </UL>
         
-        <LI>�ׂ������Ă�����C��
-        <LI>CPU�g�p���Ԃ�\��(�����܂ł��܂�)
+        <LI>細かい見てくれを修正
+        <LI>CPU使用時間を表示(あくまでおまけ)
       </UL>
       </TD>
     </TR>
     <TR nowrap valign="top">
       <TD>2000/05/17</TD>
       <TD>1.1</TD>
-      <TD>�����̃T�C�g���̂��q����̈ړ����\���ł���悤�ɂ����B(�T�C�g���ړ�����)<BR>
-      ���\�O�l����̗��q�����n���ɂȂ��J���c�H�ƕč��h���C�����v��ǉ��B<BR>
-      �O���t�Ɛ��l�̍��ڂ������B�^�O�����k����āA�����͕\���������Ȃ邩�ƁB<BR>
-      ����������(����)���ɂ��Ă͊����̕\�����ȗ�������悤�ɂ����B<BR>
-      ���ʃ����L���O�ł�������挎����\�����Ă����̂��C���B<BR>
-      �b��I��Netscape Navigator6�ɑΉ��B(�V�F�A�̕\�ł�5.0�ƕ\������܂�)</TD>
+      <TD>自分のサイト内のお客さんの移動も表示できるようにした。(サイト内移動分析)<BR>
+      結構外人さんの来客率も馬鹿にならんカモ…？と米国ドメイン統計を追加。<BR>
+      グラフと数値の項目を結合。タグが圧縮されて、少しは表示が早くなるかと。<BR>
+      割合が同じ(同着)分については割合の表示を省略させるようにした。<BR>
+      月別ランキングでうっかり先月分を表示していたのを修正。<BR>
+      暫定的にNetscape Navigator6に対応。(シェアの表では5.0と表示されます)</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>2000/04/05</TD>
       <TD>1.0c</TD>
-      <TD>�F�X�Ɲ��߂����Ȃ̂ŁANPH�X�N���v�g�`������߂�B<BR>
-      ���炭�����Mac��l�X�P�ł����Ȃ��\���ł���悤�ɂȂ�܂��B<BR>
-      �T�[�`�G���W�����X�g��TINAMI,MSN,jplaza(fresheye�~���[?)��ǉ��E�C���B</TD>
+      <TD>色々と揉めそうなので、NPHスクリプト形式をやめる。<BR>
+      恐らくこれでMacやネスケでも問題なく表示できるようになります。<BR>
+      サーチエンジンリストにTINAMI,MSN,jplaza(fresheyeミラー?)を追加・修正。</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>2000/03/11</TD>
       <TD>1.0b</TD>
-      <TD>���ϐ�TZ���C�����鏈����ǉ��B(�C�O�T�[�o�p)</TD>
+      <TD>環境変数TZを修正する処理を追加。(海外サーバ用)</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>2000/02/19</TD>
       <TD>1.0a</TD>
-      <TD>PERL4���Ɩ������[�v�Ɋׂ�o�O���C��<BR>
-      �G���[����������</TD>
+      <TD>PERL4だと無限ループに陥るバグを修正<BR>
+      エラー処理を強化</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>2000/02/19</TD>
       <TD>1.0</TD>
-      <TD>�v���O�������̂�Webstat����efStat�ɕύX�B�@version�\�L�������B<BR>
-      �v���O�������ꂩ���蒼�����B�@��܂��ȉ��P�e�[�}�͈ȉ��̒ʂ�B
+      <TD>プログラム名称をWebstatからefStatに変更。　version表記も整理。<BR>
+      プログラムを一から作り直した。　大まかな改善テーマは以下の通り。
       <UL>
-        <LI>���l���ǂ݂₷���\�[�X��S������<BR>
-        (�ϐ�(�z��)���̑̌n���A�֐��̈�{���A�@�\�ʂɃ\�[�X�𕪊�)
-        <LI>���O���������ɓǂݍ��܂��A��͌��ʂ݂̂��������ɓW�J����<BR>
-        (���O���ォ�牺�܂œǂ݂Ƃ������͌��ʂ��o���Ă���)
-        <LI>�z��Ԃ̃R�s�[���ɗ͂��Ȃ�
-        <LI>�z��𑀍�(copy,sort��)����O�ɕs�v�ȏ��͍킬���Ƃ�
-        <LI>�s�v�ɂȂ���(�A�z)�z��͒����폜����
-        <LI>�s�v�ɂȂ����ϊ��e�[�u���͒����폜����
-        <LI>���@�\�Ȕ�ėp�֐���p�ӂ��A�����̈�{��(�ėp��)��i�߂�
-        <LI>�R�[�h�ϊ����W�b�N�̍œK��
+        <LI>他人が読みやすいソースを心がける<BR>
+        (変数(配列)名の体系化、関数の一本化、機能別にソースを分割)
+        <LI>ログをメモリに読み込まず、解析結果のみをメモリに展開する<BR>
+        (ログを上から下まで読みとったら解析結果が出来ている)
+        <LI>配列間のコピーを極力しない
+        <LI>配列を操作(copy,sort等)する前に不要な情報は削ぎ落とす
+        <LI>不要になった(連想)配列は逐次削除する
+        <LI>不要になった変換テーブルは逐次削除する
+        <LI>多機能な非汎用関数を用意し、処理の一本化(汎用化)を進める
+        <LI>コード変換ロジックの最適化
       </UL>
-      �ȏ�̌��ʁA�傫�Ȑ��\���P�Ɍq�������B<BR>
-      �ȉ��A1500�s�̃��O����͂����ꍇ��
-      time �R�}���h�ł̌v�����ʁB<BR>
+      以上の結果、大きな性能改善に繋がった。<BR>
+      以下、1500行のログを解析した場合の
+      time コマンドでの計測結果。<BR>
       <BLOCKQUOTE>&gt; time ./webstat.cgi &gt; test.html<BR>
       15.742u 0.062s 0:15.83 99.8% 538+2227k
       0+2io
@@ -259,9 +257,9 @@
       1.350u 0.062s 0:01.42 99.2% 544+1627k
       0+1io
       0pf+0w</BLOCKQUOTE>
-      NPH�X�N���v�g�`���ɕύX<BR>
-      �������j���[(���O�����\�����[�h)��p�ӂ���<BR>
-      Webstat�݊����[�h(���O�P�̕\�����[�h)��p�ӂ���</TD>
+      NPHスクリプト形式に変更<BR>
+      処理メニュー(ログ複数表示モード)を用意した<BR>
+      Webstat互換モード(ログ単体表示モード)を用意した</TD>
     </TR>
   </TBODY>
 </TABLE>
@@ -270,146 +268,145 @@
   <TBODY>
     <TR nowrap valign="top">
       <TD colspan="3" bgcolor="#ffc6c7">
-      <P><B><FONT size="+1">�����ɂ�����Webstat����</FONT></B></P>
+      <P><B><FONT size="+1">■いにしえのWebstat時代</FONT></B></P>
       </TD>
     </TR>
     <TR nowrap valign="top">
       <TD>1999/12/21</TD>
       <TD>1.6.1</TD>
-      <TD>�\���̎w���&lt;BODY&gt;�^�O��ň�C�ɏo����悤�ɂ���<BR>
-      jcode.pl�̑��݃`�F�b�N�����悤�ɂ���<BR>
-      �G���[���b�Z�[�W�����������e�؂ɂ���<BR>
-      TINAMI�̌������[�h�����v����悤�ɂ���<BR>
-      �J�E���g�l��0�̎��A0���Z�G���[���o�ă��O�����S�ɕ\������Ȃ��o�O���C��<BR>
-      (�Ȃ�ł���Ȃ̂����܂Ō�����Ȃ������񂾁c(^_^;)</TD>
+      <TD>表示の指定を&lt;BODY&gt;タグ一つで一気に出来るようにした<BR>
+      jcode.plの存在チェックをやるようにした<BR>
+      エラーメッセージを少しだけ親切にした<BR>
+      TINAMIの検索ワードも統計取れるようにした<BR>
+      カウント値が0の時、0除算エラーが出てログが完全に表示されないバグを修正<BR>
+      (なんでこんなのが今まで見つからなかったんだ…(^_^;)</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>1999/08/20</TD>
       <TD>1.6.0</TD>
-      <TD>[Surfers Paradice���͋@�\]��ǉ��B<BR>
-      �u���E�U���ʂ������B<BR>
-      �����[�g�z�X�g�̎擾��efCount�ɂ�点�鎖�ɂ����B<BR>
-      (���O�̗��ߍ��݉߂��ɂ��^�C���A�E�g��������邽��)<BR>
-      �Q�ƌ��𐶂̂܂܂ŕۑ����邱�Ƃɂ���(�ȑO��index.html�Ƃ��������Ă�)</TD>
+      <TD>[Surfers Paradice分析機能]を追加。<BR>
+      ブラウザ判別を強化。<BR>
+      リモートホストの取得をefCountにやらせる事にした。<BR>
+      (ログの溜め込み過ぎによるタイムアウトを回避するため)<BR>
+      参照元を生のままで保存することにした(以前はindex.htmlとかを消してた)</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>1999/07/04</TD>
       <TD>1.5.1</TD>
-      <TD>���ϐ�TZ���C������̂�Y��Ă܂����B�@����ŊO���T�[�o�ł��g���܂��B</TD>
+      <TD>環境変数TZを修正するのを忘れてました。　これで外国サーバでも使えます。</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>?</TD>
       <TD>1.5.0</TD>
-      <TD>����Ӗ��o�[�W�����_�E��(^^;<BR>
-      1.5.0���̃o�O�C���B</TD>
+      <TD>ある意味バージョンダウン(^^;<BR>
+      1.5.0αのバグ修正。</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>?</TD>
-      <TD>1.5.0��</TD>
-      <TD>�@�\�ǉ�(�������O�̓����ǂݍ���)���悤�Ƃ������ǃv���O�������X�p�Q�b�e�B�ɂȂ��āA�����ł��󂪕�����Ȃ��Ȃ����̂ňꎞ���f(--;<BR>
-      ���낻��d�l�������ƌ��߂Ă���łȂ��ƃf�^�����ɘM��Ȃ��K�͂ɂȂ����ƌ��B</TD>
+      <TD>1.5.0β</TD>
+      <TD>機能追加(複数ログの同時読み込み)しようとしたけどプログラムがスパゲッティになって、自分でも訳が分からなくなったので一時中断(--;<BR>
+      そろそろ仕様をちゃんと決めてからでないとデタラメに弄れない規模になったと悟る。</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>?</TD>
-      <TD>1.5.0��</TD>
-      <TD>���j���[��ǉ��B</TD>
+      <TD>1.5.0α</TD>
+      <TD>メニューを追加。</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>?</TD>
       <TD>1.4.3</TD>
-      <TD>�����O�̕\�����@��ς���B�@�ًc����Ό����ĉ������B<BR>
-      �e�C�X�g���X���[�h��ǉ�</TD>
+      <TD>生ログの表示方法を変える。　異議あれば言って下さい。<BR>
+      テイストレスモードを追加</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>?</TD>
       <TD>1.4.2</TD>
-      <TD>TINAMI�J�e�S���E�z�X�g���E�u���E�U���ϊ��������C��<BR>
-      �\�̑��؂�@�\��t����<BR>
-      ��^�������o���邾���֐��E�}�N���ɂ��ăv���O�����T�C�Y�k��<BR>
-      ���ʂȃ^�O���ɗ͎�菜���A�\�������Ȃ荂���������͂�</TD>
+      <TD>TINAMIカテゴリ・ホスト名・ブラウザ名変換処理を修正<BR>
+      表の足切り機能を付ける<BR>
+      定型処理を出来るだけ関数・マクロにしてプログラムサイズ縮小<BR>
+      無駄なタグを極力取り除き、表示がかなり高速化したはず</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>?</TD>
       <TD>1.4.1</TD>
-      <TD>TINAMI����l�����Ă��Ȃ��ꍇ��TINAMI���͂�\�����Ȃ��悤�ɂ���<BR>
-      fcount.cgi�ɑΉ��B - noscript�����ǉ�</TD>
+      <TD>TINAMIから人が来ていない場合はTINAMI分析を表示しないようにした<BR>
+      fcount.cgiに対応。 - noscript処理追加</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>?</TD>
       <TD>1.4.0</TD>
-      <TD>[���Е���]�Ɍ��݌��J����Ă��鍑���(��ꃌ�x���h���C��)��S�Ēǉ��B<BR>
-      �����񌟍��������ȑf�ɁB</TD>
+      <TD>[国籍分析]に現在公開されている国情報(第一レベルドメイン)を全て追加。<BR>
+      文字列検索部分を簡素に。</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>?</TD>
       <TD>1.3.0</TD>
-      <TD>[�����h���C������](ac,ad,co,ed.go,gr,or,ne�œ��v)������<BR>
-      perl version 4.0 for Linux ���ƃG���[���o��|�J���C��<BR>
-      TINAMI�J�e�S�����͂Ŋ����̐��l���������������̂��C��<BR>
-      [�u���E�U����]�ł̕��ނł���G�[�W�F���g�����\�����ς��ǉ�<BR>
-      [���Е���]�ɃC�^���A��ǉ��B�@���[��B������[�ƁB<BR>
-      �Ƃ���z�񂪃�������������Ă��Ȃ������|�J���C���B�@�n���ɗD�����Ȃ�B</TD>
+      <TD>[国内ドメイン分析](ac,ad,co,ed.go,gr,or,neで統計)を実装<BR>
+      perl version 4.0 for Linux だとエラーが出るポカを修正<BR>
+      TINAMIカテゴリ分析で割合の数値がおかしかったのを修正<BR>
+      [ブラウザ分析]での分類できるエージェントを結構いっぱい追加<BR>
+      [国籍分析]にイタリアを追加。　うーん。じぇらーと。<BR>
+      とある配列がメモリを解放していなかったポカを修正。　地球に優しくなる。</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>?</TD>
       <TD>1.2.4</TD>
-      <TD>�Q�ƌ��ւ̃����N��ON/OFF����X�C�b�`��t����</TD>
+      <TD>参照元へのリンクをON/OFFするスイッチを付けた</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>?</TD>
-      <TD>1.2.3��</TD>
-      <TD>���ʃh���C���̔F��������</TD>
+      <TD>1.2.3α</TD>
+      <TD>国別ドメインの認識を強化</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>?</TD>
       <TD>1.2.3</TD>
-      <TD>�u���E�U�̔F���������E���̕ӂ̃o�O����|</TD>
+      <TD>ブラウザの認識を強化・その辺のバグを一掃</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>?</TD>
       <TD>1.2.2</TD>
-      <TD>���샂�[�h���ꊇ�\�����[�h�E���O�\�����[�h�E���O��̓��[�h��3��</TD>
+      <TD>動作モードを一括表示モード・ログ表示モード・ログ解析モードの3つに</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>?</TD>
       <TD>1.2.1</TD>
-      <TD>�O���t�̕\�����C��</TD>
+      <TD>グラフの表示を修正</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>?</TD>
       <TD>1.2.0</TD>
-      <TD>TINAMI�J�e�S�����́E�h���C�����́E�u���E�U���͋@�\�ǉ�</TD>
+      <TD>TINAMIカテゴリ分析・ドメイン分析・ブラウザ分析機能追加</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>?</TD>
       <TD>1.1.0</TD>
-      <TD>���O�\�����[�h�ƃ��O��̓��[�h�ɕ���</TD>
+      <TD>ログ表示モードとログ解析モードに分割</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>?</TD>
       <TD>1.0.1</TD>
-      <TD>�T�[�o�ɂ��Ȃ蕉�S���|���Ă��܂���|�J�𒼂���<BR>
-      ���A�Ŏ��s���Ԃ�40�b����5�b�֑啝�Z�k(��)</TD>
+      <TD>サーバにかなり負担を掛けてしまう大ポカを直した<BR>
+      お陰で実行時間が40秒から5秒へ大幅短縮(爆)</TD>
     </TR>
     <TR nowrap valign="top">
       <TD>?</TD>
       <TD>1.0.0</TD>
-      <TD>�݂Ă����ǂ����đ啝�p���[�A�b�v�B<BR>
-      acc_analyzer����Webstat�֖��O�ύX</TD>
+      <TD>みてくれを良くして大幅パワーアップ。<BR>
+      acc_analyzerからWebstatへ名前変更</TD>
     </TR>
     <TR nowrap valign="top">
-      <TD colspan="3">���̊ԁA�b���L�^�Ɏc��Ȃ������߂���c�B</TD>
+      <TD colspan="3">この間、暫く記録に残らない時が過ぎる…。</TD>
     </TR>
     <TR nowrap valign="top">
-      <TD>1998�č�</TD>
+      <TD>1998夏頃</TD>
       <TD>0.0.1</TD>
-      <TD>CGI�̕׋��p�ɂƂ肠�������B<BR>
-      �\���̓e�C�X�g���X�����y������</TD>
+      <TD>CGIの勉強用にとりあえず作る。<BR>
+      表示はテイストレスだが軽かった</TD>
     </TR>
   </TBODY>
 </TABLE>
 <HR>
-<DIV align="right">&copy;1998-2001 �s�v�c�G�̋�<BR>
-(<A href="http://yugen.main.jp/">http://yugen.main.jp/</A>)</DIV>
+<DIV align="right"><A href="http://ygkb.jp/">&copy;1998-2016 不可思議絵の具</A></DIV>
 </BODY>
 </HTML>

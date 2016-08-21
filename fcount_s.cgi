@@ -1,45 +1,45 @@
 #!/usr/bin/perl
-require 5.004;   # –{ƒvƒƒOƒ‰ƒ€‚Í(­‚È‚­‚Æ‚à)perl 5.004ˆÈã‚ğ•K—v‚Æ‚µ‚Ü‚·B
-$ver = '2.1.2';  # –{ƒvƒƒOƒ‰ƒ€‚Ì”Å”B‹Ö•ÏXB
+require 5.004;   # æœ¬ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã¯(å°‘ãªãã¨ã‚‚)perl 5.004ä»¥ä¸Šã‚’å¿…è¦ã¨ã—ã¾ã™ã€‚
+$ver = '2.2';  # æœ¬ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®ç‰ˆæ•°ã€‚ç¦å¤‰æ›´ã€‚
 ;#+------------------------------------------------------------------------
-;#|efCount[efStatƒJƒEƒ“ƒ^•”]
-;#|(C)1998-2000 •s‰Âv‹cŠG‚Ì‹ï(http://yugen.main.jp/)
+;#|efCount[efStatã‚«ã‚¦ãƒ³ã‚¿éƒ¨]
+;#|(C)1998-2016 ä¸å¯æ€è­°çµµã®å…·(http://ygkb.jp/)
 ;#+------------------------------------------------------------------------
-;# ™™™ ‹¤’Ê‚Ìİ’è€–Ú(•K—v) ™™™
+;# â˜†â˜†â˜† å…±é€šã®è¨­å®šé …ç›®(å¿…è¦) â˜†â˜†â˜†
 ;#+------------------------------------------------------------------------
-;# [“®ìƒ‚[ƒh]
-;# SSI‚Æ‚µ‚Ä“®ì‚³‚¹‚é‚È‚ç 1 C CGI‚Æ‚µ‚Ä“®ì‚³‚¹‚é‚È‚ç 0 B
+;# [å‹•ä½œãƒ¢ãƒ¼ãƒ‰]
+;# SSIã¨ã—ã¦å‹•ä½œã•ã›ã‚‹ãªã‚‰ 1 ï¼Œ CGIã¨ã—ã¦å‹•ä½œã•ã›ã‚‹ãªã‚‰ 0 ã€‚
 $USER{'SSIMode'} = 1;
 
-;# [ƒƒOƒtƒ@ƒCƒ‹‚ğŠi”[‚µ‚½ƒfƒBƒŒƒNƒgƒŠ‚Ì–¼‘O]
-;# ƒƒO—pƒfƒBƒŒƒNƒgƒŠ‚Í fstat/ ˆÈ‰º‚Éì‚Á‚Ä‰º‚³‚¢B
+;# [ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æ ¼ç´ã—ãŸãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®åå‰]
+;# ãƒ­ã‚°ç”¨ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¯ fstat/ ä»¥ä¸‹ã«ä½œã£ã¦ä¸‹ã•ã„ã€‚
 $USER{'DIR_Log'} = 'log';
 
-;# [ƒAƒNƒZƒXƒƒOÅ‘å•Û‘¶”]
-;# 1ˆÈãA3000–¢–‚Ì”’l‚ğ“ü—Í‚µ‚Ä‰º‚³‚¢B
+;# [ã‚¢ã‚¯ã‚»ã‚¹ãƒ­ã‚°æœ€å¤§ä¿å­˜æ•°]
+;# 1ä»¥ä¸Šã€3000æœªæº€ã®æ•°å€¤ã‚’å…¥åŠ›ã—ã¦ä¸‹ã•ã„ã€‚
 $USER{'MaxLog'} = 300;
 
-;# [Ä“Ç‚İ‚İ–h~‹@\(IPƒ`ƒFƒbƒN)‚ğ—˜—p‚·‚é‚©]
-;# 1 = ‚·‚é(ƒfƒtƒHƒ‹ƒg) / 0 = ‚µ‚È‚¢(d•¡ƒJƒEƒ“ƒg‚ğ‹–‚·)
+;# [å†èª­ã¿è¾¼ã¿é˜²æ­¢æ©Ÿæ§‹(IPãƒã‚§ãƒƒã‚¯)ã‚’åˆ©ç”¨ã™ã‚‹ã‹]
+;# 1 = ã™ã‚‹(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ) / 0 = ã—ãªã„(é‡è¤‡ã‚«ã‚¦ãƒ³ãƒˆã‚’è¨±ã™)
 $USER{'IPCheck'} = 1;
 
-    ;# (IPCheck‚ª‚P‚Ìê‡—LŒø)
-    ;# [Ä“Ç‚İ‚İ–h~‹@\‚Ì—LŒøŠúŒÀ] (•ª’PˆÊ‚Åw’è)
-    ;# w’è‚µ‚½ŠÔ‚ªŒo‚Â‚ÆA“¯‚¶IP‚Å‚ ‚Á‚Ä‚àƒJƒEƒ“ƒg‚µ‚Ü‚·B
+    ;# (IPCheckãŒï¼‘ã®å ´åˆæœ‰åŠ¹)
+    ;# [å†èª­ã¿è¾¼ã¿é˜²æ­¢æ©Ÿæ§‹ã®æœ‰åŠ¹æœŸé™] (åˆ†å˜ä½ã§æŒ‡å®š)
+    ;# æŒ‡å®šã—ãŸæ™‚é–“ãŒçµŒã¤ã¨ã€åŒã˜IPã§ã‚ã£ã¦ã‚‚ã‚«ã‚¦ãƒ³ãƒˆã—ã¾ã™ã€‚
+    ;# 0ã‚’æŒ‡å®šã™ã‚‹ã¨ã€åŒã˜IPã®é–“ã¯ãšã£ã¨ã‚«ã‚¦ãƒ³ãƒˆã—ã¾ã›ã‚“ã€‚
     $USER{'IPExpire'} = 0;
 
-# [ƒJƒEƒ“ƒgƒAƒbƒv‚³‚¹‚È‚¢ƒzƒXƒg–¼EIPƒAƒhƒŒƒX]
-# •¡”w’è‚Å‚«‚Ü‚·‚ªAŠ®‘Sˆê’v‚µ‚È‚¯‚ê‚Î‚È‚è‚Ü‚¹‚ñB
-# ‚±‚±‚ğ‹ó—“‚É‚µ‚Ä‚Í‚¢‚¯‚Ü‚¹‚ñB@“K“–‚Å—Ç‚¢‚Å‚·‚©‚ç–„‚ß‚Ä‰º‚³‚¢B
+# [ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—ã•ã›ãªã„ãƒ›ã‚¹ãƒˆåãƒ»IPã‚¢ãƒ‰ãƒ¬ã‚¹]
+# è¤‡æ•°æŒ‡å®šã§ãã¾ã™ãŒã€å®Œå…¨ä¸€è‡´ã—ãªã‘ã‚Œã°ãªã‚Šã¾ã›ã‚“ã€‚
+# ã“ã“ã‚’ç©ºæ¬„ã«ã—ã¦ã¯ã„ã‘ã¾ã›ã‚“ã€‚ã€€é©å½“ã§è‰¯ã„ã§ã™ã‹ã‚‰åŸ‹ã‚ã¦ä¸‹ã•ã„ã€‚
 @USER_DenyIP = (
 	'192.168.0.30',
 	'abc123.ppp.test.ne.jp',
-	'cj3141134-a.nishi1.ky.home.ne.jp',
 );
 
-# [ƒJƒEƒ“ƒgƒAƒbƒv‚³‚¹‚È‚¢ƒuƒ‰ƒEƒU]
-# •¡”w’è‚Å‚«‚Ü‚·B@‘O•û”äŠr‚ğs‚¢‚Ü‚·B
-# ‚±‚±‚ğ‹ó—“‚É‚µ‚Ä‚Í‚¢‚¯‚Ü‚¹‚ñB@“K“–‚Å—Ç‚¢‚Å‚·‚©‚ç–„‚ß‚Ä‰º‚³‚¢B
+# [ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—ã•ã›ãªã„ãƒ–ãƒ©ã‚¦ã‚¶]
+# è¤‡æ•°æŒ‡å®šã§ãã¾ã™ã€‚ã€€å‰æ–¹æ¯”è¼ƒã‚’è¡Œã„ã¾ã™ã€‚
+# ã“ã“ã‚’ç©ºæ¬„ã«ã—ã¦ã¯ã„ã‘ã¾ã›ã‚“ã€‚ã€€é©å½“ã§è‰¯ã„ã§ã™ã‹ã‚‰åŸ‹ã‚ã¦ä¸‹ã•ã„ã€‚
 @USER_DenyAgent = (
 	'WWWC',
 	'Kerberos',
@@ -47,109 +47,109 @@ $USER{'IPCheck'} = 1;
 
 
 ;#+------------------------------------------------------------------------
-;# ™™™ CGI‚Æ‚µ‚Äg‚¤‚Æ‚«‚Ìİ’è€–Ú ™™™
+;# â˜†â˜†â˜† CGIã¨ã—ã¦ä½¿ã†ã¨ãã®è¨­å®šé …ç›® â˜†â˜†â˜†
 ;#+------------------------------------------------------------------------
-;# [ƒJƒEƒ“ƒ^—p‰æ‘œ‚ğŠi”[‚µ‚½ƒfƒBƒŒƒNƒgƒŠ‚Ì–¼‘O]
-;# ƒJƒEƒ“ƒ^‰æ‘œ—pƒfƒBƒŒƒNƒgƒŠ‚Í fstat/ ˆÈ‰º‚Éì‚Á‚Ä‰º‚³‚¢B
+;# [ã‚«ã‚¦ãƒ³ã‚¿ç”¨ç”»åƒã‚’æ ¼ç´ã—ãŸãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®åå‰]
+;# ã‚«ã‚¦ãƒ³ã‚¿ç”»åƒç”¨ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¯ fstat/ ä»¥ä¸‹ã«ä½œã£ã¦ä¸‹ã•ã„ã€‚
 $USER{'Dir_Img'} = 'image';
 
-	;# [ƒJƒEƒ“ƒ^‚ÌƒCƒ[ƒW‚Ì–¼‘O(ƒfƒtƒHƒ‹ƒg‚Åg—p‚·‚é•¨)]
+	;# [ã‚«ã‚¦ãƒ³ã‚¿ã®ã‚¤ãƒ¡ãƒ¼ã‚¸ã®åå‰(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ä½¿ç”¨ã™ã‚‹ç‰©)]
 	$USER{'DigitName'} = 'fuksan';
 
 
 ;#+------------------------------------------------------------------------
-;# ™™™ SSI ‚Æ‚µ‚Äg‚¤‚Æ‚«‚Ìİ’è€–Ú ™™™
+;# â˜†â˜†â˜† SSI ã¨ã—ã¦ä½¿ã†ã¨ãã®è¨­å®šé …ç›® â˜†â˜†â˜†
 ;#+------------------------------------------------------------------------
-;# [efStatˆê®‚ğŠi”[‚µ‚½ƒfƒBƒŒƒNƒgƒŠ]
-;# ¦ŒÄ‚Ño‚·HTML‚©‚çŒ©‚½‘Š‘ÎƒpƒX‚Å‚à—Ç‚¢‚ªAƒ‹[ƒg‚©‚ç‚Ìƒtƒ‹ƒpƒX‚ª–]‚Ü‚µ‚¢B
-;# ¦ÅŒã‚ÌƒXƒ‰ƒbƒVƒ…(/)‚Í•K‚¸•K—vB
-$USER{'SSI_Pass'} = '/home/develop/public_html/cgi-bin/fstat/';	#skipup
-$USER{'SSI_Pass'} = '/home/sites/lolipop.jp/users/main.jp-yugen/web/cgi-bin/fstat/';	#lolipop
+;# [efStatä¸€å¼ã‚’æ ¼ç´ã—ãŸãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª]
+;# â€»å‘¼ã³å‡ºã™HTMLã‹ã‚‰è¦‹ãŸç›¸å¯¾ãƒ‘ã‚¹ã§ã‚‚è‰¯ã„ãŒã€ãƒ«ãƒ¼ãƒˆã‹ã‚‰ã®ãƒ•ãƒ«ãƒ‘ã‚¹ãŒæœ›ã¾ã—ã„ã€‚
+;# â€»æœ€å¾Œã®ã‚¹ãƒ©ãƒƒã‚·ãƒ¥(/)ã¯å¿…ãšå¿…è¦ã€‚
+$USER{'SSI_Pass'} = '/home/sites/home/users/fuka/web/cgi-bin/fstat/';
+
 
 ;#+------------------------------------------------------------------------
-;# ™™™ ‚»‚Ì‘¼A•â•“I‚È€–Ú ™™™
+;# â˜†â˜†â˜† ãã®ä»–ã€è£œåŠ©çš„ãªé …ç›® â˜†â˜†â˜†
 ;#+------------------------------------------------------------------------
-# [gifcat.pl‚Ì‚ ‚è‚© (’Êí‚Í•ÏX‚µ‚È‚¢‚Å‰º‚³‚¢)]
+# [gifcat.plã®ã‚ã‚Šã‹ (é€šå¸¸ã¯å¤‰æ›´ã—ãªã„ã§ä¸‹ã•ã„)]
 $USER{'GifCat'} = './lib/gifcat.pl';
 
 
 #+------------------------------------------------------------------------
-# (İ’è‚±‚±‚Ü‚Å)
+# (è¨­å®šã“ã“ã¾ã§)
 #+------------------------------------------------------------------------
-# ¦‚±‚±‚©‚ç‚Í•ª‚©‚él‚¾‚¯˜M‚Á‚Ä‰º‚³‚¢B
-# @(ƒ^ƒu‚ÌƒTƒCƒYE[4]AÜ•Ô‚µE[–³‚µ]‚ÅãY—í‚É•\¦‚³‚ê‚Ü‚·)
+# â€»ã“ã“ã‹ã‚‰ã¯åˆ†ã‹ã‚‹äººã ã‘å¼„ã£ã¦ä¸‹ã•ã„ã€‚
+# ã€€(ã‚¿ãƒ–ã®ã‚µã‚¤ã‚ºãƒ»[4]ã€æŠ˜è¿”ã—ãƒ»[ç„¡ã—]ã§ç¶ºéº—ã«è¡¨ç¤ºã•ã‚Œã¾ã™)
 #+------------------------------------------------------------------------
 #|&main
 #+------------------------------------------------------------------------
-&Macro_Setup;				# Šeí‰Šú‰»
-&Macro_Access;				# ƒAƒNƒZƒX‹L˜^
-&Macro_LoadData;			# ƒƒOƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚İ
-&Macro_Check;				# ƒ`ƒFƒbƒN
-if ($OutputOnly) {			# d•¡ƒAƒNƒZƒX‚Í‹L˜^‚µ‚È‚¢
-	&Macro_Output;			# Œ‹‰Ê‚ğo—Í
+&Macro_Setup;				# å„ç¨®åˆæœŸåŒ–
+&Macro_Access;				# ã‚¢ã‚¯ã‚»ã‚¹è¨˜éŒ²
+&Macro_LoadData;			# ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã¿
+&Macro_Check;				# ãƒã‚§ãƒƒã‚¯
+if ($OutputOnly) {			# é‡è¤‡ã‚¢ã‚¯ã‚»ã‚¹ã¯è¨˜éŒ²ã—ãªã„
+	&Macro_Output;			# çµæœã‚’å‡ºåŠ›
 } else {
-	&Macro_Count;			# ƒJƒEƒ“ƒg
-	&Macro_SaveData;		# •Û‘¶
-	&Macro_Output;			# Œ‹‰Ê‚ğo—Í
+	&Macro_Count;			# ã‚«ã‚¦ãƒ³ãƒˆ
+	&Macro_SaveData;		# ä¿å­˜
+	&Macro_Output;			# çµæœã‚’å‡ºåŠ›
 }
 exit;
 
 
 #+------------------------------------------------------------------------
-#|ƒvƒƒOƒ‰ƒ€‚Ì—¬‚ê‚Æ‚µ‚Ä‚ÌƒTƒuƒ‹[ƒ`ƒ“
+#|ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®æµã‚Œã¨ã—ã¦ã®ã‚µãƒ–ãƒ«ãƒ¼ãƒãƒ³
 #+------------------------------------------------------------------------
-### Šeí‰Šú‰»
+### å„ç¨®åˆæœŸåŒ–
 sub Macro_Setup {
-	$ENV{'TZ'} = 'JST-9';													# ŠÂ‹«•Ï”TZ‚ğ“ú–{ŠÔ‚Éİ’è
+	$ENV{'TZ'} = 'JST-9';													# ç’°å¢ƒå¤‰æ•°TZã‚’æ—¥æœ¬æ™‚é–“ã«è¨­å®š
 	$Digit = 0;
-	$OutputOnly = 0;														# 1=o—Í‚Ì‚İ
+	$OutputOnly = 0;														# 1=å‡ºåŠ›ã®ã¿
 
-	### Œ»İ‚Ìæ“¾
-	$RUN_TIME   = time;														# Œ»İ(•bŒ`®)
-	@RUN_TIME   = localtime($RUN_TIME);										# Œ»İ(•ÏŠ·Œã)
-	$RUN_TIME_E = &C62_Encode($RUN_TIME);									# ƒGƒ“ƒR[ƒhÏŒ»İ
-	$RUN_week   = &TotalWeek($RUN_TIME[7]);									# Œ»İT
+	### ç¾åœ¨æ™‚åˆ»ã®å–å¾—
+	$RUN_TIME   = time;														# ç¾åœ¨æ™‚åˆ»(ç§’å½¢å¼)
+	@RUN_TIME   = localtime($RUN_TIME);										# ç¾åœ¨æ™‚åˆ»(å¤‰æ›å¾Œ)
+	$RUN_TIME_E = &C62_Encode($RUN_TIME);									# ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰æ¸ˆç¾åœ¨æ™‚åˆ»
+	$RUN_week   = &TotalWeek($RUN_TIME[7]);									# ç¾åœ¨é€±
 
-	### ˆø”‚Ì‰ğß
+	### å¼•æ•°ã®è§£é‡ˆ
 	foreach $data (split(/&/, $ENV{'QUERY_STRING'})) {
 		($key , $val) = split(/=/,$data);
 		$P{$key} = $val;
 	}
-	$Filename = $P{'LOG'};													# ƒƒOƒtƒ@ƒCƒ‹–¼
+	$Filename = $P{'LOG'};													# ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«å
 
-	## SSIƒ‚[ƒh
+	## SSIãƒ¢ãƒ¼ãƒ‰
 	if ($USER{'SSIMode'}) {
-		$USER{'DIR_Log'} = "${USER{'SSI_Pass'}}${USER{'DIR_Log'}}/";		# ƒƒOŠi”[ƒfƒBƒŒƒNƒgƒŠ
+		$USER{'DIR_Log'} = "${USER{'SSI_Pass'}}${USER{'DIR_Log'}}/";		# ãƒ­ã‚°æ ¼ç´ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
 
-		# “®ìƒ‚[ƒh
-		if    ($P{'MODE'} eq '-') { $OutputOnly = 1; } 						# "-"‚È‚çƒJƒEƒ“ƒg–³‚µ
-		elsif ($P{'MODE'} eq 'h') { $OutMode = 'h' ; }						# "h"‚È‚ço—Í–³‚µ
+		# å‹•ä½œãƒ¢ãƒ¼ãƒ‰
+		if    ($P{'MODE'} eq '-') { $OutputOnly = 1; } 						# "-"ãªã‚‰ã‚«ã‚¦ãƒ³ãƒˆç„¡ã—
+		elsif ($P{'MODE'} eq 'h') { $OutMode = 'h' ; }						# "h"ãªã‚‰å‡ºåŠ›ç„¡ã—
 	}
 
-	## CGIƒ‚[ƒh
+	## CGIãƒ¢ãƒ¼ãƒ‰
 	else {
-		# “®ìƒ‚[ƒh
-		if ($P{'MODE'} =~ /^-([atyw])$/) {									# “ª‚É - ‚ª‚ ‚ê‚Îo—Í‚Ì‚İ
+		# å‹•ä½œãƒ¢ãƒ¼ãƒ‰
+		if ($P{'MODE'} =~ /^-([atyw])$/) {									# é ­ã« - ãŒã‚ã‚Œã°å‡ºåŠ›ã®ã¿
 			$OutMode = $1;
 			$OutputOnly = 1;
-		} elsif ($P{'MODE'} =~ /^([atyw])$/) {								# –³‚¯‚ê‚Î•’Ê‚Éƒ`ƒFƒbƒN
+		} elsif ($P{'MODE'} =~ /^([atyw])$/) {								# ç„¡ã‘ã‚Œã°æ™®é€šã«ãƒã‚§ãƒƒã‚¯
 			$OutMode = $1;
-		} else { $OutMode = 'a'; }											# –‚½‚³‚È‚¯‚ê‚Î‹­§“I‚É a ‚É
+		} else { $OutMode = 'a'; }											# æº€ãŸã•ãªã‘ã‚Œã°å¼·åˆ¶çš„ã« a ã«
 
-		if ($P{'DIGIT'} > 20) { &Macro_PutError('e0001'); }					# Œ…”
+		if ($P{'DIGIT'} > 20) { &Macro_PutError('e0001'); }					# æ¡æ•°
 		else                  { $Digit = $P{'DIGIT'}-1; }
 
-		$ENV{'HTTP_REFERER'} = $P{'REF'};									# QÆŒ³
+		$ENV{'HTTP_REFERER'} = $P{'REF'};									# å‚ç…§å…ƒ
 
-		$screen = $P{'SCR'};												# ‰æ–Êî•ñ
+		$screen = $P{'SCR'};												# ç”»é¢æƒ…å ±
 
-		$USER{'DigitName'} = $P{'FONT'} if ($P{'FONT'} ne '');				# ƒtƒHƒ“ƒg–¼
+		$USER{'DigitName'} = $P{'FONT'} if ($P{'FONT'} ne '');				# ãƒ•ã‚©ãƒ³ãƒˆå
 
-		## ƒfƒBƒŒƒNƒgƒŠ–¼‚ğC³
-		$USER{'DIR_Log'} = "./${USER{'DIR_Log'}}/";							# ƒƒOŠi”[ƒfƒBƒŒƒNƒgƒŠ
-		$USER{'Dir_Img'} = "./${USER{'Dir_Img'}}/${USER{'DigitName'}}/";	# ƒtƒHƒ“ƒgŠi”[ƒfƒBƒŒƒNƒgƒŠ
+		## ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåã‚’ä¿®æ­£
+		$USER{'DIR_Log'} = "./${USER{'DIR_Log'}}/";							# ãƒ­ã‚°æ ¼ç´ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
+		$USER{'Dir_Img'} = "./${USER{'Dir_Img'}}/${USER{'DigitName'}}/";	# ãƒ•ã‚©ãƒ³ãƒˆæ ¼ç´ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
 
-		### •\¦ƒ‚[ƒh‚¾‚Á‚½‚ç‚±‚±‚ÅI‚í‚è
+		### æ™‚åˆ»è¡¨ç¤ºãƒ¢ãƒ¼ãƒ‰ã ã£ãŸã‚‰ã“ã“ã§çµ‚ã‚ã‚Š
 		if ($OutMode eq 'w') {
 			$Digit = 0;
 			print &Func_PutGIF(sprintf("%02dc%02d", $RUN_TIME[2], $RUN_TIME[1]));
@@ -159,38 +159,38 @@ sub Macro_Setup {
 }
 
 
-### [ƒAƒNƒZƒX‹L˜^]
+### [ã‚¢ã‚¯ã‚»ã‚¹è¨˜éŒ²]
 sub Macro_Access {
-	### –K–âÒ‚ÌƒŠƒ‚[ƒgƒzƒXƒgæ“¾
+	### è¨ªå•è€…ã®ãƒªãƒ¢ãƒ¼ãƒˆãƒ›ã‚¹ãƒˆå–å¾—
 	$host = $ENV{'REMOTE_ADDR'};
 
 	if ($host eq '') {
 		$host = '-';
 	} else {
-		# proxyƒ`ƒFƒbƒN
+		# proxyãƒã‚§ãƒƒã‚¯
 		$host = $1 if ($ENV{'HTTP_FORWARDED'} =~ / for (.*)/);		# HTTP_FORWARDED (DeleGate , Squid)
 
 		# IP -> HOST
 		$host = gethostbyaddr(pack("C4", split(/\./, $host)), 2) || $host;
 	}
 
-	### ƒ†[ƒUƒG[ƒWƒFƒ“ƒgæ“¾
+	### ãƒ¦ãƒ¼ã‚¶ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆå–å¾—
 	$agent = $ENV{'HTTP_USER_AGENT'};
 	$agent =~ s'^Mozilla/'!';
 	$agent =~ s"\(compatible; MSIE (.+)\)"(!$1)";
-	$agent = '-' if ($agent eq '');								#ƒG[ƒWƒFƒ“ƒg–¼‚ª‚È‚¯‚ê‚Î'-'‚É’u‚«Š·‚¦‚é
+	$agent = '-' if ($agent eq '');								#ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆåãŒãªã‘ã‚Œã°'-'ã«ç½®ãæ›ãˆã‚‹
 
-	### QÆŒ³æ“¾
+	### å‚ç…§å…ƒå–å¾—
 	$ref = $ENV{'HTTP_REFERER'};
-	#$ref =~ s/%([0-9A-Fa-f][0-9A-Fa-f])/pack("C",hex($1))/ge;	# URLDecode
+	$ref =~ s/%([0-9A-Fa-f][0-9A-Fa-f])/pack("C",hex($1))/ge;	# URLDecode
 	$ref =~ s/\?$//;
 	$ref =~ s"(/index\.)html$|\1htm$|\1shtml$|\1php3$"/"i;
 	$ref =~ s'^http://'!'i;
-	if (($ref eq '') || ($ref eq '[unknown origin]') ||			# ƒŠƒ“ƒNŒ³–³‚µ, '[unknown origin]', 'bookmark'‚È‚ç'-'‚É’u‚«Š·‚¦‚é
+	if (($ref eq '') || ($ref eq '[unknown origin]') ||			# ãƒªãƒ³ã‚¯å…ƒç„¡ã—, '[unknown origin]', 'bookmark'ãªã‚‰'-'ã«ç½®ãæ›ãˆã‚‹
 	    ($ref eq 'bookmarks') || ($ref eq "',ref,'"))
 	{ $ref = '-'; }
 
-	### ‰æ–Êƒ‚[ƒh
+	### ç”»é¢ãƒ¢ãƒ¼ãƒ‰
 	if (($screen eq '') || ($screen !~ /^[0-9]/)) {
 		$screen = '-';
 	} else {
@@ -203,16 +203,16 @@ sub Macro_Access {
 }
 
 
-### [ƒƒOƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚İ]
+### [ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã¿]
 sub Macro_LoadData {
 	unless (open(LOG,"+<${USER{'DIR_Log'}}${Filename}.log")) {
 		&Macro_PutError('e0000');
 	}
 	flock(LOG,2);
-	for ($i=0 ; $i<8 ; $i++) { chomp($count[$i] = <LOG>); }		# ŠeíƒJƒEƒ“ƒg”
-	chomp(@log = <LOG>);										# ƒAƒNƒZƒXƒƒO
+	for ($i=0 ; $i<8 ; $i++) { chomp($count[$i] = <LOG>); }		# å„ç¨®ã‚«ã‚¦ãƒ³ãƒˆæ•°
+	chomp(@log = <LOG>);										# ã‚¢ã‚¯ã‚»ã‚¹ãƒ­ã‚°
 
-	###V‹KƒƒO‚È‚çƒtƒH[ƒ}ƒbƒg
+	###æ–°è¦ãƒ­ã‚°ãªã‚‰ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 	if ($count[0] eq '') {
 		$count[0] = "FC2\t${RUN_TIME_E}";
 		$count[1] = "${RUN_TIME_E}\t0";
@@ -224,32 +224,32 @@ sub Macro_LoadData {
 		$count[7] = "0\t0\t0\t0\t0\t0";
 	}
 
-	# ‹ŒŒ`®‚ÌƒƒO‚È‚ç•ÏŠ·
+	# æ—§å½¢å¼ã®ãƒ­ã‚°ãªã‚‰å¤‰æ›
 	elsif ($count[0] !~ /^FC2/) {
 		&Macro_Convert;
 	}
 
-	###ƒf[ƒ^‚ğŠe”z—ñ‚ÉŠi”[
-	($LOG_ID, $LOG_SINCE_E)			= split(/\t/, $count[0]);		#ƒwƒbƒ_
+	###ãƒ‡ãƒ¼ã‚¿ã‚’å„é…åˆ—ã«æ ¼ç´
+	($LOG_ID, $LOG_SINCE_E)			= split(/\t/, $count[0]);		#ãƒ˜ãƒƒãƒ€
 	$LOG_SINCE						= &C62_Decode($LOG_SINCE_E);
-	&Macro_PutError('e1110') if ($LOG_ID ne 'FC2');					# ƒƒOŒ`®check(‹@”\‚µ‚È‚¢?)
+	&Macro_PutError('e1110') if ($LOG_ID ne 'FC2');					# ãƒ­ã‚°å½¢å¼check(æ©Ÿèƒ½ã—ãªã„?)
 
-	($LOG_TIME_E, $ALL_E, $LOG_IP)	= split(/\t/, $count[1]);		# Šeíî•ñ
+	($LOG_TIME_E, $ALL_E, $LOG_IP)	= split(/\t/, $count[1]);		# å„ç¨®æƒ…å ±
 	$LOG_TIME						= &C62_Decode($LOG_TIME_E);
 	$ALL							= &C62_Decode($ALL_E);
 
-	@DAILY							= &split($count[2]);			# “ú•ÊWŒv
-	@HOUR							= &split($count[3]);			# ŠÔ•ÊWŒv
-	@YOUBI							= &split($count[4]);			# —j“ú•ÊWŒv
-	@WEEK							= &split($count[5]);			# T•ÊWŒv
-	@MONTH							= &split($count[6]);			# Œ•ÊWŒv
-	@YEAR							= &split($count[7]);			# Œ•ÊWŒv
+	@DAILY							= &split($count[2]);			# æ—¥åˆ¥é›†è¨ˆ
+	@HOUR							= &split($count[3]);			# æ™‚é–“åˆ¥é›†è¨ˆ
+	@YOUBI							= &split($count[4]);			# æ›œæ—¥åˆ¥é›†è¨ˆ
+	@WEEK							= &split($count[5]);			# é€±åˆ¥é›†è¨ˆ
+	@MONTH							= &split($count[6]);			# æœˆåˆ¥é›†è¨ˆ
+	@YEAR							= &split($count[7]);			# æœˆåˆ¥é›†è¨ˆ
 
-	# ƒƒO‚Ì“ú•t‚ğ‹‚ß‚é
+	# ãƒ­ã‚°ã®æ—¥ä»˜ã‚’æ±‚ã‚ã‚‹
 	@LOG_TIME = localtime($LOG_TIME);
 	$LOG_week = &TotalWeek($LOG_TIME[7]);
 
-	# •¶š—ñ‚ğØ‚è•ª‚¯A10i”‚É–ß‚·
+	# æ–‡å­—åˆ—ã‚’åˆ‡ã‚Šåˆ†ã‘ã€10é€²æ•°ã«æˆ»ã™
 	sub split {
 		my($str) = @_;
 		my(@array);
@@ -261,28 +261,28 @@ sub Macro_LoadData {
 }
 
 
-### ƒJƒEƒ“ƒg‚·‚×‚«–K–âÒ‚©ƒ`ƒFƒbƒN
+### ã‚«ã‚¦ãƒ³ãƒˆã™ã¹ãè¨ªå•è€…ã‹ãƒã‚§ãƒƒã‚¯
 sub Macro_Check {
-	if ($USER{'IPCheck'}) {												# d•¡ƒJƒEƒ“ƒg‚ğ‹–‚·‚©H
-		if ($host eq $LOG_IP) {											# ‘O‰ñ–K–âÒ‚Æ“¯‚¶‚©H
+	if ($USER{'IPCheck'}) {												# é‡è¤‡ã‚«ã‚¦ãƒ³ãƒˆã‚’è¨±ã™ã‹ï¼Ÿ
+		if ($host eq $LOG_IP) {											# å‰å›è¨ªå•è€…ã¨åŒã˜ã‹ï¼Ÿ
 			if ($USER{'IPExpire'} == 0) {
 				$OutputOnly = 1;
 			} else {
-				if ($RUN_TIME - $LOG_TIME < $USER{'IPExpire'} * 60) {	# IP‚Í—LŒøŠúŒÀŠO‚©H
+				if ($RUN_TIME - $LOG_TIME < $USER{'IPExpire'} * 60) {	# IPã¯æœ‰åŠ¹æœŸé™å¤–ã‹ï¼Ÿ
 					$OutputOnly = 1;
 				} else { $OutputOnly = 0; }
 			}
 		} else { $OutputOnly = 0; }
 	} else { $OutputOnly = 0; }
 
-	foreach (@USER_DenyIP) {											# ’e‚­‚×‚«IP‚©H
+	foreach (@USER_DenyIP) {											# å¼¾ãã¹ãIPã‹ï¼Ÿ
 		if ($host eq $_) {
 			$OutputOnly = 1;
 			last;
 		}
 	}
 
-	foreach (@USER_DenyAgent) {											# ’e‚­‚×‚«ƒuƒ‰ƒEƒU‚©H
+	foreach (@USER_DenyAgent) {											# å¼¾ãã¹ããƒ–ãƒ©ã‚¦ã‚¶ã‹ï¼Ÿ
 		if ($agent =~ /^$_/) {
 			$OutputOnly = 1;
 			last;
@@ -291,37 +291,37 @@ sub Macro_Check {
 }
 
 
-### [ƒJƒEƒ“ƒg‚·‚é]
+### [ã‚«ã‚¦ãƒ³ãƒˆã™ã‚‹]
 sub Macro_Count {
 	my($n);
 
-	### ‰½“úŠÔŒo‰ß‚µ‚½‚©‹‚ß‚é
+	### ä½•æ—¥é–“çµŒéã—ãŸã‹æ±‚ã‚ã‚‹
 	$n  = $RUN_TIME[7] - $LOG_TIME[7];
-	$n += 366 if ($n < 0);			# ”N‚ª–¾‚¯‚½ê‡•â³(n+366“úŒo‰ß)
+	$n += 366 if ($n < 0);			# å¹´ãŒæ˜ã‘ãŸå ´åˆè£œæ­£(n+366æ—¥çµŒé)
 
-	if ($n == 0) { $DAILY[0]++; }	# “¯‚¶“ú
-	elsif ($n > 0) {				# n“úŒo‰ß
+	if ($n == 0) { $DAILY[0]++; }	# åŒã˜æ—¥
+	elsif ($n > 0) {				# næ—¥çµŒé
 		for (1 .. $n) { unshift(@DAILY, 0); }
 		$DAILY[0] = 1;
 	}
 
-	### ‰½TŠÔŒo‰ß‚µ‚½‚©‹‚ß‚é
+	### ä½•é€±é–“çµŒéã—ãŸã‹æ±‚ã‚ã‚‹
 	$n  = $RUN_week - $LOG_week;
-	$n += 53 if ($n < 0);			# ”N‚ª–¾‚¯‚½ê‡•â³(n+53TŠÔŒo‰ß)
+	$n += 53 if ($n < 0);			# å¹´ãŒæ˜ã‘ãŸå ´åˆè£œæ­£(n+53é€±é–“çµŒé)
 
-	if ($n == 0) { $WEEK[0]++; }	# “¯‚¶T
-	elsif ($n > 0) {				# nTŠÔŒo‰ß
+	if ($n == 0) { $WEEK[0]++; }	# åŒã˜é€±
+	elsif ($n > 0) {				# né€±é–“çµŒé
 		for (1 .. $n) { unshift(@WEEK, 0); }
 		$WEEK[0] = 1;
 	}
 
 
-	### ‰½”NŠÔŒo‰ß‚µ‚½‚©‹‚ß‚é
+	### ä½•å¹´é–“çµŒéã—ãŸã‹æ±‚ã‚ã‚‹
 	$n = $RUN_TIME[5] - $LOG_TIME[5];
 
-	if (($n == 0) || ($n < 0)) { $YEAR[0]++; }	# “¯‚¶”N(ƒT[ƒo‘¤Œv‚ªŒÃ‚¢ê‡‚à‚±‚Ìˆ—)
-	elsif ($n > 0) {							# n”NŒo‰ß
-		@MONTH = (0) x 12;						# Œ•ÊWŒv‚ğreset
+	if (($n == 0) || ($n < 0)) { $YEAR[0]++; }	# åŒã˜å¹´(ã‚µãƒ¼ãƒå´æ™‚è¨ˆãŒå¤ã„å ´åˆã‚‚ã“ã®å‡¦ç†)
+	elsif ($n > 0) {							# nå¹´çµŒé
+		@MONTH = (0) x 12;						# æœˆåˆ¥é›†è¨ˆã‚’reset
 		for (1 .. $n) { unshift(@YEAR, 0); }
 		$YEAR[0] = 1;
 	}
@@ -333,22 +333,22 @@ sub Macro_Count {
 }
 
 
-### [ƒJƒEƒ“ƒgŒ‹‰Ê‚ğ”z—ñ‚ÉŠi”[]
+### [ã‚«ã‚¦ãƒ³ãƒˆçµæœã‚’é…åˆ—ã«æ ¼ç´]
 sub Macro_SaveData {
 	$ALL_E = &C62_Encode($ALL);
 
-	$count[0] = "FC2\t$LOG_SINCE_E";					# Šeíî•ñ
-	$count[1] = "$RUN_TIME_E\t$ALL_E\t$host";			# Šeíî•ñ
-	$count[2] = &Func_Array2Str(8,  \@DAILY);			# “ú•ÊWŒv
-	$count[3] = &Func_Array2Str(24, \@HOUR);				# ŠÔ•ÊWŒv
-	$count[4] = &Func_Array2Str(7,  \@YOUBI);			# —j“ú•ÊWŒv
-	$count[5] = &Func_Array2Str(6,  \@WEEK);				# T•ÊWŒv
-	$count[6] = &Func_Array2Str(12, \@MONTH);			# Œ•ÊWŒv
-	$count[7] = &Func_Array2Str(6,  \@YEAR);				# Œ•ÊWŒv
-	$new_log  = "$ALL_E\t$RUN_TIME_E\t$host\t$agent\t$ref\t$screen";	#V‹KƒƒOs
+	$count[0] = "FC2\t$LOG_SINCE_E";					# å„ç¨®æƒ…å ±
+	$count[1] = "$RUN_TIME_E\t$ALL_E\t$host";			# å„ç¨®æƒ…å ±
+	$count[2] = &Func_Array2Str(8,  \@DAILY);			# æ—¥åˆ¥é›†è¨ˆ
+	$count[3] = &Func_Array2Str(24, \@HOUR);				# æ™‚é–“åˆ¥é›†è¨ˆ
+	$count[4] = &Func_Array2Str(7,  \@YOUBI);			# æ›œæ—¥åˆ¥é›†è¨ˆ
+	$count[5] = &Func_Array2Str(6,  \@WEEK);				# é€±åˆ¥é›†è¨ˆ
+	$count[6] = &Func_Array2Str(12, \@MONTH);			# æœˆåˆ¥é›†è¨ˆ
+	$count[7] = &Func_Array2Str(6,  \@YEAR);							# å¹´åˆ¥é›†è¨ˆ
+	$new_log  = "$ALL_E\t$RUN_TIME_E\t$host\t$agent\t$ref\t$screen";	#æ–°è¦ãƒ­ã‚°è¡Œ
 
-	unshift(@log, $new_log);							# V‚µ‚¢ƒƒO‚ğ•t‚¯‘«‚µA
-	splice(@log, $USER{'MaxLog'});						# ŒÃ‚¢ƒƒO‚ÍÁ‚µ‹‚é
+	unshift(@log, $new_log);							# æ–°ã—ã„ãƒ­ã‚°ã‚’ä»˜ã‘è¶³ã—ã€
+	splice(@log, $USER{'MaxLog'});						# å¤ã„ãƒ­ã‚°ã¯æ¶ˆã—å»ã‚‹
 
 	seek(LOG,0,0);
 
@@ -360,8 +360,8 @@ sub Macro_SaveData {
 	flock(LOG,8);
 	close(LOG);
 
-	### ”z—ñ‚Ì“à—e‚ğˆês‚Ì•¶š—ñ‚É’¼‚·ŠÖ”
-	### $limit‚æ‚è‘å‚«‚Èƒf[ƒ^‚ÍØ‚èÌ‚Ä‚é
+	### é…åˆ—ã®å†…å®¹ã‚’ä¸€è¡Œã®æ–‡å­—åˆ—ã«ç›´ã™é–¢æ•°
+	### $limitã‚ˆã‚Šå¤§ããªãƒ‡ãƒ¼ã‚¿ã¯åˆ‡ã‚Šæ¨ã¦ã‚‹
 	sub Func_Array2Str {
 		my($limit, $array) = @_;
 		splice(@$array, $limit);
@@ -372,7 +372,7 @@ sub Macro_SaveData {
 }
 
 
-### [ƒJƒEƒ“ƒg”o—Í]
+### [ã‚«ã‚¦ãƒ³ãƒˆæ•°å‡ºåŠ›]
 sub Macro_Output {
 	my($s, $m, $h, $d, $mo, $y, $w) = @RUN_TIME;
 	my($today, $yesterday) = @DAILY;
@@ -384,7 +384,7 @@ sub Macro_Output {
 		$yesterday  = &C62_Decode($yesterday);
 	}
 
-	### SSIƒ‚[ƒh‚È‚ç
+	### SSIãƒ¢ãƒ¼ãƒ‰ãªã‚‰
 	if ($USER{'SSIMode'}) {
 		print "Content-type: text/plain\n\n";
 		if ($OutMode ne 'h') {
@@ -394,63 +394,61 @@ sub Macro_Output {
 			++$mo;
 			$y += 1900;
 
-			;#+--[ * ƒƒbƒZ[ƒW(ƒ†[ƒU•ÏX‰Â) * ]------------[ ‚±‚±‚©‚ç ]-+
+			;#+--[ * ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(ãƒ¦ãƒ¼ã‚¶å¤‰æ›´å¯) * ]------------[ ã“ã“ã‹ã‚‰ ]-+
 
-			# D‚«‚È—j“ú‚Ì•\‹L‚ğ‘I‚ñ‚Å‰º‚³‚¢B
-			@w = ('“ú', 'Œ','‰Î','…','–Ø','‹à','“y');  $w = $w[$w];
+			# å¥½ããªæ›œæ—¥ã®è¡¨è¨˜ã‚’é¸ã‚“ã§ä¸‹ã•ã„ã€‚
+			@w = ('æ—¥', 'æœˆ','ç«','æ°´','æœ¨','é‡‘','åœŸ');  $w = $w[$w];
 			# @w = ('Sun','Mon','Tue','Wed','Thu','Fri','Sat');  $w = $w[$w];
 
 			;#+-----------------------------------------------------------+
-			;#(ƒƒbƒZ[ƒW’†‚Ì•Ï”‚ÌˆÓ–¡)
-			;#  ${all}      c‘ƒqƒbƒg”    ${y} c”N    ${h}c
-			;#  ${today}    c–{“úƒqƒbƒg”  ${mo}cŒ    ${m}c•ª
-			;#  ${yesterday}cğ“úƒqƒbƒg”  ${d} c“ú    ${s}c•b
-			;#  ${host}     c–K–âÒƒzƒXƒg  ${w} c—j“ú
-			;#  ${agent}    cƒuƒ‰ƒEƒU–¼
-			;#  ${ref}      cQÆŒ³        ¦ " ‚Í \" ‚É’u‚«Š·‚¦‚Ü‚µ‚å‚¤I
+			;#(ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ä¸­ã®å¤‰æ•°ã®æ„å‘³)
+			;#  ${all}      â€¦ç·ãƒ’ãƒƒãƒˆæ•°    ${y} â€¦å¹´    ${h}â€¦æ™‚
+			;#  ${today}    â€¦æœ¬æ—¥ãƒ’ãƒƒãƒˆæ•°  ${mo}â€¦æœˆ    ${m}â€¦åˆ†
+			;#  ${yesterday}â€¦æ˜¨æ—¥ãƒ’ãƒƒãƒˆæ•°  ${d} â€¦æ—¥    ${s}â€¦ç§’
+			;#  ${host}     â€¦è¨ªå•è€…ãƒ›ã‚¹ãƒˆ  ${w} â€¦æ›œæ—¥
+			;#  ${agent}    â€¦ãƒ–ãƒ©ã‚¦ã‚¶å
+			;#  ${ref}      â€¦å‚ç…§å…ƒ        â€» " ã¯ \" ã«ç½®ãæ›ãˆã¾ã—ã‚‡ã†ï¼
 			;#+-----------------------------------------------------------+
 
 			@mes = (
-				#"${all}\n${today}\n${yesterday}\n${host}\n${agent}\n${ref}\n${y}”N${mo}Œ${d}“ú(${w})\n${h}${m}•ª${s}•b\n",
+				#"${all}\n${today}\n${yesterday}\n${host}\n${agent}\n${ref}\n${y}å¹´${mo}æœˆ${d}æ—¥(${w})\n${h}æ™‚${m}åˆ†${s}ç§’\n",
 				"<FONT FACE=\"Arial\">Total:<B>${all}</B> / Today:<B>${today}</B> / Yesterday:<B>${yesterday}</B></FONT>",
-				#"<FONT SIZE=+1><B>‚Ò‚¡`‚©‚Ÿ`™</B></FONT>@‘S•”‚Å<B>${all}–œƒ{ƒ‹ƒg</B>E¡“ú‚Í<B>${today}–œƒ{ƒ‹ƒg</B>Eğ“ú‚Í<B>${yesterday}–œƒ{ƒ‹ƒg</B>‚Ì’~“d",
-				#"ŠÍ’·‚§I@‘O•û‚É‹@‰eŠm”FI‘Šè¯•Ê”Ô†<B>${host}</B>‚ÁI<BR>“G‹@‚Å‚·I ƒRƒ“ƒfƒBƒVƒ‡ƒ“EƒŒƒbƒhƒbƒbƒbII<BR>‚»‚Ì”A‘O•û‚É<B>${all}‹@</B>ƒbI@¶Œ½‚É<B>${today}‹@</B>I@‰EŒ½‚É<B>${yesterday}‹@</B>I@”g“®–C—pˆÓ‚µ‚Ü‚·‚©!?(ŒÃ)",
 			);
 
-			;#+--[ * ƒƒbƒZ[ƒW(ƒ†[ƒU•ÏX‰Â) * ]------------[ ‚±‚±‚Ü‚Å ]-+
+			;#+--[ * ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(ãƒ¦ãƒ¼ã‚¶å¤‰æ›´å¯) * ]------------[ ã“ã“ã¾ã§ ]-+
 
-			# ƒ‰ƒ“ƒ_ƒ€‚É‘I‚Ô
+			# ãƒ©ãƒ³ãƒ€ãƒ ã«é¸ã¶
 			srand(time + $$);
 			$n = int(rand($#mes+1));
 
-			# •\¦
+			# è¡¨ç¤º
 			print $mes[$n];
 		}
 	}
 
-	### CGIƒ‚[ƒh‚È‚ç
+	### CGIãƒ¢ãƒ¼ãƒ‰ãªã‚‰
 	else {
-		# ‘ƒAƒNƒZƒX”
+		# ç·ã‚¢ã‚¯ã‚»ã‚¹æ•°
 		if    ($OutMode eq 'a') { print &Func_PutGIF($all); }
-		# ¡“úƒAƒNƒZƒX”
+		# ä»Šæ—¥ã‚¢ã‚¯ã‚»ã‚¹æ•°
 		elsif ($OutMode eq 't') { print &Func_PutGIF($today); }
-		# ğ“úƒAƒNƒZƒX”
+		# æ˜¨æ—¥ã‚¢ã‚¯ã‚»ã‚¹æ•°
 		elsif ($OutMode eq 'y') { print &Func_PutGIF($yesterday); }
 	}
 }
 
 
-### [gif‚ğo—Í]
+### [gifã‚’å‡ºåŠ›]
 sub Func_PutGIF {
 	my($Data) = @_;
 	my($i, $n, @array);
 
 	require $USER{'GifCat'};
 	print "Content-type: image/gif\n";
-	print "Expires: 01/01/1970 00:00:00 JST\n\n";	# ƒLƒƒƒbƒVƒ…‚ğ–³Œø‚É‚·‚é
+	print "Expires: 01/01/1970 00:00:00 JST\n\n";	# ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ç„¡åŠ¹ã«ã™ã‚‹
 	binmode(STDOUT);
 
-	### Œ…”‚ğw’è‚³‚ê‚½‚çA‘«‚è‚È‚¢•ª‚ğ0‚Å•â‚¤
+	### æ¡æ•°ã‚’æŒ‡å®šã•ã‚ŒãŸã‚‰ã€è¶³ã‚Šãªã„åˆ†ã‚’0ã§è£œã†
 	$Data = ('0'x($Digit-(length($Data)-1))).$Data if (length($Data)-1 < $Digit);
 
 	for ($i=0 ; $i < length($Data) ; $i++) {
@@ -462,24 +460,24 @@ sub Func_PutGIF {
 }
 
 
-### [ƒGƒ‰[o—Í]
-# e0000 = ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“¸”s
-# e0001 = Œ…”‚ ‚Ó‚ê
-# e1110 = ƒƒO‚ÌŒ`®‚ª•s³
-# e1111 = –³Œø‚ÈƒIƒvƒVƒ‡ƒ“
+### [ã‚¨ãƒ©ãƒ¼å‡ºåŠ›]
+# e0000 = ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³å¤±æ•—
+# e0001 = æ¡æ•°ã‚ãµã‚Œ
+# e1110 = ãƒ­ã‚°ã®å½¢å¼ãŒä¸æ­£
+# e1111 = ç„¡åŠ¹ãªã‚ªãƒ—ã‚·ãƒ§ãƒ³
 sub Macro_PutError {
 	my($code) = @_;
 
 	if ($USER{'SSIMode'}) {
 		print "Content-type: text/plain\n\n";
 		if ($code eq 'e0000') {
-			print "<P><B>[efCount $ver(SSI)]ƒƒO‚ğŠJ‚­‚±‚Æ‚ªo—ˆ‚Ü‚¹‚ñ‚Å‚µ‚½</B></P>\n";
+			print "<P><B>[efCount $ver(SSI)]ãƒ­ã‚°ã‚’é–‹ãã“ã¨ãŒå‡ºæ¥ã¾ã›ã‚“ã§ã—ãŸ</B></P>\n";
 		} elsif ($code eq 'e1110') {
-			print "<P><B>[efCount $ver(SSI)]ƒƒO‚ÌŒ`®‚ª•s³‚Å‚·</B></P>\n";
+			print "<P><B>[efCount $ver(SSI)]ãƒ­ã‚°ã®å½¢å¼ãŒä¸æ­£ã§ã™</B></P>\n";
 		} elsif ($code eq 'e1111') {
-			print "<P><B>[efCount $ver(SSI)]–³Œø‚ÈƒIƒvƒVƒ‡ƒ“‚Å‚·</B></P>\n";
+			print "<P><B>[efCount $ver(SSI)]ç„¡åŠ¹ãªã‚ªãƒ—ã‚·ãƒ§ãƒ³ã§ã™</B></P>\n";
 		} else {
-			print "<P><B>[efCount $ver(SSI)]–¢’è‹`‚ÌƒGƒ‰[‚Å‚·</B></P>\n";
+			print "<P><B>[efCount $ver(SSI)]æœªå®šç¾©ã®ã‚¨ãƒ©ãƒ¼ã§ã™</B></P>\n";
 		}
 	} else {
 		require $USER{'GifCat'};
@@ -509,8 +507,8 @@ sub Macro_Convert {
 
 	$all_e = &C62_Encode($all);
 
-	# ƒJƒEƒ“ƒg‹L˜^•”‚Ì•ÏŠ·
-	# ˆê’Uì‹Æ—p”z—ñ‚É“ü‚ê‚é
+	# ã‚«ã‚¦ãƒ³ãƒˆè¨˜éŒ²éƒ¨ã®å¤‰æ›
+	# ä¸€æ—¦ä½œæ¥­ç”¨é…åˆ—ã«å…¥ã‚Œã‚‹
 	$work[0] = "FC2\t${RUN_TIME_E}";
 	$work[1] = "${RUN_TIME_E}\t${all_e}\t${ip}";
 	$work[2] = $count[1];
@@ -519,10 +517,10 @@ sub Macro_Convert {
 	$work[5] = $count[4];
 	$work[6] = $count[5];
 	$work[7] = "0\t0\t0\t0\t0\t0";
-	unshift(@log,$count[6]);	# ˆì‚ê‚Ä“Ç‚İ‚Ü‚ê‚½ƒAƒNƒZƒXƒƒO
-	@count = @work;				# ˆø‚Á‰z‚·
+	unshift(@log,$count[6]);	# æº¢ã‚Œã¦èª­ã¿è¾¼ã¾ã‚ŒãŸã‚¢ã‚¯ã‚»ã‚¹ãƒ­ã‚°
+	@count = @work;				# å¼•ã£è¶Šã™
 
-	# ƒƒO‹L˜^•”‚Ì•ÏŠ·
+	# ãƒ­ã‚°è¨˜éŒ²éƒ¨ã®å¤‰æ›
 	foreach (@log) {
 		($num, $time, $host, $agent, $ref, $screen) = split(/#/, $_);
 		$num   = &C62_Encode($num);
@@ -536,19 +534,19 @@ sub Macro_Convert {
 }
 
 
-### ’ÊZT‚ğ‹‚ß‚éŠÖ”
+### é€šç®—é€±ã‚’æ±‚ã‚ã‚‹é–¢æ•°
 sub TotalWeek {
 	my($total) = @_;
 	my($week);
 
-	if ($total < 7) { $week = 0; }				# 0œZ‘Îô
+	if ($total < 7) { $week = 0; }				# 0é™¤ç®—å¯¾ç­–
 	else            { $week = int($total/7); }
 
 	return $week;
 }
 
 
-;### 62i”¨10i”
+;### 62é€²æ•°â†’10é€²æ•°
 sub C62_Decode {
 	my $str = reverse($_[0]);
 	my($digit, $i);
@@ -561,7 +559,7 @@ sub C62_Decode {
 }
 
 
-;### 10i”¨62i”
+;### 10é€²æ•°â†’62é€²æ•°
 sub C62_Encode {
 	my($digit) = $_[0];
 	my($str);

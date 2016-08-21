@@ -1,14 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
 <HTML>
 <HEAD>
-<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
-<TITLE>efCcount�p�Ăяo���^�O���������c�[��</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>efCcount用呼び出しタグ自動生成ツール</TITLE>
 
 <SCRIPT language="JavaScript">
 <!--JavaScript
-/*** �p������������\�[�X�`���Ȃ��Ł` ***/
+/*** 恥ずかしいからソース覗かないで～ ***/
 
-//�f�[�^�󂯎��
+//データ受け取り
 function getdata(form) {
 	for (i=0 ; i < form.mode.length ; i++) {
 		if (form.mode[i].checked) {
@@ -33,7 +33,7 @@ function getdata(form) {
 
 	path    = form.path.value;
 	logname = form.logname.value;
-	digit   = form.digit.selectedIndex;	// value���ƃl�X�P�ł�NULL�ɂȂ�
+	digit   = form.digit.selectedIndex;	// valueだとネスケではNULLになる
 	font    = form.font.value;
 
 	img_width = form.img_width.value;
@@ -45,19 +45,19 @@ function getdata(form) {
 }
 
 
-//�\��
+//表示
 function disp(form) {
 
 	if (path == "") {
-		alert("�p�X����URL���w�肳��Ă��܂����I");
+		alert("パス又はURLが指定されていませんよ！");
 	} else {
 		msg_path = path+"?";
 	}
 
 	if ((logname == "") && (mode != "w")) {
-		alert("���O�t�@�C�����w�肳��Ă��܂����I");
+		alert("ログファイルが指定されていませんよ！");
 	} else {
-		if (mode == "w") { msg_log = ""; }	// ���v���[�h�Ȃ烍�O�̎w��͕s�v�ł���
+		if (mode == "w") { msg_log = ""; }	// 時計モードならログの指定は不要である
 		else { msg_log = "LOG=" + logname; }
 	}
 
@@ -71,7 +71,7 @@ function disp(form) {
 	}
 
 	if (digit != 0) {
-		if (mode == "w") { msg_digit = ""; }	// ���v���[�h�Ȃ猅���̎w��͕s�v�ł���
+		if (mode == "w") { msg_digit = ""; }	// 時計モードなら桁数の指定は不要である
 		else { msg_digit = "&DIGIT=" + digit; }
 	} else {
 		msg_digit = "";
@@ -108,9 +108,9 @@ function disp(form) {
 	}
 
 
-	// JavaScript���g��
+	// JavaScriptを使う
 	if ((usejava == "y") && (mode != "w")) {
-		msg  = '<SCRIPT language="JavaScript">\n<!--\n\t/* efStat from YugenKoubou (http://yugen.main.jp/) */\n';
+		msg  = '<SCRIPT language="JavaScript">\n<!--\n\t/* efStat from YugenKoubou (http://ygkb.jp/) */\n';
 		msg += '\tbuf = escape(parent.document.referrer);\n';
 		msg += '\tref = "";\n';
 		msg += '\tfor (i = 0; i < buf.length; i++) {\n\t\tstr = buf.charAt(i);\n\t\tref += (str == "+") ? "%2B" : str;\n\t}\n';
@@ -122,29 +122,29 @@ function disp(form) {
 		msg += '&REF=noscript&SCR=-"'+msg_img_width+msg_img_height+msg_img_border+msg_img_alt+'>\n</NOSCRIPT>';
 	}
 
-	// JavaScript���g��Ȃ�
+	// JavaScriptを使わない
 	else if ((usejava == "n") && (mode != "w")) {
 			msg  = '<IMG src="'+msg_path+msg_log+msg_mode+msg_digit+msg_font+'"'+msg_img_width+msg_img_height+msg_img_border+msg_img_alt+'>\n';
 	}
 
-	// ���v���[�h�Ȃ��
+	// 時計モードならば
 	else if (mode == "w") {
 			msg  = '<IMG src="'+msg_path+msg_mode+msg_font+'"'+msg_img_width+msg_img_height+msg_img_border+msg_img_alt+'>\n';
 	}
 
-	// �A���������
-	if (mode == "a") { msg_ = "�J�E���^��ʁF�w���A�N�Z�X���x\n"; }
-	if (mode == "t") { msg_ = "�J�E���^��ʁF�w�{���A�N�Z�X���x\n"; }
-	if (mode == "y") { msg_ = "�J�E���^��ʁF�w����A�N�Z�X���x\n"; }
-	if (mode == "w") { msg_ = "�J�E���^��ʁF�w���v�x\n"; }
+	// 連絡欄を作る
+	if (mode == "a") { msg_ = "カウンタ種別：『総アクセス数』\n"; }
+	if (mode == "t") { msg_ = "カウンタ種別：『本日アクセス数』\n"; }
+	if (mode == "y") { msg_ = "カウンタ種別：『昨日アクセス数』\n"; }
+	if (mode == "w") { msg_ = "カウンタ種別：『時計』\n"; }
 
-	if (do_count == "y") { msg_ += "���̃J�E���^�̓J�E���g�������F�w�s���x\n"; }
-	if (do_count == "n") { msg_ += "���̃J�E���^�̓J�E���g�������F�w�s��Ȃ��x\n"; }
+	if (do_count == "y") { msg_ += "このカウンタはカウント処理を：『行う』\n"; }
+	if (do_count == "n") { msg_ += "このカウンタはカウント処理を：『行わない』\n"; }
 
-	if ((usejava == "y") && (mode != "w") && (do_count == "y")) { msg_ += "�Q�ƌ��E��ʏ����L�^�F�w����x\n"; }
-	if ((usejava == "n") && (mode != "w") && (do_count == "y")) { msg_ += "�Q�ƌ��E��ʏ����L�^�F�w���Ȃ��x\n"; }
+	if ((usejava == "y") && (mode != "w") && (do_count == "y")) { msg_ += "参照元・画面情報を記録：『する』\n"; }
+	if ((usejava == "n") && (mode != "w") && (do_count == "y")) { msg_ += "参照元・画面情報を記録：『しない』\n"; }
 
-	// ���ۂ̕\��
+	// 実際の表示
 	form.TEXTAREA.value = msg;
 	form.COMMENT.value = msg_;
 }
@@ -156,30 +156,30 @@ function disp(form) {
 <TABLE width="100%" cellpadding="0" cellspacing="0">
   <TBODY>
     <TR>
-      <TD><B><FONT size="+2">efCount�p�Ăяo���^�O���������c�[��</FONT></B> ver. 0.4
+      <TD><B><FONT size="+2">efCount用呼び出しタグ自動生成ツール</FONT></B> ver. 0.4
       <HR>
-      fcount.cgi ��ݒu�����ň�ԑ�ςȂ̂͌Ăяo�����߂̃^�O����镔���ł���ˁB<BR>
-      ��������ǂ�ł��C�}�C�`������Ȃ��c�H�@�Ƃ���������R�����邩���m��܂���B<BR>
-      �����ŁA��ʏォ��K�v�����݂̂��w�肷�邱�Ƃɂ��A�����I�ɌĂяo�����߂̃^�O�������c�[��������Ă݂܂����B<BR>
+      fcount.cgi を設置する上で一番大変なのは呼び出すためのタグを作る部分ですよね。<BR>
+      説明書を読んでもイマイチ分からない…？　という方も沢山居られるかも知れません。<BR>
+      そこで、画面上から必要事項のみを指定することにより、自動的に呼び出すためのタグが作られるツールを作ってみました。<BR>
       <BR>
-      ���⎖������͂��A�{�^���������Ƃ������̗��Ƀ^�O���\������܂��B�@������R�s�[���āA�ݒu������HTML�t�@�C���ɒ���t���ĉ������B<BR>
-      �Ȃ��A�ŏ�������͂���Ă��鍀�ڂ́A�f�t�H���g�̐ݒ�ł��B�@efStat
-      ���C���X�g�[�������܂܂̏�ԂȂ炱�̂܂܂œ����͂��ł��B<BR>
+      質問事項を入力し、ボタンを押すとすぐ下の欄にタグが表示されます。　それをコピーして、設置したいHTMLファイルに張り付けて下さい。<BR>
+      なお、最初から入力されている項目は、デフォルトの設定です。　efStat
+      をインストールしたままの状態ならこのままで動くはずです。<BR>
       <BR>
-      ���܂�ď��߂ă}�g���ɍ���� JavaScript
-      �ł��̂ŁA�����s�s�������邩���m��܂���(�Ȃ񂹎������Ȃ��܂�Web�̃T���v�������Ȃ���V�R�V�R�ł����񂾃��m�Łc)�B�@�������������_������܂�����A���C�y�ɂ��m�点�������B<BR>
+      生まれて初めてマトモに作った JavaScript
+      ですので、何か不都合があるかも知れません(なんせ資料もないままWebのサンプルを見ながらシコシコ打ち込んだモノで…)。　何かおかしい点がありましたら、お気軽にお知らせ下さい。<BR>
       <FORM>
       <CENTER>
       <TABLE border="1" bgcolor="#ffdfe0" cellpadding="2" cellspacing="0" width="95%">
         <TBODY>
           <TR>
-            <TD bgcolor="#ffc6c7" nowrap colspan="4"><B>1. �ǂ̎�ނ̃J�E���^�����܂����H</B></TD>
+            <TD bgcolor="#ffc6c7" nowrap colspan="4"><B>1. どの種類のカウンタを作りますか？</B></TD>
           </TR>
           <TR>
-            <TD>���J�E���g�� <INPUT type="radio" name="mode" value="a" checked></TD>
-            <TD>�{���J�E���g�� <INPUT type="radio" name="mode" value="t"></TD>
-            <TD>����J�E���g�� <INPUT type="radio" name="mode" value="y"></TD>
-            <TD>���v <INPUT type="radio" name="mode" value="w"></TD>
+            <TD>総カウント数 <INPUT type="radio" name="mode" value="a" checked></TD>
+            <TD>本日カウント数 <INPUT type="radio" name="mode" value="t"></TD>
+            <TD>昨日カウント数 <INPUT type="radio" name="mode" value="y"></TD>
+            <TD>時計 <INPUT type="radio" name="mode" value="w"></TD>
           </TR>
         </TBODY>
       </TABLE>
@@ -188,22 +188,22 @@ function disp(form) {
       <TABLE border="1" bgcolor="#ffdfe0" cellpadding="2" cellspacing="0" width="95%">
         <TBODY>
           <TR>
-            <TD bgcolor="#ffc6c7" nowrap colspan="3"><B>2. ���̃J�E���^�ɃJ�E���g�����܂����H</B><BR>
-            �����A�����A����c�ƈ�̃y�[�W�ɃJ�E���^�𕡐��\��������悤�ȏꍇ�A���ۂɃJ�E���g�������s�킹��J�E���^�͑�\�̈�����ɂ��ĉ������B<BR>
-            ���m�Ɏw�肵�Ă�����ƃT�[�o�̕��ׂ��������邾���łȂ��A�J�E���^�̐��x���啝�Ɍ��サ�܂��B</TD>
+            <TD bgcolor="#ffc6c7" nowrap colspan="3"><B>2. そのカウンタにカウントさせますか？</B><BR>
+            総合、今日、昨日…と一つのページにカウンタを複数表示させるような場合、実際にカウント処理を行わせるカウンタは代表の一つだけにして下さい。<BR>
+            正確に指定してあげるとサーバの負荷を押さえるだけでなく、カウンタの精度も大幅に向上します。</TD>
           </TR>
           <TR>
-            <TD colspan="2">�͂� <INPUT type="radio" name="do_count" value="y" checked></TD>
-            <TD>������ <INPUT type="radio" name="do_count" value="n"></TD>
+            <TD colspan="2">はい <INPUT type="radio" name="do_count" value="y" checked></TD>
+            <TD>いいえ <INPUT type="radio" name="do_count" value="n"></TD>
             </TR>
           <TR>
-            <TD bgcolor="#ffc6c7" colspan="2"><B>3. (2.�Łu�͂��v�Ɠ������ꍇ) JavaScript�𕹗p���܂����H</B><BR>
-            JavaScript �𕹗p����Ɓu�Q�ƌ��v�u��ʉ𑜓x�v�u��ʐF�[�x�v���擾�ł���悤�ɂȂ�܂��B</TD>
+            <TD bgcolor="#ffc6c7" colspan="2"><B>3. (2.で「はい」と答えた場合) JavaScriptを併用しますか？</B><BR>
+            JavaScript を併用すると「参照元」「画面解像度」「画面色深度」を取得できるようになります。</TD>
             <TD align="center">x</TD>
           </TR>
           <TR>
-            <TD>�͂� <INPUT type="radio" name="usejava" value="y" checked></TD>
-            <TD>������ <INPUT type="radio" name="usejava" value="n"></TD>
+            <TD>はい <INPUT type="radio" name="usejava" value="y" checked></TD>
+            <TD>いいえ <INPUT type="radio" name="usejava" value="n"></TD>
             <TD align="center">x</TD>
           </TR>
         </TBODY>
@@ -213,25 +213,25 @@ function disp(form) {
       <TABLE border="1" bgcolor="#ffdfe0" cellpadding="2" cellspacing="0" width="95%">
         <TBODY>
           <TR>
-            <TD colspan="5" bgcolor="#ffc6c7"><B>4. �\���Ɋւ���w�� (�K�{)</B></TD>
+            <TD colspan="5" bgcolor="#ffc6c7"><B>4. 表示に関する指定 (必須)</B></TD>
           </TR>
           <TR>
             <TH align="right" bgcolor="#ffc6c7" colspan="3">fcount.cgi<BR>
-            �܂ł̃p�X</TH>
+            までのパス</TH>
             <TD><INPUT size="40" type="text" name="path" value="./cgi-bin/fstat/fcount.cgi"></TD>
-            <TD>�Ăяo��HTML�t�@�C�����猩���Afcount.cgi
-            �̈ʒu���L���ĉ������B<BR>
-            http://�` �Ŏn�܂�URL�ł̎w����\�ł��B<BR>
-            ���̏ꍇ�A���̃z�X�g�ɂ���fcount.cgi���Ăяo�����Ƃ��ł��܂��B</TD>
+            <TD>呼び出すHTMLファイルから見た、fcount.cgi
+            の位置を記して下さい。<BR>
+            http://～ で始まるURLでの指定も可能です。<BR>
+            この場合、他のホストにあるfcount.cgiを呼び出すことができます。</TD>
           </TR>
           <TR>
-            <TH align="right" bgcolor="#ffc6c7" colspan="3">���O�t�@�C����</TH>
+            <TH align="right" bgcolor="#ffc6c7" colspan="3">ログファイル名</TH>
             <TD><INPUT size="20" type="text" name="logname" value="index"> .log</TD>
-            <TD>�L�^����Ώۂ̃��O�t�@�C�������w�肵�ĉ������B<BR>
-            �g���q�� .log �͕K�v����܂���B</TD>
+            <TD>記録する対象のログファイル名を指定して下さい。<BR>
+            拡張子の .log は必要ありません。</TD>
           </TR>
           <TR>
-            <TH align="right" bgcolor="#ffc6c7" colspan="3">�\������</TH>
+            <TH align="right" bgcolor="#ffc6c7" colspan="3">表示桁数</TH>
             <TD><SELECT name="digit">
             <OPTION value="0">0</OPTION>
             <OPTION value="1">1</OPTION>
@@ -244,13 +244,13 @@ function disp(form) {
             <OPTION value="8">8</OPTION>
             <OPTION value="9">9</OPTION>
             </SELECT></TD>
-            <TD>0 ���w�肷��Əȗ��������ƂɂȂ�܂�(�܂�A�\���������w�肵�Ȃ�)</TD>
+            <TD>0 を指定すると省略したことになります(つまり、表示桁数を指定しない)</TD>
           </TR>
           <TR>
-            <TH align="right" bgcolor="#ffc6c7" colspan="3">�t�H���g</TH>
+            <TH align="right" bgcolor="#ffc6c7" colspan="3">フォント</TH>
             <TD><INPUT size="20" type="text" name="font" value="fuksan"></TD>
-            <TD>�w�肵�Ȃ��ꍇ�A�ȗ��������ƂɂȂ�܂�<BR>
-            (�܂�A�v���O�������Ŏw�肵���f�t�H���g�̃t�H���g���g�p����)</TD>
+            <TD>指定しない場合、省略したことになります<BR>
+            (つまり、プログラム側で指定したデフォルトのフォントを使用する)</TD>
           </TR>
         </TBODY>
       </TABLE>
@@ -258,19 +258,19 @@ function disp(form) {
       <TABLE border="1" bgcolor="#ffdfe0" cellpadding="2" cellspacing="0" width="95%">
         <TBODY>
           <TR>
-            <TD colspan="4" bgcolor="#ffc6c7"><B>5. �\���Ɋւ���w�� (�C��)</B></TD>
+            <TD colspan="4" bgcolor="#ffc6c7"><B>5. 表示に関する指定 (任意)</B></TD>
           </TR>
           <TR>
-            <TH align="right" bgcolor="#ffc6c7">�摜����</TH>
-            <TD><INPUT size="3" type="text" name="img_width" value="60">�@���ȗ���</TD>
-            <TH align="right" bgcolor="#ffc6c7">�摜�c��</TH>
-            <TD><INPUT size="3" type="text" name="img_height" value="16">�@���ȗ���</TD>
+            <TH align="right" bgcolor="#ffc6c7">画像横幅</TH>
+            <TD><INPUT size="3" type="text" name="img_width" value="60">　※省略可</TD>
+            <TH align="right" bgcolor="#ffc6c7">画像縦幅</TH>
+            <TD><INPUT size="3" type="text" name="img_height" value="16">　※省略可</TD>
           </TR>
           <TR>
-            <TH align="right" bgcolor="#ffc6c7" nowrap>�摜�̘g�̑���</TH>
-            <TD><INPUT size="3" type="text" name="img_border" value="0">�@���ȗ���</TD>
-            <TH align="right" bgcolor="#ffc6c7">���ߕ�</TH>
-            <TD><INPUT size="20" type="text" name="img_alt" value="���A�N�Z�X��">�@���ȗ���</TD>
+            <TH align="right" bgcolor="#ffc6c7" nowrap>画像の枠の太さ</TH>
+            <TD><INPUT size="3" type="text" name="img_border" value="0">　※省略可</TD>
+            <TH align="right" bgcolor="#ffc6c7">注釈文</TH>
+            <TD><INPUT size="20" type="text" name="img_alt" value="総アクセス数">　※省略可</TD>
           </TR>
         </TBODY>
       </TABLE>
@@ -278,14 +278,14 @@ function disp(form) {
       <TABLE border="1" bgcolor="#ffdfe0" cellpadding="2" cellspacing="0" width="95%">
         <TBODY>
           <TR>
-            <TD colspan="4" align="center" bgcolor="#ffc6c7"><INPUT type="button" value="�Ăяo���pHTML��\��������" onclick="getdata(this.form)"></TD>
+            <TD colspan="4" align="center" bgcolor="#ffc6c7"><INPUT type="button" value="呼び出し用HTMLを表示させる" onclick="getdata(this.form)"></TD>
           </TR>
           <TR>
-            <TD colspan="4" align="center"><TEXTAREA wrap="soft" rows="20" cols="80" name="TEXTAREA" readonly>�����Ɍ��ʂ��\������܂��B
-�J�b�g���y�[�X�g��HTML�ɒ���t���ĉ������B</TEXTAREA></TD>
+            <TD colspan="4" align="center"><TEXTAREA wrap="soft" rows="20" cols="80" name="TEXTAREA" readonly>ここに結果が表示されます。
+カット＆ペーストでHTMLに張り付けて下さい。</TEXTAREA></TD>
           </TR>
           <TR>
-            <TD colspan="4" align="center"><TEXTAREA wrap="soft" rows="3" cols="80" name="COMMENT" readonly>�A�����F</TEXTAREA></TD>
+            <TD colspan="4" align="center"><TEXTAREA wrap="soft" rows="3" cols="80" name="COMMENT" readonly>連絡欄：</TEXTAREA></TD>
           </TR>
         </TBODY>
       </TABLE>

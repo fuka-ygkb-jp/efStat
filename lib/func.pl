@@ -1,4 +1,4 @@
-### ¥á¥Ë¥å¡¼/À¸¥í¥°
+### ãƒ¡ãƒ‹ãƒ¥ãƒ¼/ç”Ÿãƒ­ã‚°
 sub menu_rawlog {
 	$i = 0;
 	foreach (@filename) {
@@ -7,45 +7,45 @@ sub menu_rawlog {
 		$i++;
 		if ($i == $colspan) { print "</TR>\n"; $i = 0; }
 	}
-	# Í¾¤Ã¤¿¥¹¥Ú¡¼¥¹¤ò¤´¤Ş¤«¤¹
-	for (; $i < $colspan ; $i++) { print "<TD>¡¡</TD>"; }
+	# ä½™ã£ãŸã‚¹ãƒšãƒ¼ã‚¹ã‚’ã”ã¾ã‹ã™
+	for (; $i < $colspan ; $i++) { print "<TD>ã€€</TD>"; }
 	print "</TR>\n";
 }
 
-### ¥á¥Ë¥å¡¼/¥«¥¦¥ó¥È·Ï
-sub menu_count { print "\t<TR${tbc[6]}><TD><A HREF=\"#hour\">»ş´ÖÊÌ½¸·×</A></TD><TD><A HREF=\"#day\">ÆüÊÌ½¸·×</A></TD><TD><A HREF=\"#week\">ÍËÆüÊÌ½¸·×</A></TD><TD><A HREF=\"#weekly\">½µÊÌ½¸·×</A></TD><TD><A HREF=\"#month\">·îÊÌ½¸·×</A></TD><TD><A HREF=\"#year\">Ç¯ÅÙÊÌ½¸·×</A></TD></TR>\n"; }
+### ãƒ¡ãƒ‹ãƒ¥ãƒ¼/ã‚«ã‚¦ãƒ³ãƒˆç³»
+sub menu_count { print "\t<TR${tbc[6]}><TD><A HREF=\"#hour\">æ™‚é–“åˆ¥é›†è¨ˆ</A></TD><TD><A HREF=\"#day\">æ—¥åˆ¥é›†è¨ˆ</A></TD><TD><A HREF=\"#week\">æ›œæ—¥åˆ¥é›†è¨ˆ</A></TD><TD><A HREF=\"#weekly\">é€±åˆ¥é›†è¨ˆ</A></TD><TD><A HREF=\"#month\">æœˆåˆ¥é›†è¨ˆ</A></TD><TD><A HREF=\"#year\">å¹´åº¦åˆ¥é›†è¨ˆ</A></TD></TR>\n"; }
 
-### ¥á¥Ë¥å¡¼/¥é¥ó¥­¥ó¥°
-sub menu_rank { print "\t<TR${tbc[6]}><TH colspan=${colspan}><A HREF=\"#rank\">³Æ¼ï¥é¥ó¥­¥ó¥°</A></TH></TR>\n"; }
+### ãƒ¡ãƒ‹ãƒ¥ãƒ¼/ãƒ©ãƒ³ã‚­ãƒ³ã‚°
+sub menu_rank { print "\t<TR${tbc[6]}><TH colspan=${colspan}><A HREF=\"#rank\">å„ç¨®ãƒ©ãƒ³ã‚­ãƒ³ã‚°</A></TH></TR>\n"; }
 
-### ¥á¥Ë¥å¡¼/»²¾È¸µ·Ï
+### ãƒ¡ãƒ‹ãƒ¥ãƒ¼/å‚ç…§å…ƒç³»
 sub menu_ref {
-print "\t<TR${tbc[6]}><TD><A HREF=\"#ref\">»²¾È¸µÅı·×</A></TD><TD><A HREF=\"#ref_own\">±ÜÍ÷¼Ô°ÜÆ°Ê¬ÀÏ</A></TD><TD>¡¡</TD><TD>¡¡</TD><TD>¡¡</TD><TD>¡¡</TD></TR>\n";
-print "\t<TR${tbc[6]}><TD><A HREF=\"#search_share\">¥µ¡¼¥Á¥¨¥ó¥¸¥ó¤Î¥·¥§¥¢</A></TD><TD><A HREF=\"#search_key\">¥µ¡¼¥Á¥¨¥ó¥¸¥óÊ¬ÀÏ</A></TD><TD><A HREF=\"#tinami\">TINAMIÊ¬ÀÏ</A></TD><TD><A HREF=\"#sp\">Surfers ParadiceÊ¬ÀÏ</A></TD><TD>¡¡</TD><TD>¡¡</TD></TR>\n";
+print "\t<TR${tbc[6]}><TD><A HREF=\"#ref\">å‚ç…§å…ƒçµ±è¨ˆ</A></TD><TD><A HREF=\"#ref_own\">é–²è¦§è€…ç§»å‹•åˆ†æ</A></TD><TD>ã€€</TD><TD>ã€€</TD><TD>ã€€</TD><TD>ã€€</TD></TR>\n";
+print "\t<TR${tbc[6]}><TD><A HREF=\"#search_share\">ã‚µãƒ¼ãƒã‚¨ãƒ³ã‚¸ãƒ³ã®ã‚·ã‚§ã‚¢</A></TD><TD><A HREF=\"#search_key\">ã‚µãƒ¼ãƒã‚¨ãƒ³ã‚¸ãƒ³åˆ†æ</A></TD><TD>ã€€</TD><TD>ã€€</TD><TD>ã€€</TD><TD>ã€€</TD></TR>\n";
 }
 
-### ¥á¥Ë¥å¡¼/¥Û¥¹¥È·Ï
-sub menu_host { print "\t<TR${tbc[6]}><TD><A HREF=\"#host\">¥Û¥¹¥ÈÅı·×</A></TD><TD><A HREF=\"#domain\">¹ñÀÒÊÌÅı·×</A></TD><TD><A HREF=\"#jp\">¹ñÆâ¥É¥á¥¤¥óÅı·×</A></TD><TD><A HREF=\"#us\">ÊÆ¹ñ¥É¥á¥¤¥óÅı·×</A></TD><TD>¡¡</TD><TD>¡¡</TD></TR>\n"; }
+### ãƒ¡ãƒ‹ãƒ¥ãƒ¼/ãƒ›ã‚¹ãƒˆç³»
+sub menu_host { print "\t<TR${tbc[6]}><TD><A HREF=\"#host\">ãƒ›ã‚¹ãƒˆçµ±è¨ˆ</A></TD><TD><A HREF=\"#domain\">å›½ç±åˆ¥çµ±è¨ˆ</A></TD><TD><A HREF=\"#jp\">å›½å†…ãƒ‰ãƒ¡ã‚¤ãƒ³çµ±è¨ˆ</A></TD><TD><A HREF=\"#us\">ç±³å›½ãƒ‰ãƒ¡ã‚¤ãƒ³çµ±è¨ˆ</A></TD><TD>ã€€</TD><TD>ã€€</TD></TR>\n"; }
 
-### ¥á¥Ë¥å¡¼/¥Ö¥é¥¦¥¶·Ï
-sub menu_ua { print "\t<TR${tbc[6]}><TD><A HREF=\"#ua\">¥Ö¥é¥¦¥¶Åı·×</A></TD><TD><A HREF=\"#share_ie\">IEÆ±»Î¤Î¥·¥§¥¢</A></TD><TD><A HREF=\"#share_nn\">NNÆ±»Î¤Î¥·¥§¥¢</A></TD><TD><A HREF=\"#share_os\">ÍøÍÑOSÅı·×</A></TD><TD>¡¡</TD><TD>¡¡</TD></TR>\n"; }
+### ãƒ¡ãƒ‹ãƒ¥ãƒ¼/ãƒ–ãƒ©ã‚¦ã‚¶ç³»
+sub menu_ua { print "\t<TR${tbc[6]}><TD><A HREF=\"#ua\">ãƒ–ãƒ©ã‚¦ã‚¶çµ±è¨ˆ</A></TD><TD><A HREF=\"#share_ie\">IEåŒå£«ã®ã‚·ã‚§ã‚¢</A></TD><TD><A HREF=\"#share_os\">åˆ©ç”¨OSçµ±è¨ˆ</A></TD><TD><A HREF=\"#share_nn\">ã€€</A></TD><TD>ã€€</TD><TD>ã€€</TD></TR>\n"; }
 
-### ¥á¥Ë¥å¡¼/²èÌÌ¾ğÊó·Ï
-sub menu_screen { print "\t<TR${tbc[6]}><TD><A HREF=\"#screen\">²èÌÌ¾ğÊóÅı·×</A></TD><TD><A HREF=\"#screen_size\">¥µ¥¤¥ºÊÌÅı·×</A></TD><TD><A HREF=\"#screen_color\">¿§¿¼ÅÙÊÌÅı·×</A></TD><TD>¡¡</TD><TD>¡¡</TD><TD>¡¡</TD></TR>\n"; }
+### ãƒ¡ãƒ‹ãƒ¥ãƒ¼/ç”»é¢æƒ…å ±ç³»
+sub menu_screen { print "\t<TR${tbc[6]}><TD><A HREF=\"#screen\">ç”»é¢æƒ…å ±çµ±è¨ˆ</A></TD><TD><A HREF=\"#screen_size\">ã‚µã‚¤ã‚ºåˆ¥çµ±è¨ˆ</A></TD><TD><A HREF=\"#screen_color\">è‰²æ·±åº¦åˆ¥çµ±è¨ˆ</A></TD><TD>ã€€</TD><TD>ã€€</TD><TD>ã€€</TD></TR>\n"; }
 
 
-;### HTML Æ¬¤ÎÉôÊ¬
+;### HTML é ­ã®éƒ¨åˆ†
 sub html_head {
 print <<"END";
 Content-type: text/html
 
 <HTML>
 <HEAD>
-	<META http-equiv=\"Content-Type\" content=\"text/html; charset=EUC-JP\">
+	<META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">
 	<META http-equiv=\"Content-Style-Type\" content=\"text/css\">
 
-	<!-- efStat $ver  by Enogu Fukashigi (http://yugen.main.jp/) -->
-	<!-- ¤³¤Î¥¹¥¯¥ê¥×¥È¤ÎºÇ¿·ÈÇ¤¬Íß¤·¤¤Êı¤Ï¾åµ­¥¢¥É¥ì¥¹¤Ş¤Ç¤ª±Û¤·²¼¤µ¤¤(^^) -->
+	<!-- efStat $ver  by Enogu Fukashigi (http://ygkb.jp/) -->
+	<!-- ã“ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®æœ€æ–°ç‰ˆãŒæ¬²ã—ã„æ–¹ã¯ä¸Šè¨˜ã‚¢ãƒ‰ãƒ¬ã‚¹ã¾ã§ãŠè¶Šã—ä¸‹ã•ã„(^^) -->
 
 	<TITLE>efStat / $html_title</TITLE>
 
@@ -67,18 +67,18 @@ END
 }
 
 
-;### HTML ¤·¤Ã¤İ¤ÎÉôÊ¬
+;### HTML ã—ã£ã½ã®éƒ¨åˆ†
 sub html_tail {
-	print "\n<HR>\n<DIV align=right><A href=\"http://yugen.main.jp/\">[efStat $ver] / &copy;1998-2001 Enogu Fukashigi\@YugenKoubou</A></DIV>\n</BODY>\n</HTML>\n";
+	print "\n<HR>\n<DIV align=right><A href=\"http://ygkb.jp/\">[efStat $ver] / &copy;1998-2016 Enogu Fukashigi\@YugenKoubou</A></DIV>\n</BODY>\n</HTML>\n";
 }
 
 
 package func;
 ;#+------------------------------------------------------------------------
 ;#|efStat
-;#|¶¦ÍÑ´Ø¿ô
+;#|å…±ç”¨é–¢æ•°
 ;#+------------------------------------------------------------------------
-### ¥Æ¡¼¥Ö¥ë¤òÆÉ¤ß¹ş¤à
+### ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 sub LoadTable {
 	my($filename) = @_;
 	my(%hash);
@@ -94,10 +94,10 @@ sub LoadTable {
 	return \%hash;
 }
 
-;### Åı·×·ë²Ì¤ò¥ê¥¹¥È¤Ë¤¹¤ë´Ø¿ô
-;### É½¼¨²¼¸Â¤ÈÏ¢ÁÛÇÛÎó¤òÊü¤ê¹ş¤à¤È¹ß½ç¤Ë¥½¡¼¥È¤·¤¿ÇÛÎó¤òÊÖ¤¹
-;### $assoc_array = Ï¢ÁÛÇÛÎó¤Ø¤Î¥ê¥Õ¥¡¥ì¥ó¥¹ (Ãæ¿È¤Ï¥­¡¼Ëè¤Î¥«¥¦¥ó¥È¿ô)
-;### $limit       = ºîÀ®²¼¸Â¤Ø¤Î¥ê¥Õ¥¡¥ì¥ó¥¹ (¤³¤Î¿ô¤ò²¼²ó¤ëÊ¬¤Ï¥ê¥¹¥È¤«¤éÀÚ¤ê¼Î¤Æ¤ë)
+;### çµ±è¨ˆçµæœã‚’ãƒªã‚¹ãƒˆã«ã™ã‚‹é–¢æ•°
+;### è¡¨ç¤ºä¸‹é™ã¨é€£æƒ³é…åˆ—ã‚’æ”¾ã‚Šè¾¼ã‚€ã¨é™é †ã«ã‚½ãƒ¼ãƒˆã—ãŸé…åˆ—ã‚’è¿”ã™
+;### $assoc_array = é€£æƒ³é…åˆ—ã¸ã®ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹ (ä¸­èº«ã¯ã‚­ãƒ¼æ¯ã®ã‚«ã‚¦ãƒ³ãƒˆæ•°)
+;### $limit       = ä½œæˆä¸‹é™ã¸ã®ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹ (ã“ã®æ•°ã‚’ä¸‹å›ã‚‹åˆ†ã¯ãƒªã‚¹ãƒˆã‹ã‚‰åˆ‡ã‚Šæ¨ã¦ã‚‹)
 sub MakeList {
 	my ($hash, $limit) = @_;
 	my (@array, $key, $value);
@@ -110,7 +110,7 @@ sub MakeList {
 }
 
 
-;### ¼«Á³¿ô¤ÎÆş¤Ã¤¿ÇÛÎó¤òÊü¤ê¹ş¤à¤È¹ç·×ÃÍ¤òÊÖ¤¹´Ø¿ô
+;### è‡ªç„¶æ•°ã®å…¥ã£ãŸé…åˆ—ã‚’æ”¾ã‚Šè¾¼ã‚€ã¨åˆè¨ˆå€¤ã‚’è¿”ã™é–¢æ•°
 sub CalcSum {
 	my $sum;
 	foreach (@_) { $sum += $_; }
@@ -118,7 +118,7 @@ sub CalcSum {
 }
 
 
-;### 62¿Ê¿ô¢ª10¿Ê¿ô
+;### 62é€²æ•°â†’10é€²æ•°
 sub C62_Decode {
 	my $str = reverse($_[0]);
 	my($digit, $i);
@@ -131,7 +131,7 @@ sub C62_Decode {
 }
 
 
-;### 10¿Ê¿ô¢ª62¿Ê¿ô
+;### 10é€²æ•°â†’62é€²æ•°
 sub C62_Encode {
 	my($digit) = $_[0];
 	my($str);
@@ -148,18 +148,18 @@ sub C62_Encode {
 }
 
 
-;### ¥¨¥é¡¼½ĞÎÏ
+;### ã‚¨ãƒ©ãƒ¼å‡ºåŠ›
 sub PutError {
 	my($mesg) = @_;
-	$html_title = '°Û¾ï½ªÎ»¤·¤Ş¤·¤¿';
+	$html_title = 'ç•°å¸¸çµ‚äº†ã—ã¾ã—ãŸ';
 	&main::html_head;
-	print "<CENTER><P><B>[¥¨¥é¡¼]</B>$mesg</P></CENTER>\n";
+	print "<CENTER><P><B>[ã‚¨ãƒ©ãƒ¼]</B>$mesg</P></CENTER>\n";
 	&main::html_tail;
 	exit(1);
 }
 
 
-;### URLÆâ¤Î16¿ÊÉ½µ­¤òÊ¸»ú¤ËÌá¤¹´Ø¿ô(URL¥Ç¥³¡¼¥É)
+;### URLå†…ã®16é€²è¡¨è¨˜ã‚’æ–‡å­—ã«æˆ»ã™é–¢æ•°(URLãƒ‡ã‚³ãƒ¼ãƒ‰)
 sub URLdecode {
 	my($str) = @_;
 	$str =~ s/%([0-9A-Fa-f][0-9A-Fa-f])/pack("C",hex($1))/ge;
@@ -167,15 +167,15 @@ sub URLdecode {
 }
 
 
-;### URLÆâ¤Î´Á»úÅù¤ò16¿ÊÉ½µ­¤Ë¤¹¤ë´Ø¿ô(URL¥¨¥ó¥³¡¼¥É)
+;### URLå†…ã®æ¼¢å­—ç­‰ã‚’16é€²è¡¨è¨˜ã«ã™ã‚‹é–¢æ•°(URLã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰)
 sub URLencode {
 	my($str) = @_;
 	$str =~ s/([^\x21-\x24\x26-\x7E])/sprintf("%%%02X",unpack("C",$1))/ge;
 	return $str;
 }
 
-;### ¥ê¥ó¥¯¤Î¥¿¥°¤òºî¤ë´Ø¿ô(URL¤òÊü¤ê¹ş¤à¤ÈÊ¸»ú¥³¡¼¥ÉÊÑ´¹¡¢URL¤Ê¤±¤ì¤Ğ"-"¤òÊÖ¤¹)
-;### $mode¤¬1,2¤Î»ş ?(¥³¥Ş¥ó¥É¥»¥Ñ¥ì¡¼¥¿¡©) ¤¬Íè¤¿¤é²ş¹Ô¤òÉÕ²Ã¤¹¤ë
+;### ãƒªãƒ³ã‚¯ã®ã‚¿ã‚°ã‚’ä½œã‚‹é–¢æ•°(URLã‚’æ”¾ã‚Šè¾¼ã‚€ã¨æ–‡å­—ã‚³ãƒ¼ãƒ‰å¤‰æ›ã€URLãªã‘ã‚Œã°"-"ã‚’è¿”ã™)
+;### $modeãŒ1,2ã®æ™‚ ?(ã‚³ãƒãƒ³ãƒ‰ã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿ï¼Ÿ) ãŒæ¥ãŸã‚‰æ”¹è¡Œã‚’ä»˜åŠ ã™ã‚‹
 sub MakeLink {
 	my($ref,$mode) = @_;
 	my($work);
@@ -185,22 +185,22 @@ sub MakeLink {
 	$work =~ s/</&lt;/g;
 	$work =~ s/>/&gt;/g;
 	$work =~ s/"/&quot;/g;
-	$work =~ s/\?/<BR>\?/g if ($mode == 1);	# »²¾È¸µÍÑ
-	$work =~ s/\?/\n\t\?/g if ($mode == 2);	# À¸¥í¥°ÍÑ
+	$work =~ s/\?/<BR>\?/g if ($mode == 1);	# å‚ç…§å…ƒç”¨
+	$work =~ s/\?/\n\t\?/g if ($mode == 2);	# ç”Ÿãƒ­ã‚°ç”¨
 	return "<A HREF=\"$ref\">$work</A>";
 }
 
-;### ÄÌ»»ÉÃ¤«¤éÆü»ş¤òÆÀ¤ë´Ø¿ô
-;### (ÄÌ»»ÉÃ(1970/01/01 00:00:00¤«¤é)¤òÊü¤ê¹ş¤à¤È[Ç¯/·î/Æü/(ÍË) »ş:Ê¬:ÉÃ]¤ÎÊ¸»úÎó¤ËÀ°·Á¤·¤ÆÊÖ¤¹)
+;### é€šç®—ç§’ã‹ã‚‰æ—¥æ™‚ã‚’å¾—ã‚‹é–¢æ•°
+;### (é€šç®—ç§’(1970/01/01 00:00:00ã‹ã‚‰)ã‚’æ”¾ã‚Šè¾¼ã‚€ã¨[å¹´/æœˆ/æ—¥/(æ›œ) æ™‚:åˆ†:ç§’]ã®æ–‡å­—åˆ—ã«æ•´å½¢ã—ã¦è¿”ã™)
 sub MakeDate {
 	my($t) = @_;
 	my(@wdays, $sec, $min, $hour, $day, $mon, $year, $wday);
-	@wdays=('Æü','·î','²Ğ','¿å','ÌÚ','¶â','ÅÚ');
+	@wdays=('æ—¥','æœˆ','ç«','æ°´','æœ¨','é‡‘','åœŸ');
 	($sec,$min,$hour,$day,$mon,$year,$wday) = localtime($t);
 	return sprintf("%d/%02d/%02d(%s) %02d:%02d:%02d",1900+$year,$mon+1,$day,$wdays[$wday],$hour,$min,$sec);
 }
 
-### GMT·Á¼°¤Ç»ş¹ï¤òÊÖ¤¹´Ø¿ô
+### GMTå½¢å¼ã§æ™‚åˆ»ã‚’è¿”ã™é–¢æ•°
 sub GmtDate {
 	my($t) = @_;
 	my($sec, $min, $hour, $day, $mon, $year, $wday, @wdays, @month);

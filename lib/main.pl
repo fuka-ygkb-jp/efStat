@@ -1,74 +1,73 @@
 ;#+------------------------------------------------------------------------
 ;#|efStat
-;#|¥í¥°²òÀÏ¥ë¡¼¥Á¥ó
+;#|ãƒ­ã‚°è§£æãƒ«ãƒ¼ãƒãƒ³
 ;#+------------------------------------------------------------------------
 
 if (($P{PASS} ne $Pass) && ($DoPass)) {
-	print "<CENTER><P><B>[¥¨¥é¡¼]</B>¥Ñ¥¹¥ï¡¼¥É¤¬°ìÃ×¤·¤Ş¤»¤ó¤Ç¤·¤¿¡£</P></CENTER>\n";
+	print "<CENTER><P><B>[ã‚¨ãƒ©ãƒ¼]</B>ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒä¸€è‡´ã—ã¾ã›ã‚“ã§ã—ãŸã€‚</P></CENTER>\n";
 	&html_tail;
 	exit(1);
 }
 
 
-;### ·×»»»ş´ÖÂ¬Äê³«»Ï
+;### è¨ˆç®—æ™‚é–“æ¸¬å®šé–‹å§‹
 $CPU_start = (times)[0] if ($DoPutBenchmark);
 
-### ¥³¡¼¥ÉÊÑ´¹ÍÑ¥Æ¡¼¥Ö¥ë¤òÆÉ¤ß¹ş¤à
+### ã‚³ãƒ¼ãƒ‰å¤‰æ›ç”¨ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 $TABLE{'agent'}    = &func::LoadTable('./lib/table/agent.tbl');
 $TABLE{'cctld'}    = &func::LoadTable('./lib/table/cctld.tbl');
 $TABLE{'gtld'}     = &func::LoadTable('./lib/table/gtld.tbl');
 $TABLE{'jpdomain'} = &func::LoadTable('./lib/table/jpdomain.tbl');
-$TABLE{'tinami'}   = &func::LoadTable('./lib/table/tinami.tbl');
 
 foreach $filename (@filename) {
-	if ($filename eq '') { next; }		# ".log"¥Õ¥¡¥¤¥ëÂĞºö
-	
-	### ¥Õ¥¡¥¤¥ë¤ò¥ª¡¼¥×¥ó
+	if ($filename eq '') { next; }		# ".log"ãƒ•ã‚¡ã‚¤ãƒ«å¯¾ç­–
+
+	### ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚ªãƒ¼ãƒ—ãƒ³
 	unless (open(LOG,"<${Dir_Log}${filename}.log")) {
-		print "<CENTER><P><B>[¥¨¥é¡¼]</B>¥¢¥¯¥»¥¹¥í¥° ( ${Dir_Log}${filename}.log ) ¤ò³«¤¯¤³¤È¤¬¤Ç¤­¤Ş¤»¤ó¡£<BR>¤½¤Î¥Õ¥¡¥¤¥ë¤ÏËÜÅö¤ËÂ¸ºß¤·¤Æ¤¤¤ë¤«¡¢¥Ñ¡¼¥ß¥Ã¥·¥ç¥ó¤ÏÀµ¤·¤¤¤« (606Ëô¤Ï666) ¤Ê¤É¤ò³ÎÇ§²¼¤µ¤¤¡£</P></CENTER>\n";
+		print "<CENTER><P><B>[ã‚¨ãƒ©ãƒ¼]</B>ã‚¢ã‚¯ã‚»ã‚¹ãƒ­ã‚° ( ${Dir_Log}${filename}.log ) ã‚’é–‹ãã“ã¨ãŒã§ãã¾ã›ã‚“ã€‚<BR>ãã®ãƒ•ã‚¡ã‚¤ãƒ«ã¯æœ¬å½“ã«å­˜åœ¨ã—ã¦ã„ã‚‹ã‹ã€ãƒ‘ãƒ¼ãƒŸãƒƒã‚·ãƒ§ãƒ³ã¯æ­£ã—ã„ã‹ (606åˆã¯666) ãªã©ã‚’ç¢ºèªä¸‹ã•ã„ã€‚</P></CENTER>\n";
 		&html_tail;
 		exit(1);
 	}
 	flock(LOG,2);
 
-	### ¥×¥í¥°¥é¥à¼Â¹Ô»ş¹ï¤ò¼èÆÀ
+	### ãƒ—ãƒ­ã‚°ãƒ©ãƒ å®Ÿè¡Œæ™‚åˆ»ã‚’å–å¾—
 	($SEC,$MIN,$HOUR,$DAY,$MON,$YEAR,$YOUBI,$TOTAL) = localtime(time);
 
-	### ¥Ø¥Ã¥ÀÉô¤òÆÉ¤ß¹ş¤à¡õ¥Á¥§¥Ã¥¯
+	### ãƒ˜ãƒƒãƒ€éƒ¨ã‚’èª­ã¿è¾¼ã‚€ï¼†ãƒã‚§ãƒƒã‚¯
 	chop($HEAD = <LOG>);
 	($LOG_ID, $LOG_SINCE{$filename}) = split(/\t/, $HEAD);
 	$LOG_SINCE{$filename} = &func::C62_Decode($LOG_SINCE{$filename});
 
 	if ($LOG_ID ne 'FC2') { next; }
 
-	### ³Æ¼ï¾ğÊó
+	### å„ç¨®æƒ…å ±
 	chomp($INFO{$filename} = <LOG>);
 	$RANK_ALL{$filename} = &func::C62_Decode((split(/\t/, $INFO{$filename}))[1]);
 
-	### ÆüÊÌ½¸·×
+	### æ—¥åˆ¥é›†è¨ˆ
 	chomp($DAY{$filename} = <LOG>);
 	$RANK_DAY{$filename} = &func::C62_Decode((split(/\t/, $DAY{$filename}))[0]);
 
-	### »ş´ÖÊÌ½¸·×
+	### æ™‚é–“åˆ¥é›†è¨ˆ
 	chomp($HOUR{$filename} = <LOG>);
 
-	### ÍËÆüÊÌ½¸·×
+	### æ›œæ—¥åˆ¥é›†è¨ˆ
 	chomp($WEEK{$filename} = <LOG>);
 
-	### ½µÊÌ½¸·×
+	### é€±åˆ¥é›†è¨ˆ
 	chomp($WEEKLY{$filename} = <LOG>);
 	$RANK_WEEKLY{$filename} = &func::C62_Decode((split(/\t/, $WEEKLY{$filename}))[0]);
 
-	### ·îÊÌ½¸·×
+	### æœˆåˆ¥é›†è¨ˆ
 	chomp($MONTH{$filename} = <LOG>);
 	$RANK_MONTH{$filename} = &func::C62_Decode((split(/\t/, $MONTH{$filename}))[$MON]);
 
-	### Ç¯ÅÙÊÌ½¸·×
+	### å¹´åº¦åˆ¥é›†è¨ˆ
 	chomp($YEAR{$filename} = <LOG>);
 	# $RANK_YEAR{$filename} = &func::C62_Decode((split(/\t/, $YEAR{$filename}))[0]);
 
-	### ¥¢¥¯¥»¥¹¥í¥°½¸·×
-	# ²òÀÏÈÏ°Ï¤¬»ØÄê¤µ¤ì¤Æ¤¤¤ë¾ì¹ç
+	### ã‚¢ã‚¯ã‚»ã‚¹ãƒ­ã‚°é›†è¨ˆ
+	# è§£æç¯„å›²ãŒæŒ‡å®šã•ã‚Œã¦ã„ã‚‹å ´åˆ
 	if ((defined($P{'d'})) && ($P{'d'} ne 'a')) {
 		if ($P{'d'} eq 'y') { $TOTAL = --$TOTAL; }
 		@HOUR = ('0') x 24;
@@ -84,7 +83,7 @@ foreach $filename (@filename) {
 		$HOUR{$filename} = join("\t", @HOUR);
 	}
 
-	# Á´¤ÆÉ½¼¨
+	# å…¨ã¦è¡¨ç¤º
 	else {
 		while (chop($LINE = <LOG>)) {
 			&Macro_Split;
@@ -95,12 +94,12 @@ foreach $filename (@filename) {
 	flock(LOG,8);
 	close(LOG);
 
-	### À¸¥í¥°ÍÑ¥«¥¦¥ó¥¿¤ò½é´ü²½¤·¤Æ¤ª¤¯
+	### ç”Ÿãƒ­ã‚°ç”¨ã‚«ã‚¦ãƒ³ã‚¿ã‚’åˆæœŸåŒ–ã—ã¦ãŠã
 	$COUNT_RAWLOG = 0;
 
-	### Ë½ÁöËÉ»ßÍÑ¥ê¥ß¥Ã¥¿
+	### æš´èµ°é˜²æ­¢ç”¨ãƒªãƒŸãƒƒã‚¿
 	if ($SAMPLES == $Limit_Analyzer) {
-		print "<CENTER><P><B>[¥¨¥é¡¼]</B>Êİ¸îµ¡Ç½\¤¬Æ¯¤­¡¢¥×¥í¥°¥é¥à¤ò¶¯À©½ªÎ»¤·¤Ş¤·¤¿¡£<BR>$Limit_Analyzer·ï¤Ş¤Ç¤Î¥í¥°¤·¤«½èÍı¤Ç¤­¤Ê¤¤¤è¤¦¤Ë¤Ê¤Ã¤Æ¤¤¤Ş¤¹¡£<BR>Ëô¤Ï¡¢¥×¥í¥°¥é¥à¤¬Ë½\Áö¤·¤Ş¤·¤¿¡£¿¼¹ï¤ÊÌäÂê¤Ç¤¹¤Î¤Ç¡¢¤¼¤Òºî¼Ô¤Ë¤´Ï¢Íí²¼¤µ¤¤¡£</P></CENTER>\n";
+		print "<CENTER><P><B>[ã‚¨ãƒ©ãƒ¼]</B>ä¿è­·æ©Ÿèƒ½\ãŒåƒãã€ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’å¼·åˆ¶çµ‚äº†ã—ã¾ã—ãŸã€‚<BR>$Limit_Analyzerä»¶ã¾ã§ã®ãƒ­ã‚°ã—ã‹å‡¦ç†ã§ããªã„ã‚ˆã†ã«ãªã£ã¦ã„ã¾ã™ã€‚<BR>åˆã¯ã€ãƒ—ãƒ­ã‚°ãƒ©ãƒ ãŒæš´\èµ°ã—ã¾ã—ãŸã€‚æ·±åˆ»ãªå•é¡Œã§ã™ã®ã§ã€ãœã²ä½œè€…ã«ã”é€£çµ¡ä¸‹ã•ã„ã€‚</P></CENTER>\n";
 		&html_tail;
 		exit(1);
 	}
@@ -115,60 +114,59 @@ sub Macro_Split {
 	$host =~ tr/A-Z/a-z/;
 
 	$ref  = &func::URLdecode($ref);
-	&jcode::convert(\$ref, 'euc', '', 'z');
-	&jcode::tr(\$ref, '£°-£¹£Á-£Ú£á-£ú¡¡', '0-9a-za-z ');
+	&jcode::convert(\$ref, 'utf8', '', 'z');
 	$ref = &func::URLencode($ref);
 }
 
 sub Macro_ProcessLine {
-	### °ìÈÖ¿·¤·¤¤¥í¥°¤Îµ­Ï¿Æü»ş
+	### ä¸€ç•ªæ–°ã—ã„ãƒ­ã‚°ã®è¨˜éŒ²æ—¥æ™‚
 	$now = $date if ($SAMPLES == 0);
 
-	### À¸¥í¥°¤ò¼èÆÀ
+	### ç”Ÿãƒ­ã‚°ã‚’å–å¾—
 	if (($P{MODE} eq 'rawlog') || ($P{MODE} eq 'all') || ($P{MODE} eq 'solo_rawlog') || ($P{MODE} eq 'solo_all')) {
 		&Macro_CountRawlog() if ($COUNT_RAWLOG < $Limit_Log);
 	}
 
-	### »²¾È¸µÅı·×, TINAMI¥«¥Æ¥´¥êÊ¬ÀÏ, Surfers ParadiceÊ¬ÀÏ
+	### å‚ç…§å…ƒçµ±è¨ˆ
 	&Macro_CountRef() if (($P{MODE} eq 'ref') || ($P{MODE} eq 'all') || ($P{MODE} eq 'solo_analyze') || ($P{MODE} eq 'solo_all'));
 
-	### ¥Û¥¹¥ÈÌ¾Åı·×, ¹ñÀÒÊ¬ÀÏ, ¹ñÆâ¥É¥á¥¤¥óÊ¬ÀÏ
+	### ãƒ›ã‚¹ãƒˆåçµ±è¨ˆ, å›½ç±åˆ†æ, å›½å†…ãƒ‰ãƒ¡ã‚¤ãƒ³åˆ†æ
 	&Macro_CountHost() if (($P{MODE} eq 'host') || ($P{MODE} eq 'all') || ($P{MODE} eq 'solo_analyze') || ($P{MODE} eq 'solo_all'));
 
-	### ¥Ö¥é¥¦¥¶Åı·×, ¥Ö¥é¥¦¥¶Ê¬ÀÏ, ¥¹¥¯¥ê¡¼¥ó¾ğÊó
+	### ãƒ–ãƒ©ã‚¦ã‚¶çµ±è¨ˆ, ãƒ–ãƒ©ã‚¦ã‚¶åˆ†æ, ã‚¹ã‚¯ãƒªãƒ¼ãƒ³æƒ…å ±
 	&Macro_CountAgent() if (($P{MODE} eq 'ua') || ($P{MODE} eq 'all') || ($P{MODE} eq 'solo_analyze') || ($P{MODE} eq 'solo_all'));
 
-	### ¥¹¥¯¥ê¡¼¥ó¾ğÊó
+	### ã‚¹ã‚¯ãƒªãƒ¼ãƒ³æƒ…å ±
 	&Macro_CountScreen() if (($P{MODE} eq 'screen') || ($P{MODE} eq 'all') || ($P{MODE} eq 'solo_analyze') || ($P{MODE} eq 'solo_all'));
 
-	### ¥µ¥ó¥×¥ê¥ó¥°¤·¤¿¥¢¥¯¥»¥¹¥í¥°¤ÎÁí¿ô
+	### ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°ã—ãŸã‚¢ã‚¯ã‚»ã‚¹ãƒ­ã‚°ã®ç·æ•°
 	$SAMPLES++;
 
-	### °ìÈÖ¸Å¤¤¥í¥°¤Îµ­Ï¿Æü»ş
+	### ä¸€ç•ªå¤ã„ãƒ­ã‚°ã®è¨˜éŒ²æ—¥æ™‚
 	$old = $date;
 }
 
 
-### ½¸·×·ë²Ì¤ò¥½¡¼¥È
-### Ï¢ÁÛÇÛÎó¤òºï½ü¤¹¤ëÁ°¤ËÉ¬Í×¤Ê¾ğÊó¤òÂÔÈò¤·¤Æ¤ª¤¯
-### ÉÔÍ×¤Ë¤Ê¤Ã¤¿Ï¢ÁÛÇÛÎó¤òºï½ü¤¹¤ë
+### é›†è¨ˆçµæœã‚’ã‚½ãƒ¼ãƒˆ
+### é€£æƒ³é…åˆ—ã‚’å‰Šé™¤ã™ã‚‹å‰ã«å¿…è¦ãªæƒ…å ±ã‚’å¾…é¿ã—ã¦ãŠã
+### ä¸è¦ã«ãªã£ãŸé€£æƒ³é…åˆ—ã‚’å‰Šé™¤ã™ã‚‹
 if (($P{MODE} eq 'count') || ($P{MODE} eq 'all')) {
-	#Áí¹ç¥é¥ó¥­¥ó¥°
+	#ç·åˆãƒ©ãƒ³ã‚­ãƒ³ã‚°
 	@rank_all			= &func::MakeList(\%RANK_ALL, \0);
 	$COUNT_ALL			= &func::CalcSum(values(%RANK_ALL));
 	undef %RANK_ALL;
 
-	#·î´Ö¥é¥ó¥­¥ó¥°
+	#æœˆé–“ãƒ©ãƒ³ã‚­ãƒ³ã‚°
 	@rank_month			= &func::MakeList(\%RANK_MONTH, \0);
 	$COUNT_MONTH		= &func::CalcSum(values(%RANK_MONTH));
 	undef %RANK_MONTH;
 
-	#½µ´Ö¥é¥ó¥­¥ó¥°
+	#é€±é–“ãƒ©ãƒ³ã‚­ãƒ³ã‚°
 	@rank_weekly		= &func::MakeList(\%RANK_WEEKLY, \0);
 	$COUNT_WEEKLY		= &func::CalcSum(values(%RANK_WEEKLY));
 	undef %RANK_WEEKLY;
 
-	#ËÜÆü¥é¥ó¥­¥ó¥°
+	#æœ¬æ—¥ãƒ©ãƒ³ã‚­ãƒ³ã‚°
 	@rank_day			= &func::MakeList(\%RANK_DAY, \0);
 	$COUNT_DAY			= &func::CalcSum(values(%RANK_DAY));
 	undef %RANK_DAY;
@@ -187,31 +185,21 @@ if (($P{MODE} eq 'ref') || ($P{MODE} eq 'all') || ($P{MODE} eq 'solo_analyze') |
 	}
 
 	@ref				= &func::MakeList(\%REF, \$Limit_Ref);
-	$COUNT_REF			= &func::CalcSum(values(%REF));					#¼«¥µ¥¤¥ÈÆâ»²¾È¿ô
+	$COUNT_REF			= &func::CalcSum(values(%REF));					#è‡ªã‚µã‚¤ãƒˆå†…å‚ç…§æ•°
 	undef %REF;
 
 	@ref_own			= &func::MakeList(\%REF_OWN, \0);
-	$COUNT_OWN			= &func::CalcSum(values(%REF_OWN));				#¼«¥µ¥¤¥ÈÆâ»²¾È¿ô
+	$COUNT_OWN			= &func::CalcSum(values(%REF_OWN));				#è‡ªã‚µã‚¤ãƒˆå†…å‚ç…§æ•°
 	undef %REF_OWN;
 
 	@ref_search			= &func::MakeList(\%REF_SEARCH, \$Limit_Search);
-	$COUNT_SEARCH		= &func::CalcSum(values(%REF_SEARCH));			#¥µ¡¼¥Á¥¨¥ó¥¸¥ó¤Î¥­¡¼¥ï¡¼¥ÉÁí¿ô
+	$COUNT_SEARCH		= &func::CalcSum(values(%REF_SEARCH));			#ã‚µãƒ¼ãƒã‚¨ãƒ³ã‚¸ãƒ³ã®ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ç·æ•°
 	undef %REF_SEARCH;
 
-	#¥µ¡¼¥Á¥¨¥ó¥¸¥ó¤«¤éÍè¤¿¿ô
+	#ã‚µãƒ¼ãƒã‚¨ãƒ³ã‚¸ãƒ³ã‹ã‚‰æ¥ãŸæ•°
 	@ref_search_share	= &func::MakeList(\%REF_SEARCH_SHARE, \0);
-	$COUNT_SEARCH_SHARE	= &func::CalcSum(values(%REF_SEARCH_SHARE));	
-	$COUNT_TN_			= $REF_SEARCH_SHARE{'TINAMI'};					#TINAMI¤«¤éÍè¤¿¿ô
-	$COUNT_SP_			= $REF_SEARCH_SHARE{'Surfers Paradice'};		#SP¤«¤éÍè¤¿¿ô
+	$COUNT_SEARCH_SHARE	= &func::CalcSum(values(%REF_SEARCH_SHARE));
 	undef %REF_SEARCH_SHARE;
-
-	@ref_tinami			= &func::MakeList(\%REF_TINAMI, \$Limit_Tinami);
-	$COUNT_TN			= &func::CalcSum(values(%REF_TINAMI));			#TINAMI¤Î¥­¡¼¥ï¡¼¥ÉÁí¿ô
-	undef %REF_TINAMI;
-
-	@ref_sp				= &func::MakeList(\%REF_SP, \$Limit_Sp);
-	$COUNT_SP			= &func::CalcSum(values(%REF_SP));				#SP¤Î¥­¡¼¥ï¡¼¥ÉÁí¿ô
-	undef %REF_SP;
 }
 
 
@@ -237,63 +225,59 @@ if (($P{MODE} eq 'ua') || ($P{MODE} eq 'all') || ($P{MODE} eq 'solo_analyze') ||
 	undef %AGENT;
 
 	@agent_ie			= &func::MakeList(\%AGENT_IE, \0);
-	$COUNT_IE			= &func::CalcSum(values(%AGENT_IE));			#IE¤Î¥·¥§¥¢
+	$COUNT_IE			= &func::CalcSum(values(%AGENT_IE));			#IEã®ã‚·ã‚§ã‚¢
 	undef %AGENT_IE;
 
-	@agent_nn			= &func::MakeList(\%AGENT_NN, \0);
-	$COUNT_NN			= &func::CalcSum(values(%AGENT_NN));			#NN¤Î¥·¥§¥¢
-	undef %AGENT_NN;
-
 	@agent_os			= &func::MakeList(\%AGENT_OS, \0);
-	$COUNT_OS			= &func::CalcSum(values(%AGENT_OS));			#OS¤Î¥·¥§¥¢
+	$COUNT_OS			= &func::CalcSum(values(%AGENT_OS));			#OSã®ã‚·ã‚§ã‚¢
 	undef %AGENT_OS;
 }
 
 
 if (($P{MODE} eq 'screen') || ($P{MODE} eq 'all') || ($P{MODE} eq 'solo_analyze') || ($P{MODE} eq 'solo_all')) {
 	@screen				= &func::MakeList(\%SCREEN, \0);
-	$COUNT_SCREEN		= &func::CalcSum(values(%SCREEN));				#Í­°Õ¤Ê²èÌÌ¾ğÊó¥«¥¦¥ó¥È¿ô
+	$COUNT_SCREEN		= &func::CalcSum(values(%SCREEN));				#æœ‰æ„ãªç”»é¢æƒ…å ±ã‚«ã‚¦ãƒ³ãƒˆæ•°
 	undef %SCREEN;
 
 	@screen_size		= &func::MakeList(\%SCREEN_SIZE, \0);
-	$COUNT_SCREEN_SIZE	= &func::CalcSum(values(%SCREEN_SIZE));			#Í­°Õ¤Ê²èÌÌ¾ğÊó¥«¥¦¥ó¥È¿ô
+	$COUNT_SCREEN_SIZE	= &func::CalcSum(values(%SCREEN_SIZE));			#æœ‰æ„ãªç”»é¢æƒ…å ±ã‚«ã‚¦ãƒ³ãƒˆæ•°
 	undef %SCREEN_SIZE;
 
 	@screen_color		= &func::MakeList(\%SCREEN_COLOR, \0);
-	$COUNT_SCREEN_COLOR	= &func::CalcSum(values(%SCREEN_COLOR));		#Í­°Õ¤Ê²èÌÌ¾ğÊó¥«¥¦¥ó¥È¿ô
+	$COUNT_SCREEN_COLOR	= &func::CalcSum(values(%SCREEN_COLOR));		#æœ‰æ„ãªç”»é¢æƒ…å ±ã‚«ã‚¦ãƒ³ãƒˆæ•°
 	undef %SCREEN_COLOR;
 }
 
 
 
-### ¥³¡¼¥É¤äµ­¹æ¤ò°ÕÌ£¤¢¤ëÊ¸»úÎó¤ËÊÑ´¹¤¹¤ë
+### ã‚³ãƒ¼ãƒ‰ã‚„è¨˜å·ã‚’æ„å‘³ã‚ã‚‹æ–‡å­—åˆ—ã«å¤‰æ›ã™ã‚‹
 &Macro_ChangeList;
 
 
-### ³Æ¼ï¾ğÊó
+### å„ç¨®æƒ…å ±
 if (($P{MODE} eq 'solo_rawlog') || ($P{MODE} eq 'solo_analyze') || ($P{MODE} eq 'solo_all')) {
-	$days = ($now-$old)/86400;						#¥í¥°¤ò¼è¤Ã¤¿´ü´Ö(Æü¿ô)
+	$days = ($now-$old)/86400;						#ãƒ­ã‚°ã‚’å–ã£ãŸæœŸé–“(æ—¥æ•°)
 	$now = &func::MakeDate($now);
 	$old = &func::MakeDate($old);
 
 	print "<CENTER><TABLE BORDER=2 CELLSPACING=0 CELLPADDING=2>\n";
-	print "\t<TR><TH COLSPAN=4${tbc[0]}>ÂĞ¾İ¥í¥°¥Õ¥¡¥¤¥ë : ${filename[0]}.log</TH></TR>\n";
-	print "\t<TR><TH${tbc[1]}>Ä´ºº´ü´Ö</TH><TD${tbc[5]}>$old ¡Á $now</TD><TH${tbc[2]}>Áí¥Ò¥Ã¥È¿ô</TH><TD${tbc[6]}>$RANK_ALL{ $filename[0] }</TD></TR>\n";
+	print "\t<TR><TH COLSPAN=4${tbc[0]}>å¯¾è±¡ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ« : ${filename[0]}.log</TH></TR>\n";
+	print "\t<TR><TH${tbc[1]}>èª¿æŸ»æœŸé–“</TH><TD${tbc[5]}>$old ï½ $now</TD><TH${tbc[2]}>ç·ãƒ’ãƒƒãƒˆæ•°</TH><TD${tbc[6]}>$RANK_ALL{ $filename[0] }</TD></TR>\n";
 
 	if ($days > 0) {
 		$ave  = sprintf("%0.2f", $SAMPLES/$days);
 		$days = sprintf("%0.2f", $days);
-		print "\t<TR><TH COLSPAN=4${tbc[8]}>$SAMPLES¥¢¥¯¥»¥¹Ã£À®¤Ë$daysÆüÍ×¤·¤Ş¤¹¡¡(1ÆüÊ¿¶Ñ $ave ¥¢¥¯¥»¥¹)</TH></TR>\n";
+		print "\t<TR><TH COLSPAN=4${tbc[8]}>$SAMPLESã‚¢ã‚¯ã‚»ã‚¹é”æˆã«$daysæ—¥è¦ã—ã¾ã™ã€€(1æ—¥å¹³å‡ $ave ã‚¢ã‚¯ã‚»ã‚¹)</TH></TR>\n";
 	}
 	print "</TABLE></CENTER><HR>\n\n";
 }
 
 
-### ¾®¥á¥Ë¥å¡¼
+### å°ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 unless ($P{MODE} eq 'solo_rawlog') {
-	### ¥á¥Ë¥å¡¼
-	$colspan = 6;		# Îó¤Î¿ô
-	print "<!-- ¾®¥á¥Ë¥å¡¼ -->\n<A name=menu></A>\n<CENTER><TABLE border=1 cellspacing=0 cellpadding=1${tbc[0]}>\n\t<TR><TH colspan=${colspan}><FONT size=+1>¡ü ¾®¥á¥Ë¥å¡¼ ¡ü</FONT></TH></TR>\n";
+	### ãƒ¡ãƒ‹ãƒ¥ãƒ¼
+	$colspan = 6;		# åˆ—ã®æ•°
+	print "<!-- å°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ -->\n<A name=menu></A>\n<CENTER><TABLE border=1 cellspacing=0 cellpadding=1${tbc[0]}>\n\t<TR><TH colspan=${colspan}><FONT size=+1>â— å°ãƒ¡ãƒ‹ãƒ¥ãƒ¼ â—</FONT></TH></TR>\n";
 
 	if ($P{MODE} eq 'rawlog') {
 		&menu_rawlog;
@@ -309,9 +293,9 @@ unless ($P{MODE} eq 'solo_rawlog') {
 	} elsif ($P{MODE} eq 'screen') {
 		&menu_screen;
 	} elsif ($P{MODE} eq 'all') {
-		print "\t<TR><TH colspan=${colspan}${tbc[0]}>¢£À¸¥í¥°¢£</TH></TR>\n";
+		print "\t<TR><TH colspan=${colspan}${tbc[0]}>â– ç”Ÿãƒ­ã‚°â– </TH></TR>\n";
 		&menu_rawlog;
-		print "\t<TR><TH colspan=${colspan}${tbc[0]}>¢£¤½¤ÎÂ¾½¸·×¢£</TH></TR>\n";
+		print "\t<TR><TH colspan=${colspan}${tbc[0]}>â– ãã®ä»–é›†è¨ˆâ– </TH></TR>\n";
 		&menu_count;
 		&menu_rank;
 		&menu_ref;
@@ -325,17 +309,17 @@ unless ($P{MODE} eq 'solo_rawlog') {
 		&menu_ua;
 		&menu_screen;
 	}
-	print "<TR><TD colspan=${colspan}><DIV ALIGN=right><A HREF=\"$self\">[¢¥ ¥á¥Ë¥å¡¼¤ËÌá¤ë]</A></DIV></TD></TR></TABLE></CENTER><HR>\n\n";
+	print "<TR><TD colspan=${colspan}><DIV ALIGN=right><A HREF=\"$self\">[â–² ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã«æˆ»ã‚‹]</A></DIV></TD></TR></TABLE></CENTER><HR>\n\n";
 }
 
 
-### À¸¥í¥°
+### ç”Ÿãƒ­ã‚°
 if (($P{MODE} eq 'rawlog') || ($P{MODE} eq 'all') || ($P{MODE} eq 'solo_rawlog') || ($P{MODE} eq 'solo_all')) {
-	### À¸¥í¥°¤Î¥Æ¡¼¥Ö¥ë
+	### ç”Ÿãƒ­ã‚°ã®ãƒ†ãƒ¼ãƒ–ãƒ«
 	print "<CENTER>\n";
 	foreach $filename (@filename) {
 		if (defined($RAWLOG{$filename})) {
-			print "<A NAME=rawlog_${filename}></A>\n<TABLE border=1 cellspacing=0 cellpadding=1${tbc[0]}><TR><TD><A HREF=\"#menu\"><B><FONT size=+1>À¸¥í¥° ($filename.log)</FONT> / ºÇ¿·$Limit_Log·ï</B></A></TD></TR><TR><TD><PRE>\n";
+			print "<A NAME=rawlog_${filename}></A>\n<TABLE border=1 cellspacing=0 cellpadding=1${tbc[0]}><TR><TD><A HREF=\"#menu\"><B><FONT size=+1>ç”Ÿãƒ­ã‚° ($filename.log)</FONT> / æœ€æ–°$Limit_Logä»¶</B></A></TD></TR><TR><TD><PRE>\n";
 			print $RAWLOG{$filename};
 			print "</PRE></TD></TR></TABLE><BR>\n";
 		}
@@ -344,138 +328,135 @@ if (($P{MODE} eq 'rawlog') || ($P{MODE} eq 'all') || ($P{MODE} eq 'solo_rawlog')
 }
 
 
-### ¥«¥¦¥ó¥È½¸·×
+### ã‚«ã‚¦ãƒ³ãƒˆé›†è¨ˆ
 if (($P{MODE} eq 'count') || ($P{MODE} eq 'all') || ($P{MODE} eq 'solo_analyze') || ($P{MODE} eq 'solo_all')) {
-	print "<!-- ¥«¥¦¥ó¥È¿ô½¸·× -->\n<CENTER>\n";
-	print "<!-- ÆüÊÌ½¸·× -->\n<A name=day></A>\n";
-
+	print "<!-- ã‚«ã‚¦ãƒ³ãƒˆæ•°é›†è¨ˆ -->\n<CENTER>\n";
+	print "<!-- æ—¥åˆ¥é›†è¨ˆ -->\n<A name=day></A>\n";
 	&Macro_PutTable_b(0, $koumoku{'day'}, \%DAY);
 	undef %DAY;
 	print "\n\n<BR>\n\n";
-	print "<!-- ½µÊÌ½¸·× -->\n<A name=weekly></A>\n";
+
+	print "<!-- é€±åˆ¥é›†è¨ˆ -->\n<A name=weekly></A>\n";
 	&Macro_PutTable_b(0, $koumoku{'weekly'}, \%WEEKLY);
 	undef %WEEKLY;
 	print "\n\n<BR>\n\n";
-	print "<!-- ·îÊÌ½¸·× -->\n<A name=month></A>\n";
+
+	print "<!-- æœˆåˆ¥é›†è¨ˆ -->\n<A name=month></A>\n";
 	&Macro_PutTable_b(0, $koumoku{'month'}, \%MONTH);
 	undef %MONTH;
 	print "\n\n<BR>\n\n";
-	print "<!-- »ş´ÖÂÓÊÌ½¸·× -->\n<A name=hour></A>\n";
+
+	print "<!-- æ™‚é–“å¸¯åˆ¥é›†è¨ˆ -->\n<A name=hour></A>\n";
 	&Macro_PutTable_b(2, $koumoku{'hour'}, \%HOUR);
 	undef %HOUR;
 	print "\n\n<BR>\n\n";
-	print "<!-- ÍËÆüÊÌ½¸·× -->\n<A name=week></A>\n";
+
+	print "<!-- æ›œæ—¥åˆ¥é›†è¨ˆ -->\n<A name=week></A>\n";
 	&Macro_PutTable_b(2, $koumoku{'week'}, \%WEEK);
 	undef %WEEK;
 	print "\n\n<BR>\n\n";
-	print "<!-- Ç¯ÅÙÊÌ½¸·× -->\n<A name=year></A>\n";
+
+	print "<!-- å¹´åº¦åˆ¥é›†è¨ˆ -->\n<A name=year></A>\n";
 	&Macro_PutTable_b(0, $koumoku{'year'}, \%YEAR);
 	undef %YEAR;
 	print "\n</CENTER><BR>\n\n";
 
 	unless (($P{MODE} eq 'solo_analyze') || ($P{MODE} eq 'solo_all')) {
-		print "<!-- ¥µ¥¤¥ÈÆâ¥é¥ó¥­¥ó¥° -->\n<A name=rank></A>\n<CENTER><TABLE border=0 cellpadding=4><TR><TD valign=top>\n";
-		&Macro_PutTable_a(0, 'Áí¹ç¥é¥ó¥­¥ó¥°', '¥Ú¡¼¥¸Ì¾', $COUNT_ALL,		'', 0, 0, \@rank_all);
+		print "<!-- ã‚µã‚¤ãƒˆå†…ãƒ©ãƒ³ã‚­ãƒ³ã‚° -->\n<A name=rank></A>\n<CENTER><TABLE border=0 cellpadding=4><TR><TD valign=top>\n";
+		&Macro_PutTable_a(0, 'ç·åˆãƒ©ãƒ³ã‚­ãƒ³ã‚°', 'ãƒšãƒ¼ã‚¸å', $COUNT_ALL,		'', 0, 0, \@rank_all);
 		undef @rank_all;
 		print "</TD><TD valign=top>\n";
-		&Macro_PutTable_a(0, '·î´Ö¥é¥ó¥­¥ó¥°', '¥Ú¡¼¥¸Ì¾', $COUNT_MONTH,	'', 0, 0, \@rank_month);
+		&Macro_PutTable_a(0, 'æœˆé–“ãƒ©ãƒ³ã‚­ãƒ³ã‚°', 'ãƒšãƒ¼ã‚¸å', $COUNT_MONTH,	'', 0, 0, \@rank_month);
 		undef @rank_month;
 		print "</TD></TR><TR><TD valign=top>\n";
-		&Macro_PutTable_a(0, '½µ´Ö¥é¥ó¥­¥ó¥°', '¥Ú¡¼¥¸Ì¾', $COUNT_WEEKLY,	'', 0, 0, \@rank_weekly);
+		&Macro_PutTable_a(0, 'é€±é–“ãƒ©ãƒ³ã‚­ãƒ³ã‚°', 'ãƒšãƒ¼ã‚¸å', $COUNT_WEEKLY,	'', 0, 0, \@rank_weekly);
 		undef @rank_weekly;
 		print "</TD><TD valign=top>\n";
-		&Macro_PutTable_a(0, 'ËÜÆü¥é¥ó¥­¥ó¥°', '¥Ú¡¼¥¸Ì¾', $COUNT_DAY,		'', 0, 0, \@rank_day);
+		&Macro_PutTable_a(0, 'æœ¬æ—¥ãƒ©ãƒ³ã‚­ãƒ³ã‚°', 'ãƒšãƒ¼ã‚¸å', $COUNT_DAY,		'', 0, 0, \@rank_day);
 		undef @rank_day;
 		print "</TD></TR></TABLE></CENTER><BR>\n\n";
 	}
 }
 
-### »²¾È¸µ·Ï
+### å‚ç…§å…ƒç³»
 if (($P{MODE} eq 'ref') || ($P{MODE} eq 'all') || ($P{MODE} eq 'solo_analyze') || ($P{MODE} eq 'solo_all')) {
-	print "<!-- »²¾È¸µ -->\n<A name=ref></A>\n<CENTER>\n";
-	&Macro_PutTable_a(0, '»²¾È¸µÅı·×', '»²¾È¸µURL', $COUNT_REF, '', 0, $Limit_Ref, \@ref);
+	print "<!-- å‚ç…§å…ƒ -->\n<A name=ref></A>\n<CENTER>\n";
+	&Macro_PutTable_a(0, 'å‚ç…§å…ƒçµ±è¨ˆ', 'å‚ç…§å…ƒURL', $COUNT_REF, '', 0, $Limit_Ref, \@ref);
 	undef @ref;
 	print "</CENTER><BR>\n\n";
-	print "<!-- ¥µ¥¤¥ÈÆâ°ÜÆ°Ê¬ÀÏ -->\n<A name=ref_own></A><CENTER>\n";
-	&Macro_PutTable_a(2, '¥µ¥¤¥ÈÆâ°ÜÆ°Ê¬ÀÏ', '°ÜÆ°¤ÎÆâÌõ', $COUNT_OWN, '¼«¥µ¥¤¥ÈÆâ¢ª¼«¥µ¥¤¥ÈÆâ', $COUNT_OWN, 0, \@ref_own);
+	print "<!-- ã‚µã‚¤ãƒˆå†…ç§»å‹•åˆ†æ -->\n<A name=ref_own></A><CENTER>\n";
+	&Macro_PutTable_a(2, 'ã‚µã‚¤ãƒˆå†…ç§»å‹•åˆ†æ', 'ç§»å‹•ã®å†…è¨³', $COUNT_OWN, 'è‡ªã‚µã‚¤ãƒˆå†…â†’è‡ªã‚µã‚¤ãƒˆå†…', $COUNT_OWN, 0, \@ref_own);
 	undef @ref_own;
 	print "</CENTER><BR>\n\n";
 
-	print "<!-- ¥µ¡¼¥Á¥¨¥ó¥¸¥óÅı·× -->\n<CENTER><TABLE border=0 cellpadding=8><TR><TD valign=top>\n<A name=search_share></A>\n";
-	&Macro_PutTable_a(2, '¥µ¡¼¥Á¥¨¥ó¥¸¥ó¥·¥§¥¢', 'Ì¾Á°', $COUNT_SEARCH_SHARE, '¥µ¡¼¥Á¥¨¥ó¥¸¥ó¤«¤é', $COUNT_SEARCH_SHARE, 0, \@ref_search_share);
+	print "<!-- ã‚µãƒ¼ãƒã‚¨ãƒ³ã‚¸ãƒ³çµ±è¨ˆ -->\n<CENTER><TABLE border=0 cellpadding=8><TR><TD valign=top>\n<A name=search_share></A>\n";
+	&Macro_PutTable_a(2, 'ã‚µãƒ¼ãƒã‚¨ãƒ³ã‚¸ãƒ³ã‚·ã‚§ã‚¢', 'åå‰', $COUNT_SEARCH_SHARE, 'ã‚µãƒ¼ãƒã‚¨ãƒ³ã‚¸ãƒ³ã‹ã‚‰', $COUNT_SEARCH_SHARE, 0, \@ref_search_share);
 	undef @ref_search_share;
 	print "\n</TD><TD valign=top>\n<A name=search_key></A>\n";
-	&Macro_PutTable_a(0, '¥µ¡¼¥Á¥¨¥ó¥¸¥óÊ¬ÀÏ', '¸¡º÷¥ï¡¼¥É(³µ»»)', $COUNT_SEARCH, '', 0, $Limit_Search, \@ref_search);
+	&Macro_PutTable_a(0, 'ã‚µãƒ¼ãƒã‚¨ãƒ³ã‚¸ãƒ³åˆ†æ', 'æ¤œç´¢ãƒ¯ãƒ¼ãƒ‰(æ¦‚ç®—)', $COUNT_SEARCH, '', 0, $Limit_Search, \@ref_search);
 	undef @ref_search;
-	print "\n</TD></TR></TABLE></CENTER>\n\n";
-	print "<CENTER><TABLE border=0 cellpadding=8><TR><TD valign=top>\n<A name=tinami></A>\n";
-	&Macro_PutTable_a(1, 'TINAMIÊ¬ÀÏ', '¸¡º÷¥ï¡¼¥É', $COUNT_TN, 'TINAMI¤«¤é', $COUNT_TN_, $Limit_Tinami, \@ref_tinami);
-	undef @ref_tinami;
-	print "\n</TD><TD valign=top>\n<A name=sp></A>\n";
-	&Macro_PutTable_a(1, 'Surfers ParadiceÊ¬ÀÏ', '¸¡º÷¥ï¡¼¥É', $COUNT_SP, 'SP¤«¤é', $COUNT_SP_, $Limit_Sp, \@ref_sp);
-	undef @ref_sp;
 	print "\n</TD></TR></TABLE></CENTER><BR>\n\n";
 }
 
-### ¥Û¥¹¥È·Ï
+### ãƒ›ã‚¹ãƒˆç³»
 if (($P{MODE} eq 'host') || ($P{MODE} eq 'all') || ($P{MODE} eq 'solo_analyze') || ($P{MODE} eq 'solo_all')) {
-	print "<!-- ¥É¥á¥¤¥óÅı·× -->\n<CENTER><TABLE border=0 cellpadding=8><TR><TD valign=top>\n<A name=host></A>\n";
-	&Macro_PutTable_a(0, '¥É¥á¥¤¥óÊÌÅı·×', '¥É¥á¥¤¥ó', $SAMPLES, '', 0, $Limit_Host, \@host);
+	print "<!-- ãƒ‰ãƒ¡ã‚¤ãƒ³çµ±è¨ˆ -->\n<CENTER><TABLE border=0 cellpadding=8><TR><TD valign=top>\n<A name=host></A>\n";
+	&Macro_PutTable_a(0, 'ãƒ‰ãƒ¡ã‚¤ãƒ³åˆ¥çµ±è¨ˆ', 'ãƒ‰ãƒ¡ã‚¤ãƒ³', $SAMPLES, '', 0, $Limit_Host, \@host);
 	undef @host;
 	print "\n</TD><TD valign=top>\n<A name=domain></A>\n";
-	&Macro_PutTable_a(0, '¹ñÀÒÊÌÅı·×', '¹ñÀÒ (ccTLD)', $SAMPLES, '', 0, $Limit_Domain, \@host_dm);
+	&Macro_PutTable_a(0, 'å›½ç±åˆ¥çµ±è¨ˆ', 'å›½ç± (ccTLD)', $SAMPLES, '', 0, $Limit_Domain, \@host_dm);
 	undef @host_dm;
 	print "\n\n<BR>\n\n<A name=jp></A>\n";
-	&Macro_PutTable_a(2, '¹ñÆâ¥É¥á¥¤¥óÅı·×', 'Âè2¥ì¥Ù¥ë¥É¥á¥¤¥ó', $COUNT_JP, 'ÆüËÜ¤«¤é', $COUNT_JP, 0, \@host_dm_jp);
+	&Macro_PutTable_a(2, 'å›½å†…ãƒ‰ãƒ¡ã‚¤ãƒ³çµ±è¨ˆ', 'ç¬¬2ãƒ¬ãƒ™ãƒ«ãƒ‰ãƒ¡ã‚¤ãƒ³', $COUNT_JP, 'æ—¥æœ¬ã‹ã‚‰', $COUNT_JP, 0, \@host_dm_jp);
 	undef @host_dm_jp;
 	print "\n\n<BR>\n\n<A name=us></A>\n";
-	&Macro_PutTable_a(2, 'ÊÆ¹ñ¥É¥á¥¤¥óÅı·×', '½êÂ°ÁÈ¿¥ (gTLD)', $COUNT_US, 'ÊÆ¹ñ¤«¤é', $COUNT_US, 0, \@host_dm_us);
+	&Macro_PutTable_a(2, 'ç±³å›½ãƒ‰ãƒ¡ã‚¤ãƒ³çµ±è¨ˆ', 'æ‰€å±çµ„ç¹” (gTLD)', $COUNT_US, 'ç±³å›½ã‹ã‚‰', $COUNT_US, 0, \@host_dm_us);
 	undef @host_dm_us;
 	print "\n</TD></TR></TABLE></CENTER><BR>\n\n";
 }
 
-### ¥Ö¥é¥¦¥¶·Ï
+### ãƒ–ãƒ©ã‚¦ã‚¶ç³»
 if (($P{MODE} eq 'ua') || ($P{MODE} eq 'all') || ($P{MODE} eq 'solo_analyze') || ($P{MODE} eq 'solo_all')) {
-	print "<!-- ¥Ö¥é¥¦¥¶Åı·× -->\n<CENTER><TABLE border=0 cellpadding=8><TR><TD valign=top>\n<A name=ua></A>\n";
-	&Macro_PutTable_a(0, '¥Ö¥é¥¦¥¶Åı·×', '¥¨¡¼¥¸¥§¥ó¥ÈÌ¾¾Î', $SAMPLES, '', 0, $Limit_Agent, \@agent);
+	print "<!-- ãƒ–ãƒ©ã‚¦ã‚¶çµ±è¨ˆ -->\n<CENTER><TABLE border=0 cellpadding=8><TR><TD valign=top>\n<A name=ua></A>\n";
+	&Macro_PutTable_a(0, 'ãƒ–ãƒ©ã‚¦ã‚¶çµ±è¨ˆ', 'ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆåç§°', $SAMPLES, '', 0, $Limit_Agent, \@agent);
 	undef @agent;
+
 	print "\n</TD><TD valign=top>\n<A name=share_ie></A>\n";
-	&Macro_PutTable_a(2, 'IEÆ±»Î¤Î¥·¥§¥¢', 'IE¥Ğ¡¼¥¸¥ç¥ó', $COUNT_IE, 'IEÁí¿ô', $COUNT_IE, 0, \@agent_ie);
+	&Macro_PutTable_a(2, 'IEåŒå£«ã®ã‚·ã‚§ã‚¢', 'IEãƒãƒ¼ã‚¸ãƒ§ãƒ³', $COUNT_IE, 'IEç·æ•°', $COUNT_IE, 0, \@agent_ie);
 	undef @agent_ie;
-	print "\n\n<BR>\n\n<A name=share_nn></A>\n";
-	&Macro_PutTable_a(2, 'NNÆ±»Î¤Î¥·¥§¥¢', 'NN¥Ğ¡¼¥¸¥ç¥ó', $COUNT_NN, 'NNÁí¿ô', $COUNT_NN, 0, \@agent_nn);
-	undef @agent_nn;
+
 	print "\n\n<BR>\n\n<A name=share_os></A>\n";
-	&Macro_PutTable_a(0, 'ÍøÍÑOSÅı·×', 'OS¼ïÊÌ(³µ»»)', $COUNT_OS, '', 0, 0, \@agent_os);
+	&Macro_PutTable_a(0, 'åˆ©ç”¨OSçµ±è¨ˆ', 'OSç¨®åˆ¥(æ¦‚ç®—)', $COUNT_OS, '', 0, 0, \@agent_os);
 	undef @agent_os;
+
 	print "\n</TD></TR></TABLE></CENTER><BR>\n\n";
 }
 
 if (($P{MODE} eq 'screen') || ($P{MODE} eq 'all') || ($P{MODE} eq 'solo_analyze') || ($P{MODE} eq 'solo_all')) {
-	print "<!-- ²èÌÌ¾ğÊó·Ï -->\n<CENTER><TABLE border=0 cellpadding=8><TR><TD valign=top>\n<A name=screen></A>\n";
-	&Macro_PutTable_a(0, '²èÌÌ¾ğÊóÅı·×', '²èÌÌ¾ğÊó', $COUNT_SCREEN, '', 0, 0, \@screen);
+	print "<!-- ç”»é¢æƒ…å ±ç³» -->\n<CENTER><TABLE border=0 cellpadding=8><TR><TD valign=top>\n<A name=screen></A>\n";
+	&Macro_PutTable_a(0, 'ç”»é¢æƒ…å ±çµ±è¨ˆ', 'ç”»é¢æƒ…å ±', $COUNT_SCREEN, '', 0, 0, \@screen);
 	undef @screen;
 	print "\n</TD><TD valign=top>\n<A name=screen_size></A>\n";
-	&Macro_PutTable_a(0, '¥µ¥¤¥ºÊÌÅı·×', '²£ x ½Ä', $COUNT_SCREEN_SIZE, '', 0, 0, \@screen_size);
+	&Macro_PutTable_a(0, 'ã‚µã‚¤ã‚ºåˆ¥çµ±è¨ˆ', 'æ¨ª x ç¸¦', $COUNT_SCREEN_SIZE, '', 0, 0, \@screen_size);
 	undef @screen_size;
 	print "\n</TD><TD valign=top>\n<A name=screen_color></A>\n";
-	&Macro_PutTable_a(0, '¿§¿¼ÅÙÊÌÅı·×', '¿§¿ô', $COUNT_SCREEN_COLOR, '', 0, 0, \@screen_color);
+	&Macro_PutTable_a(0, 'è‰²æ·±åº¦åˆ¥çµ±è¨ˆ', 'è‰²æ•°', $COUNT_SCREEN_COLOR, '', 0, 0, \@screen_color);
 	undef @screen_color;
 	print "\n</TD></TR></TABLE></CENTER><BR>\n\n";
 }
 
 
-### ·×»»»ş´ÖÂ¬Äê½ªÎ»
+### è¨ˆç®—æ™‚é–“æ¸¬å®šçµ‚äº†
 if ($DoPutBenchmark) {
 	$CPU_end = (times)[0];
-	printf("<DIV align=right>¾ÃÈñ»ş´Ö¡§ %.3f CPUÉÃ</DIV>\n",$CPU_end-$CPU_start);
+	printf("<DIV align=right>æ¶ˆè²»æ™‚é–“ï¼š %.3f CPUç§’</DIV>\n",$CPU_end-$CPU_start);
 }
 
 
 ;#--------------------------------------------------------------------
-;#¥Ş¥¯¥í
+;#ãƒã‚¯ãƒ­
 ;#--------------------------------------------------------------------
-;### À¸¥í¥°¤Î¥ê¥¹¥È¤òºî¤ë¥Ş¥¯¥í
+;### ç”Ÿãƒ­ã‚°ã®ãƒªã‚¹ãƒˆã‚’ä½œã‚‹ãƒã‚¯ãƒ­
 sub Macro_CountRawlog {
 	$work{'agent'} = $agent;
 	$work{'agent'} =~ s'^!'Mozilla/';
@@ -493,11 +474,11 @@ sub Macro_CountRawlog {
 	if ($screen eq '-') {
 		$work{'screen'} = '-';
 	} else {
-		split(/,/, $screen);
-		$_[0] = &func::C62_Decode($_[0]);
-		$_[1] = &func::C62_Decode($_[1]);
-		$_[2] = &func::C62_Decode($_[2]);
-		$work{'screen'} = "$_[0]x$_[1]x$_[2]";
+		@sc = split(/,/, $screen);
+		$sc[0] = &func::C62_Decode($sc[0]);
+		$sc[1] = &func::C62_Decode($sc[1]);
+		$sc[2] = &func::C62_Decode($sc[2]);
+		$work{'screen'} = "$sc[0]x$sc[1]x$sc[2]";
 	}
 
 	$RAWLOG{$filename} .= "[$num] $work{'date'} $host $work{'screen'}\n\t$work{'agent'}\n\t$work{'ref'}\n\n";
@@ -505,16 +486,10 @@ sub Macro_CountRawlog {
 }
 
 
-;### »²¾È¸µ¤ò¥«¥¦¥ó¥È¤¹¤ë¥Ş¥¯¥í
+;### å‚ç…§å…ƒã‚’ã‚«ã‚¦ãƒ³ãƒˆã™ã‚‹ãƒã‚¯ãƒ­
 sub Macro_CountRef {
-	# ¥µ¡¼¥Á¥¨¥ó¥¸¥ó¤«¤é
-	if    ($ref =~ '^!\w+\.tinami\.com/')
-		{ $flag =  1; ++$REF_SEARCH_SHARE{'TINAMI'}; }
-
-	elsif ($ref =~ '\.surpara\.')
-		{ $flag =  2; ++$REF_SEARCH_SHARE{'Surfers Paradice'}; }
-
-	elsif ($ref =~ '^!dir\.yahoo\.')
+	# ã‚µãƒ¼ãƒã‚¨ãƒ³ã‚¸ãƒ³ã‹ã‚‰
+	if ($ref =~ '^!dir\.yahoo\.')
 		{ $flag =  3; ++$REF_SEARCH_SHARE{'Yahoo!(Directory)'}; }
 
 	elsif (($ref =~ '^!\w+\.goo\.ne\.jp/'))
@@ -560,12 +535,12 @@ sub Macro_CountRef {
 		{ $flag = 17; ++$REF_SEARCH_SHARE{'Yahoo!(Google)'}; }
 
 
-	# ÄÌ¾ï¤ÎURL
+	# é€šå¸¸ã®URL
 	else {
 		$flag = 0;
 		$flg = 0;
 
-		# ¼«¥µ¥¤¥È¤«¥Á¥§¥Ã¥¯
+		# è‡ªã‚µã‚¤ãƒˆã‹ãƒã‚§ãƒƒã‚¯
 		foreach (@MySite) {
 			if ($ref =~ /^$_/) {
 				$ref =~ s/^$_//;
@@ -579,27 +554,14 @@ sub Macro_CountRef {
 		++$REF{$ref} if ($flg == 0);
 	}
 
-	# ¥µ¡¼¥Á¥¨¥ó¥¸¥ó¥­¡¼¥ï¡¼¥É¿¶¤êÊ¬¤±
+	# ã‚µãƒ¼ãƒã‚¨ãƒ³ã‚¸ãƒ³ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰æŒ¯ã‚Šåˆ†ã‘
 	if ($flag > 0) {
 		++$REF{'-search-'};
-		split(/&/, $ref);
-		foreach $_ (@_) {
-			s/%20|\+|\|/ /gi;								# ½èÍıÂ®ÅÙ¤Î´Ø·¸¤Ç¤«¤Ê¤êÛ£Ëæ
-#			s/%81@|%81b|\+|\|/ /gi;								# ½èÍıÂ®ÅÙ¤Î´Ø·¸¤Ç¤«¤Ê¤êÛ£Ëæ
-
-			# TINAMI
-			if ($flag == 1) {
-				++$REF_TINAMI{$1} if (/(\w\w)=yes/ || /word=(.+)/);
-				++$REF_TINAMI{"[Charlotte] $1"} if (/key=(.+)/);
-			}
-
-			# Surfers Paradice
-			elsif ($flag == 2) {
-				++$REF_SP{$1}	if ((/J=(.+)/) || (/search=(.+)/));
-			}
+		foreach $_ (split(/&/, $ref)) {
+			s/%20|\+|\|/ /gi;								# å‡¦ç†é€Ÿåº¦ã®é–¢ä¿‚ã§ã‹ãªã‚Šæ›–æ˜§
 
 			# Yahoo!
-			elsif ($flag == 3) {
+			if ($flag == 3) {
 				++$REF_SEARCH{$1}	if (/p=(.+)/);
 				++$REF_SEARCH{"<I>[Yahoo C]</I> $1"}	if (/r=(.+)/);
 			}
@@ -650,176 +612,175 @@ sub Macro_CountRef {
 			}
 		}
 	}
-	# ++$REF{$ref};
 }
 
 
-;### ¥Û¥¹¥ÈÌ¾¤Î·Á¼°¤òÁªÊÌ¤·¥«¥¦¥ó¥È¤¹¤ë¥Ş¥¯¥í
+;### ãƒ›ã‚¹ãƒˆåã®å½¢å¼ã‚’é¸åˆ¥ã—ã‚«ã‚¦ãƒ³ãƒˆã™ã‚‹ãƒã‚¯ãƒ­
 sub Macro_CountHost {
-	split(/\./, $host);
+	@w = split(/\./, $host);
 
-	if (($host eq '') || ($host eq '-')) {						#'-'¤·¤«¤Ê¤«¤Ã¤¿¤é
+	if (($host eq '') || ($host eq '-')) {						#'-'ã—ã‹ãªã‹ã£ãŸã‚‰
 		++$HOST_DM{'-'};
 	}
 
 	### FQDN
-	elsif ($_[$#_] =~ /[a-z]$/) {
+	elsif ($w[$#w] =~ /[a-z]$/) {
 		## ccTLD
-		if (length($_[$#_]) == 2) {
-			++$HOST_DM{ $_[$#_] };
-			$host = "*.$_[$#_-2].$_[$#_-1].$_[$#_]";
+		if (length($w[$#w]) == 2) {
+			++$HOST_DM{ $w[$#w] };
+			$host = "*.$w[$#w-2].$w[$#w-1].$w[$#w]";
 
-			# ÆüËÜ¤ÏÇ°Æş¤ê
-			if ($_[$#_] eq 'jp') { ++$HOST_DM_JP{$_[$#_-1]}; }
+			# æ—¥æœ¬ã¯å¿µå…¥ã‚Š
+			if ($w[$#w] eq 'jp') { ++$HOST_DM_JP{$w[$#w-1]}; }
 		}
 
 		## gTLD
 		else {
 			++$HOST_DM{'us'};
-			++$HOST_DM_US{ $_[$#_] };
-			$host = "*.$_[$#_-1].$_[$#_]";
+			++$HOST_DM_US{ $w[$#w] };
+			$host = "*.$w[$#w-1].$w[$#w]";
 		}
 	}
 
 	### IP
 	else {
 		++$HOST_DM{'ipaddr'};
-		$host = "$_[$#_-3].$_[$#_-2].$_[$#_-1].*";
+		$host = "$w[$#w-3].$w[$#w-2].$w[$#w-1].*";
 	}
 
 	++$HOST{$host};
 }
 
 
-;### ¥¨¡¼¥¸¥§¥ó¥ÈÌ¾¤òÁªÊÌ¤·¥«¥¦¥ó¥È¤¹¤ë¥Ş¥¯¥í
+;### ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆåã‚’é¸åˆ¥ã—ã‚«ã‚¦ãƒ³ãƒˆã™ã‚‹ãƒã‚¯ãƒ­
 sub Macro_CountAgent {
-	### Mozzila·Ï
+	# OSçµ±è¨ˆ
+	if    (($agent =~ /Windows/i) || ($agent =~ /Win/i))
+												{ ++$AGENT_OS{'Windows'}; }
+	elsif ($agent =~ /Android/i)				{ ++$AGENT_OS{"Android"}; }
+	elsif ($agent =~ /iPhone/i)					{ ++$AGENT_OS{"iPhone"}; }
+	elsif ($agent =~ /iPod/i)					{ ++$AGENT_OS{"iPod"}; }
+	elsif ($agent =~ /iPad/i)					{ ++$AGENT_OS{"iPad"}; }
+	elsif ($agent =~ /Mac OS X/i)				{ ++$AGENT_OS{"Mac OS X"}; }
+	elsif ($agent =~ /Nintendo 3DS/i)			{ ++$AGENT_OS{"Nintendo 3DS"}; }
+	elsif ($agent =~ /Nintendo DSi/i)			{ ++$AGENT_OS{"Nintendo DSi"}; }
+	elsif ($agent =~ /Nintendo WiiU/i)			{ ++$AGENT_OS{"Nintendo WiiU"}; }
+	elsif ($agent =~ /PlayStation Vita/i)		{ ++$AGENT_OS{"PlayStation Vita"}; }
+	elsif ($agent =~ /PlayStation/i)			{ ++$AGENT_OS{"PlayStation"}; }
+	elsif ($agent =~ /Linux/i)					{ ++$AGENT_OS{'Linux'}; }
+	elsif ($agent =~ /Java\/(\d+)\./i)			{ ++$AGENT_OS{"Java"}; }
+	elsif ($agent =~ /Googlebot/i)				{ ++$AGENT_OS{"å·¡å›bot"}; }
+	elsif ($agent =~ /bingbot/i)				{ ++$AGENT_OS{"å·¡å›bot"}; }
+	else                                		{ ++$AGENT_OS{'ä¸æ˜'}; }
+	#else                                		{ ++$AGENT_OS{$agent}; }
+
+	### Mozzilaç³»
 	if ($agent =~ /^!/) {
-		$agent =~ '^!([\w.-]+)\s';					# NN¤Î¥á¥¸¥ã¡¼¥Ğ¡¼¥¸¥ç¥ó¤ÇÅı·×
+		$agent =~ '^!([\w.-]+)\s';					# NNã®ãƒ¡ã‚¸ãƒ£ãƒ¼ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã§çµ±è¨ˆ
 		$nnver = $1;
 
-		$agent =~ /\((.*)\)/;						# Ãí¼á¾ğÊó¤òÌÊÌ©¤ËÄ´¤Ù¤ë½àÈ÷
-		split(/; /, $1);
+		$agent =~ /\((.*)\)/;						# æ³¨é‡ˆæƒ…å ±ã‚’ç¶¿å¯†ã«èª¿ã¹ã‚‹æº–å‚™
+		@token = split(/; /, $1);
 
-		# IE·Ï
-		if ($_[0] =~ /^!([\w.-]+)/) {
-			# NetCaptor
-			if ($_[2] =~ /^NetCaptor/) {
-				++$AGENT{'NetCaptor'};
-			}
-
-			# ½ãIE
+		# IEç³»
+		if ($token[0] =~ /^!([\w.-]+)/) {
+			
+			if ($token[2] =~ /^NetCaptor/) { ++$AGENT{'NetCaptor'}; }	# NetCaptor
 			else {
-				++$AGENT{'Internet Explorer'};		# IEÁ´ÂÎ¤Î¥·¥§¥¢
-				++$AGENT_IE{$1};					# IE¤Î¥á¥¸¥ã¡¼¥Ğ¡¼¥¸¥ç¥ó
-
-				### IE¤Î¾ì¹ç¤ÎOSÅı·×
-				if (($_[1] eq 'Windows 98') && ($_[2] eq 'Win 9x 4.90'))
-				                                  {	++$AGENT_OS{'Windows Me'}; }
-				elsif ($_[1] eq 'Windows 98')     { ++$AGENT_OS{'Windows 98'}; }
-				elsif ($_[1] eq 'Windows NT 5.1') { ++$AGENT_OS{'Windows XP'}; }
-				elsif ($_[1] eq 'Windows NT 5.0') { ++$AGENT_OS{'Windows 2000'}; }
-				elsif ($_[1] eq 'Windows 95')     { ++$AGENT_OS{'Windows 95'}; }
-				elsif ($_[1] eq 'Windows NT 4.0') { ++$AGENT_OS{'Windows NT'}; }	# Â¿Ê¬
-				elsif ($_[1] eq 'Windows NT')     { ++$AGENT_OS{'Windows NT'}; }
-				elsif ($_[1] =~ /^MSN|^AOL/)      { ++$AGENT_OS{$_[2]}; }
-				elsif ($_[1] eq 'Mac_PowerPC')    { ++$AGENT_OS{'Macintosh'}; }
-				elsif ($_[1] eq 'Win32')          { ++$AGENT_OS{'Windows 95'}; }	# Â¿Ê¬
-				elsif ($_[1] eq 'Windows 3.1')    { ++$AGENT_OS{'Windows 3.1'}; }
-				# else { ++$AGENT_OS{'-etc-'}; print "$agent<BR>\n"; }
+				# ç´”IE
+				++$AGENT{'Internet Explorer'};		# IEå…¨ä½“ã®ã‚·ã‚§ã‚¢
+				++$AGENT_IE{$1};					# IEã®ãƒ¡ã‚¸ãƒ£ãƒ¼ãƒãƒ¼ã‚¸ãƒ§ãƒ³
 			}
 		}
 
-		# NN·Ï
-		elsif (($_[1] =~ /\bI\b/) || ($_[1] =~ /\bU\b/) || ($_[1] =~ /\bN\b/)) {
-			++$AGENT{'Netscape Navigator'};		# NNÁ´ÂÎ¤Î¥·¥§¥¢
-			++$AGENT_NN{$nnver};
-
-			### OSÅı·×
-			if    (($_[0] eq 'Win98') || ($_[2] eq 'Win98'))
-				{ ++$AGENT_OS{'Windows 98'}; }
-			elsif (($_[0] eq 'Windows NT 5.0') || ($_[2] eq 'Windows NT 5.0'))
-				{ ++$AGENT_OS{'Windows 2000'}; }
-			elsif (($_[0] eq 'Win95') || ($_[2] eq 'Win95'))
-				{ ++$AGENT_OS{'Windows 95'}; }
-			elsif (($_[0] eq 'WinNT') || ($_[2] eq 'WinNT'))
-				{ ++$AGENT_OS{'Windows NT'}; }
-			elsif (($_[0] eq 'WinNT4.0') || ($_[2] eq 'WinNT4.0'))
-				{ ++$AGENT_OS{'Windows NT'}; }
-			elsif (($_[0] eq 'Macintosh') || ($_[2] eq 'Macintosh'))
-				{ ++$AGENT_OS{'Macintosh'}; }
-			elsif (($_[0] eq 'Win16') || ($_[2] eq 'Win16'))
-				{ ++$AGENT_OS{'Windows 3.1'}; }
-			elsif ($_[0] eq 'OS/2')
-				{ ++$AGENT_OS{'OS/2'}; }
-			# XÃ¼Ëö¤Î¾ì¹ç¤Ï¤â¤¦¾¯¤·»ÅÊ¬¤±¤ë
-			elsif ($_[0] eq 'X11')
-				{ $_[2] =~ /^([^\s]+)/; ++$AGENT_OS{$1}; }
-			# else { ++$AGENT_OS{'-etc-'}; print "$agent<BR>\n"; }
+		# NNç³»
+		elsif (($token[1] =~ /\bI\b/) || ($token[1] =~ /\bU\b/) || ($token[1] =~ /\bN\b/)) {
+			++$AGENT{'Netscape Navigator'};		# NNå…¨ä½“ã®ã‚·ã‚§ã‚¢
 		}
 
-		# ¤½¤ÎÂ¾¥³¥ó¥Ñ¥Á
-		elsif ($_[0] eq 'compatible') {
-			if ($_[1] =~ '^([^/]*)/.*') {		# ver.É½µ­¤¬¤¢¤ë¤Ã¤İ¤¤
-				++$AGENT{$1};					# ver.É½µ­¤òºï¤ë
+		# ãã®ä»–ã‚³ãƒ³ãƒ‘ãƒ
+		elsif ($token[0] eq 'compatible') {
+			if ($token[1] =~ '^([^/]*)/.*') {		# ver.è¡¨è¨˜ãŒã‚ã‚‹ã£ã½ã„
+				++$AGENT{$1};					# ver.è¡¨è¨˜ã‚’å‰Šã‚‹
 			} else {
-				++$AGENT{$_[1]};				# ¤½¤Î¤Ş¤ŞºÎÍÑ
+				++$AGENT{$token[1]};				# ãã®ã¾ã¾æ¡ç”¨
 			}
 		}
 
-		# ¤½¤¦¤¤¤¦¤ï¤±¤Ç¤â¤Ê¤¤ÈùÌ¯¤ÊÎ©¾ì¤Î¤ä¤Ä
+		# ãã†ã„ã†ã‚ã‘ã§ã‚‚ãªã„å¾®å¦™ãªç«‹å ´ã®ã‚„ã¤
 		else {
-			if ($_[0] =~ "^DreamPassport/") {
-				++$AGENT{'DreamPassport'};
-			} elsif ($_[0] =~ "^PNWalker/") {
-				++$AGENT{'PNWalker'};
-			} elsif (($nnver == 3.01) && (!$_[1])) {	# CacheFlow
-				++$AGENT{'CacheFlow'};
-			} else {									# ËÜÅö¤Ë¥Ş¥¤¥Ê¡¼¡©
-				++$AGENT{'-etc-'};
+			if ($token[0] =~ "^DreamPassport/")				{ ++$AGENT{'DreamPassport'}; }
+			elsif ($token[0] =~ "^PNWalker/")				{ ++$AGENT{'PNWalker'}; }
+			elsif (($nnver == 3.01) && (!$token[1]))		{ ++$AGENT{'CacheFlow'}; }
+
+			# ã‚²ãƒ¼ãƒ æ©Ÿç­‰
+			elsif ($agent =~ /Nintendo 3DS/i)			{ ++$AGENT_OS{"Nintendo 3DS"}; }
+			elsif ($agent =~ /Nintendo DSi/i)			{ ++$AGENT_OS{"Nintendo DSi"}; }
+			elsif ($agent =~ /Nintendo WiiU/i)			{ ++$AGENT_OS{"Nintendo WiiU"}; }
+			elsif ($agent =~ /PlayStation Vita/i)		{ ++$AGENT_OS{"PlayStation Vita"}; }
+			elsif ($agent =~ /PlayStation/i)			{ ++$AGENT_OS{"PlayStation"}; }
+
+			elsif ($agent =~ /Edge\/(\d+)\./i)			{ ++$AGENT{"Edge"}; }
+			elsif ($agent =~ /Chrome\/(\d+)\./i)		{ ++$AGENT{"Chrome"}; }
+			elsif ($agent =~ /Firefox\/(\d+)\./i)		{ ++$AGENT{"Firefox"}; }
+			elsif ($agent =~ /Safari\/(\d+)\./i)		{ ++$AGENT{"Safari"}; }
+			elsif ($agent =~ /AppleWebKit\/(\d+)\./i)	{ ++$AGENT{"AppleWebKit"}; }
+			elsif ($agent =~ /Trident\/(\d+)\./i)	{
+				++$AGENT{"Internet Explorer"};
+				if    ($1 eq '4') { ++$AGENT_IE{'8'}; }
+				elsif ($1 eq '5') { ++$AGENT_IE{'9'}; }
+				elsif ($1 eq '6') { ++$AGENT_IE{'10'}; }
+				elsif ($1 eq '7') { ++$AGENT_IE{'11'}; }
+				else              { ++$AGENT_IE{'etc'}; }
 			}
+			else										{ ++$AGENT{"-etc-"}; }
 		}
 	}
 
-	### Mozilla¤òÌ¾¾è¤é¤Ê¤¤ÆÈÎ©·Ï
+	### Mozillaã‚’åä¹—ã‚‰ãªã„ç‹¬ç«‹ç³»
 	else {
-		if ($agent =~ '^([^/]*)/.*') {			# ver.É½µ­¤¬¤¢¤ë¤Ã¤İ¤¤
-			++$AGENT{$1};						# ver.É½µ­¤òºï¤ë
+		if ($agent =~ '^([^/]*)/.*') {			# ver.è¡¨è¨˜ãŒã‚ã‚‹ã£ã½ã„
+			++$AGENT{$1};						# ver.è¡¨è¨˜ã‚’å‰Šã‚‹
 		} else {
-			++$AGENT{$agent};					# ¤½¤Î¤Ş¤ŞºÎÍÑ
+			++$AGENT{$agent};					# ãã®ã¾ã¾æ¡ç”¨
 		}
 	}
 }
 
 
-;### ²èÌÌ¾ğÊó¤ò¥«¥¦¥ó¥È¤¹¤ë¥Ş¥¯¥í
+;### ç”»é¢æƒ…å ±ã‚’ã‚«ã‚¦ãƒ³ãƒˆã™ã‚‹ãƒã‚¯ãƒ­
 sub Macro_CountScreen {
-	unless (($screen eq '') || ($screen eq '-')) {
-		split(/,/, $screen);
-		$_[0] = &func::C62_Decode($_[0]);
-		$_[1] = &func::C62_Decode($_[1]);
-		$_[2] = &func::C62_Decode($_[2]);
-		++$SCREEN{"$_[0]x$_[1]x$_[2]"};
-		++$SCREEN_SIZE{"$_[0]x$_[1]"};
-		++$SCREEN_COLOR{"$_[2]"};
+	if (($screen eq '') || ($screen eq '-')) {
+		++$SCREEN{"-"};
+		++$SCREEN_SIZE{"-"};
+		++$SCREEN_COLOR{"-"};
+	} else {
+		@sc = split(/,/, $screen);
+		$sc[0] = &func::C62_Decode($sc[0]);
+		$sc[1] = &func::C62_Decode($sc[1]);
+		$sc[2] = &func::C62_Decode($sc[2]);
+
+		++$SCREEN{"$sc[0]x$sc[1]x$sc[2]"};
+		++$SCREEN_SIZE{"$sc[0]x$sc[1]"};
+		++$SCREEN_COLOR{"$sc[2]"};
 	}
 }
 
 
-;### ¥³¡¼¥É¤äµ­¹æ¤ò°ÕÌ£¤¢¤ëÊ¸»úÎó¤ËÊÑ´¹¤¹¤ë
+;### ã‚³ãƒ¼ãƒ‰ã‚„è¨˜å·ã‚’æ„å‘³ã‚ã‚‹æ–‡å­—åˆ—ã«å¤‰æ›ã™ã‚‹
 sub Macro_ChangeList {
-	### »²¾È¸µ
+	### å‚ç…§å…ƒ
 	foreach (@ref) {
 		($n, $data) = split(/\t/);
 
 		if ($data eq '-') {
-			$data = '¥Ö¥Ã¥¯¥Ş¡¼¥¯¡¦¤ªµ¤¤ËÆş¤ê¤«¤é / ¥í¥Ü¥Ã¥È¡¦½ä²ó¥½¥Õ¥È / URLÄ¾ÂÇ¤Á / »²¾È¸µ¤ò±£ÊÃ¤·¤Æ¤Î¥¢¥¯¥»¥¹';
+			$data = 'ãªã—';
 		} elsif ($data eq 'noscript') {
-			$data = 'JavaScript¤ò¶Ø»ß¡¢Ëô¤Ï»ÈÍÑ½ĞÍè¤Ê¤¤¥Ö¥é¥¦¥¶¤Ë¤è¤ê»²¾È¸µ¼èÆÀ¼ºÇÔ';
+			$data = 'JavaScriptä½¿ç”¨ä¸èƒ½';
 		} elsif ($data eq '-own-') {
-			$data = '¼«¥µ¥¤¥ÈÆâ¤Ç¤Î°ÜÆ°';
+			$data = 'è‡ªã‚µã‚¤ãƒˆå†…ã§ã®ç§»å‹•';
 		} elsif ($data eq '-search-') {
-			$data = '(efStat¤ËÅĞÏ¿¤µ¤ì¤Æ¤¤¤ë)¥µ¡¼¥Á¥¨¥ó¥¸¥ó¤«¤é';
+			$data = 'ã‚µãƒ¼ãƒã‚¨ãƒ³ã‚¸ãƒ³ã‹ã‚‰';
 		} else {
 			$data =~ s"^!"http://";
 			if (($DoLink) && ($data =~ /^http/)) {
@@ -832,47 +793,30 @@ sub Macro_ChangeList {
 		$_ = "$n\t$data";
 	}
 
-	### ¥µ¥¤¥ÈÆâ°ÜÆ°Ê¬ÀÏ
+	### ã‚µã‚¤ãƒˆå†…ç§»å‹•åˆ†æ
 	&change_a(\@ref_own);
 
-	### ¥µ¡¼¥Á¥¨¥ó¥¸¥ó
+	### ã‚µãƒ¼ãƒã‚¨ãƒ³ã‚¸ãƒ³
 	&change_a(\@ref_search);
 
-	### TINAMI¥«¥Æ¥´¥ê
-	foreach (@ref_tinami) {
-		($n, $data) = split(/\t/);
-
-		if ($TABLE{'tinami'}{$data}) {
-			$data = "[C] $TABLE{'tinami'}{$data}";
-		} else {
-			$data = &func::URLdecode($data);
-		}
-
-		$_ = "$n\t$data";
-	}
-
-	## Surfers Paradice
-	&change_a(\@ref_sp);
-
-
-	### ¥«¥ó¥È¥ê¡¼¥³¡¼¥É
+	### ã‚«ãƒ³ãƒˆãƒªãƒ¼ã‚³ãƒ¼ãƒ‰
 	foreach (@host_dm) {
 		($n, $data) = split(/\t/);
 
 		if ($data eq 'ipaddr') {
-			$data = "¥É¥á¥¤¥óÈ½ÊÌ¤Ç¤­¤º (<B>IP¥¢¥É¥ì¥¹</B>)";
+			$data = "ãƒ‰ãƒ¡ã‚¤ãƒ³åˆ¤åˆ¥ã§ããš (<B>IPã‚¢ãƒ‰ãƒ¬ã‚¹</B>)";
 		} elsif ($data eq '-') {
-			$data = "<B><FONT SIZE=+1>[·Ù¹ğ] IPµ­Ï¿Ìµ¤·</FONT><BR>(¥«¥¦¥ó¥¿¤òTELNET¤«¤éÄ¾ÀÜ¼Â¹Ô?)</B>";
+			$data = "<B><FONT SIZE=+1>[è­¦å‘Š] IPè¨˜éŒ²ç„¡ã—</FONT><BR>(ã‚«ã‚¦ãƒ³ã‚¿ã‚’TELNETã‹ã‚‰ç›´æ¥å®Ÿè¡Œ?)</B>";
 		} elsif ($TABLE{'cctld'}{$data}) {
 			$data = "$TABLE{'cctld'}{$data} (\*.<B>${data}<\/B>)";
 		} else {
-			$data = "Ì¤ÄêµÁ¤Î¹ñÀÒ¥³¡¼¥É (*.<B>${data}<\/B>)";
+			$data = "æœªå®šç¾©ã®å›½ç±ã‚³ãƒ¼ãƒ‰ (*.<B>${data}<\/B>)";
 		}
 
 		$_ = "$n\t$data";
 	}
 
-	## ÆüËÜÂè2¥ì¥Ù¥ë¥É¥á¥¤¥ó
+	## æ—¥æœ¬ç¬¬2ãƒ¬ãƒ™ãƒ«ãƒ‰ãƒ¡ã‚¤ãƒ³
 	foreach (@host_dm_jp) {
 		($n, $data) = split(/\t/);
 
@@ -882,7 +826,7 @@ sub Macro_ChangeList {
 		}
 	}
 
-	## ÊÆ¹ñÂè2¥ì¥Ù¥ë¥É¥á¥¤¥ó
+	## ç±³å›½ç¬¬2ãƒ¬ãƒ™ãƒ«ãƒ‰ãƒ¡ã‚¤ãƒ³
 	foreach (@host_dm_us) {
 		($n, $data) = split;
 
@@ -897,9 +841,9 @@ sub Macro_ChangeList {
 		($n, $data) = split(/\t/);
 
 		if ($data eq '-etc-') {
-			$data = "¤½¤ÎÂ¾";
+			$data = "ãã®ä»–";
 		} elsif ($data eq '-') {
-			$data = "Ì¾¾ÎÉÔÌÀ";
+			$data = "åç§°ä¸æ˜";
 		} elsif ($TABLE{'agent'}{$data}) {
 			$data = "${data}<BR>$TABLE{'agent'}{$data}";
 		}
@@ -926,30 +870,30 @@ sub Macro_ChangeList {
 }
 
 
-;### ½ĞÎÏÍÑ¤Î¥Æ¡¼¥Ö¥ë¤òºî¤ë
-;### É½¼¨¥â¡¼¥É, É½Âê, ¹àÌÜ, ³ä¤ë¿ô, Éû¹àÌÜ1, Éû¹àÌÜ2(³ä¤ë¿ô), É½¼¨²¼¸Â, É½¼¨¤µ¤»¤ëÇÛÎó
+;### å‡ºåŠ›ç”¨ã®ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ä½œã‚‹
+;### è¡¨ç¤ºãƒ¢ãƒ¼ãƒ‰, è¡¨é¡Œ, é …ç›®, å‰²ã‚‹æ•°, å‰¯é …ç›®1, å‰¯é …ç›®2(å‰²ã‚‹æ•°), è¡¨ç¤ºä¸‹é™, è¡¨ç¤ºã•ã›ã‚‹é…åˆ—
 sub Macro_PutTable_a {
 	my($mode, $title, $item, $div, $sub1, $sub2, $limit, $array) = @_;
 	my($buf, $n, $data, $line, $ave, $width);
 
 	unless (@$array == ()) {
-		if (($sub2==0) || ($SAMPLES==0)) { $ave = 0; }							#0½ü»»ÂĞºö
+		if (($sub2==0) || ($SAMPLES==0)) { $ave = 0; }							#0é™¤ç®—å¯¾ç­–
 		else { $ave = sprintf("%2.1f", ($sub2*100)/$SAMPLES); }
 
-		### É½Âê
+		### è¡¨é¡Œ
 		print "<TABLE border=1 cellspacing=0 cellpadding=1${tbc[5]}>\n";
 
-		print "\t<TR><TH nowrap colspan=2${tbc[0]}><A HREF=\"#menu\"><FONT size=+1>¢£ $title ¢£</FONT></A><BR>";
-		if    ($mode == 0) { print "<FONT size=-1>(¥µ¥ó¥×¥ëÁí¿ô : $div)</FONT>"; }																				#ÄÌ¾ïÉ½¼¨
-		elsif ($mode == 1) { print "(<SUP>$sub1 : $sub2 ($ave%)</SUP> / <SUB>Á´ÂÎ : $SAMPLES</SUB>)<BR><FONT size=-1>(Í­¸ú¥µ¥ó¥×¥ëÁí¿ô : $div)</FONT>"; }		#TINAMI,SPÊ¬ÀÏÍÑ
-		elsif ($mode == 2) { print "(<SUP>$sub1 : $sub2 ($ave%)</SUP> / <SUB>Á´ÂÎ : $SAMPLES</SUB>)"; }															#¹ñÆâ¥É¥á¥¤¥ó,IE¥·¥§¥¢,NN¥·¥§¥¢ÍÑ
+		print "\t<TR><TH nowrap colspan=2${tbc[0]}><A HREF=\"#menu\"><FONT size=+1>â–  $title â– </FONT></A><BR>";
+		if    ($mode == 0) { print "<FONT size=-1>(ã‚µãƒ³ãƒ—ãƒ«ç·æ•° : $div)</FONT>"; }																			#é€šå¸¸è¡¨ç¤º
+		elsif ($mode == 1) { print "(<SUP>$sub1 : $sub2 ($ave%)</SUP> / <SUB>å…¨ä½“ : $SAMPLES</SUB>)<BR><FONT size=-1>(æœ‰åŠ¹ã‚µãƒ³ãƒ—ãƒ«ç·æ•° : $div)</FONT>"; }	#TINAMI,SPåˆ†æç”¨
+		elsif ($mode == 2) { print "(<SUP>$sub1 : $sub2 ($ave%)</SUP> / <SUB>å…¨ä½“ : $SAMPLES</SUB>)"; }														#å›½å†…ãƒ‰ãƒ¡ã‚¤ãƒ³,IEã‚·ã‚§ã‚¢,NNã‚·ã‚§ã‚¢ç”¨
 		print "</TH></TR>\n";
 
-		### É½¤Î¹àÌÜ
-		print "\t<TR><TH nowrap${tbc[1]}>·ï¿ô</TH>";
+		### è¡¨ã®é …ç›®
+		print "\t<TR><TH nowrap${tbc[1]}>ä»¶æ•°</TH>";
 		print "<TH${tbc[2]}>$item</TH></TR>\n";
 
-		### É½¤ÎÃæ¿È
+		### è¡¨ã®ä¸­èº«
 		foreach $line (@$array) {
 			($n, $data) = split(/\t/, $line);
 			$n = int($n);
@@ -971,69 +915,69 @@ sub Macro_PutTable_a {
 			print "<TD${tbc[6]}>${data}</TD></TR>\n";
 		}
 
-		### É½¼¨²¼¸Â¤¬»ØÄê¤µ¤ì¤Æ¤¤¤ë¾ì¹ç¡¢Ãí¼á¤òÉ½¼¨
-		print "\t<TR><TD colspan=2 align=right${tbc[0]}><FONT size=-1><B>$limit·ï°Ê²¼¾ÊÎ¬</B></FONT></TD></TR>\n" unless ($limit == 0);
+		### è¡¨ç¤ºä¸‹é™ãŒæŒ‡å®šã•ã‚Œã¦ã„ã‚‹å ´åˆã€æ³¨é‡ˆã‚’è¡¨ç¤º
+		print "\t<TR><TD colspan=2 align=right${tbc[0]}><FONT size=-1><B>$limitä»¶ä»¥ä¸‹çœç•¥</B></FONT></TD></TR>\n" unless ($limit == 0);
 		print "</TABLE>\n";
 	}
 }
 
 
-;### ¥«¥¦¥ó¥¿½¸·×É½ - ²£ÃÖ¤­
-;### É½¼¨¥¿¥¤¥×, ¹àÌÜ¼ïÊÌ, Ï¢ÁÛÇÛÎó
-;### ¥¿¥¤¥×: 0=ÄÌ¾ï, 1=[¥µ¥¤¥ÈÁ´ÂÎ]¤¬¤Ê¤¤, 2=[·×]¤¬¤Ê¤¤, 3=Î¾ÊıÌµ¤¤
+;### ã‚«ã‚¦ãƒ³ã‚¿é›†è¨ˆè¡¨ - æ¨ªç½®ã
+;### è¡¨ç¤ºã‚¿ã‚¤ãƒ—, é …ç›®ç¨®åˆ¥, é€£æƒ³é…åˆ—
+;### ã‚¿ã‚¤ãƒ—: 0=é€šå¸¸, 1=[ã‚µã‚¤ãƒˆå…¨ä½“]ãŒãªã„, 2=[è¨ˆ]ãŒãªã„, 3=ä¸¡æ–¹ç„¡ã„
 sub Macro_PutTable_b {
 	my($type, $ptr, $hash) = @_;
 	my($colspan, @sum);
 
-	if   (($type==2) || ($type==3)) {						#[¥Ú¡¼¥¸·×]¤òÉ½¼¨¤·¤Ê¤¤
+	if   (($type==2) || ($type==3)) {						#[ãƒšãƒ¼ã‚¸è¨ˆ]ã‚’è¡¨ç¤ºã—ãªã„
 		$colspan = @$ptr;
 	} else { $colspan = @$ptr+1; }
 
-	### ¹àÌÜ(É½Âê)
+	### é …ç›®(è¡¨é¡Œ)
 	print "<TABLE border=1 cellspacing=0 cellpadding=1${tbc[6]}>\n";
-	print "\t<TR><TH colspan=${colspan}${tbc[0]}><A href=\"#menu\"><FONT size=+1>¢£ $ptr->[0] ¢£</FONT></A></TH></TR>\n";
+	print "\t<TR><TH colspan=${colspan}${tbc[0]}><A href=\"#menu\"><FONT size=+1>â–  $ptr->[0] â– </FONT></A></TH></TR>\n";
 
-	### ¹Ô : ¹àÌÜ
-	print "\t<TR${tbc[5]}><TH nowrap${tbc[1]}>¡¡</TH>";
+	### è¡Œ : é …ç›®
+	print "\t<TR${tbc[5]}><TH nowrap${tbc[1]}>ã€€</TH>";
 	for ($i=1 ; $i < @$ptr ; $i++) { print "<TH>$ptr->[$i]</TH>"; }
-	### Îó : ¥Ú¡¼¥¸·×
-	print "<TH${tbc[4]}>¥Ú¡¼¥¸·×</TH>" unless (($type==2) || ($type==3));
+	### åˆ— : ãƒšãƒ¼ã‚¸è¨ˆ
+	print "<TH${tbc[4]}>ãƒšãƒ¼ã‚¸è¨ˆ</TH>" unless (($type==2) || ($type==3));
 	print "</TR>\n";
 
-	### ¹Ô : ÆâÍÆ
-	foreach (@filename) {
-		print "\t<TR align=right><TH${tbc[2]}>$_</TH>";
+	### è¡Œ : å†…å®¹
+	foreach $fname (@filename) {
+		print "\t<TR align=right><TH${tbc[2]}>$fname</TH>";
 
-		split(/\t/, $$hash{ $_ });
-		foreach (@_) {
-			$_ = &func::C62_Decode($_);
+		@x = split(/\t/, $$hash{ $fname });
+		foreach $x (@x) {
+			$x = &func::C62_Decode($x);
 		}
-		$all = &func::CalcSum(@_);
+		$all = &func::CalcSum(@x);
 
 		for ($i=0 ; $i < @$ptr-1 ; $i++) {
-			if (($_[$i]==0) || ($all==0)) { $ave = 0; }
+			if (($x[$i]==0) || ($all==0)) { $ave = 0; }
 			else {
-				$ave = sprintf("%2.1f",($_[$i]*100)/$all);
+				$ave = sprintf("%2.1f",($x[$i]*100)/$all);
 			}
 			$height = int($ave);
 			$height = 1 if ($height < 1);
 
 			print "<TD valign=\"bottom\">";
-			print "<IMG src=\"lib/b.gif\" height=${height} width=10 alt=\"$ave%\"><BR>" if ($DoPutGraph);
-			print "$_[$i]";
+			print "<IMG src=\"lib/b.gif\" height=${height} width=10 alt=\"$ave%\" title=\"$ave%\"><BR>" if ($DoPutGraph);
+			print "$x[$i]";
 			print "</TD>";
-			$sum[$i] += $_[$i];
+			$sum[$i] += $x[$i];
 		}
-		### Îó : [¥Ú¡¼¥¸·×]
+		### åˆ— : [ãƒšãƒ¼ã‚¸è¨ˆ]
 		unless (($type==2) || ($type==3)) {
 			print "<TH${tbc[8]}>$all</TH>";
 		}
 		print "</TR>\n";
 	}
 
-	### ¹Ô : ¥µ¥¤¥ÈÁ´ÂÎ
+	### è¡Œ : ã‚µã‚¤ãƒˆå…¨ä½“
 	unless (($type==1) || ($type==3)) {
-		print "\t<TR align=right${tbc[7]}><TH nowrap${tbc[3]}>¥µ¥¤¥È·×</TH>";
+		print "\t<TR align=right${tbc[7]}><TH nowrap${tbc[3]}>ã‚µã‚¤ãƒˆè¨ˆ</TH>";
 		$all = &func::CalcSum(@sum);
 		foreach (@sum) {
 			if (($_==0) || ($all==0)) { $ave = 0; }
@@ -1044,73 +988,12 @@ sub Macro_PutTable_b {
 			$height = 1 if ($height < 1);
 
 			print "<TH valign=\"bottom\">";
-			print "<IMG src=\"lib/b.gif\" height=${height} width=10 alt=\"$ave%\"><BR>" if ($DoPutGraph);
+			print "<IMG src=\"lib/b.gif\" height=${height} width=10 alt=\"$ave%\" title=\"$ave%\"><BR>" if ($DoPutGraph);
 			print "$_";
 			print "</TH>";
 		}
-		### Îó : ¸¡»»Éô ([¥Ú¡¼¥¸·×] = [¥µ¥¤¥È·×])
+		### åˆ— : æ¤œç®—éƒ¨ ([ãƒšãƒ¼ã‚¸è¨ˆ] = [ã‚µã‚¤ãƒˆè¨ˆ])
 		printf("<TH%s>%d</TH>",${tbc[9]}, $all) unless ($type==2);
-		print "<TR>\n";
-	}
-
-	print "</TABLE>\n";
-}
-
-
-;### ¥«¥¦¥ó¥¿½¸·×É½ - ²£ÃÖ¤­
-;### É½¼¨¥¿¥¤¥×, ¹àÌÜ¼ïÊÌ, É½Âê, Ã±°Ì, ¹àÌÜ¿ô, Ï¢ÁÛÇÛÎó
-;### ¥¿¥¤¥×: 0=ÄÌ¾ï, 1=[¥µ¥¤¥ÈÁ´ÂÎ]¤¬¤Ê¤¤, 2=[·×]¤¬¤Ê¤¤, 3=Î¾ÊıÌµ¤¤
-;### ¸ÄÊÌ¥â¡¼¥É: 0=ÄÌ¾ï, 1=ÍËÆüÊÌ½¸·×, 2=·îÊÌ½¸·×
-sub Macro_PutTable_c {
-	my($type, $mode, $title, $sub, $max, $assoc_array) = @_;
-	my($colspan, @sum, @d, @w);
-	@w=('Æü','·î','²Ğ','¿å','ÌÚ','¶â','ÅÚ');
-
-	if   (($type==2) || ($type==3)) {						#[¥Ú¡¼¥¸·×]¤òÉ½¼¨¤·¤Ê¤¤
-		$colspan = $max+1;									# -> Îó¤ò¸º¤é¤¹
-	} else { $colspan = $max+2; }
-
-	### ¹àÌÜ(É½Âê)
-	print "<TABLE border=1 cellspacing=0 cellpadding=1${tbc[6]}>\n";
-	print "\t<TR><TH colspan=${colspan}${tbc[0]}><A href=\"#menu\"><FONT size=+1>¢£ $title ¢£</FONT></A></TH></TR>\n";
-
-	### ¹Ô : ¹àÌÜ
-	print "\t<TR${tbc[5]}><TH nowrap${tbc[1]}>¡¡</TH>";
-	for ($i=0 ; $i < $max ; $i++) {
-		print "<TH>";
-		if    ($mode == 0) { print "$i$sub"; }				#ÄÌ¾ï
-		elsif ($mode == 1) { print "$w[$i]$sub"; }			#ÍËÆüÊÌ½¸·×
-		elsif ($mode == 2) { printf("%d$sub", $i+1); }		#·îÊÌ½¸·×
-		print "</TH>";
-	}
-	### Îó : ¥Ú¡¼¥¸·×
-	unless (($type==2) || ($type==3)) { print "<TH${tbc[4]}>¥Ú¡¼¥¸·×</TH>"; }
-	print "</TR>\n";
-
-	### ¹Ô : ÆâÍÆ
-	foreach $line (@filename) {
-		print "\t<TR align=right><TH${tbc[2]}>$line</TH>";
-
-		split(/\t/, $$assoc_array{ $line });
-
-		for ($i=0 ; $i < $max ; $i++) {
-			$_[$i] = &func::C62_Decode($_[$i]);
-			print "<TD>$_[$i]</TD>";
-			$sum[$i] += $_[$i];
-		}
-		### Îó : [¥Ú¡¼¥¸·×]
-		unless (($type==2) || ($type==3)) {
-			printf("<TH%s>%d</TH>",${tbc[8]}, &func::CalcSum(@_));
-		}
-		print "</TR>\n";
-	}
-
-	### ¹Ô : ¥µ¥¤¥ÈÁ´ÂÎ
-	unless (($type==1) || ($type==3)) {
-		print "\t<TR align=right${tbc[7]}><TH nowrap${tbc[3]}>¥µ¥¤¥È·×</TH>";
-		for ($i=0 ; $i < $#sum+1 ; $i++) { print "<TH>$sum[$i]</TH>"; }
-		### Îó : ¸¡»»Éô ([¥Ú¡¼¥¸·×] = [¥µ¥¤¥È·×])
-		unless ($type==2) { printf("<TH%s>%d</TH>",${tbc[9]}, &func::CalcSum(@sum)); }
 		print "<TR>\n";
 	}
 
