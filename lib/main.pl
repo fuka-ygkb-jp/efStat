@@ -501,7 +501,7 @@ sub Macro_CountRef {
 	elsif ($ref =~ '^!\w+\.msn\.')
 		{ $flag =  6; ++$REF_SEARCH_SHARE{'MSN'}; }
 
-	elsif ($ref =~ '^!\w+\.google\.')
+	elsif ($ref =~ '^.+\.google\.')
 		{ $flag =  7; ++$REF_SEARCH_SHARE{'Google'}; }
 
 	elsif ($ref =~ '^!infonavi\.infoweb\.ne\.jp/')
@@ -533,6 +533,9 @@ sub Macro_CountRef {
 
 	elsif ($ref =~ '^!google\.yahoo\.')
 		{ $flag = 17; ++$REF_SEARCH_SHARE{'Yahoo!(Google)'}; }
+
+	elsif ($ref =~ '^.*yandex\.ru')
+		{ $flag = 17; ++$REF_SEARCH_SHARE{'Yandex'}; }
 
 
 	# 通常のURL

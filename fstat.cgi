@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 require 5.004;	# 本プログラムは(少なくとも)perl 5.004以上を必要とします。
-$ver = '2.2';	# 本プログラムのバージョン。変更しないで下さい。
+$ver = '2.2.1';	# 本プログラムのバージョン。変更しないで下さい。
 ;#+------------------------------------------------------------------------
 ;#|efStat[ログ表示部]
 ;#|(C)1998-2016 不可思議絵の具(http://ygkb.jp/)
@@ -38,14 +38,8 @@ $Pass = 'abc';
 
 # [まとめたいURL]
 @Complete_URL = (
-	[ 'http://www.i-say.net/cgi/', 'CGI ZOO' ],
-	[ 'http://chmod755.magical.gr.jp/', 'chmod755' ],
-	[ 'http://script.lovely.to/', 'にほんごCGIインデックス' ],
-	[ 'http://www.imjnews.com/bcp/bcpcgi/', 'Best CGI Persuit' ],
 	[ 'fstat.cgi', 'efStatコピーライトから' ],
 	[ 'listgen_c.cgi', 'Listgenコピーライトから' ],
-	[ '.2ch.net', '2chへ帰れ' ],
-	[ '.bbspink.com', '2chへ帰れ' ],
 );
 
 
