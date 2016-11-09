@@ -44,7 +44,7 @@ Content-type: text/html
 	<META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">
 	<META http-equiv=\"Content-Style-Type\" content=\"text/css\">
 
-	<!-- efStat $ver  by Enogu Fukashigi (http://ygkb.jp/) -->
+	<!-- efStat $ver  by Enogu Fukashigi (https://ygkb.jp/) -->
 	<!-- このスクリプトの最新版が欲しい方は上記アドレスまでお越し下さい(^^) -->
 
 	<TITLE>efStat / $html_title</TITLE>
@@ -69,7 +69,7 @@ END
 
 ;### HTML しっぽの部分
 sub html_tail {
-	print "\n<HR>\n<DIV align=right><A href=\"http://ygkb.jp/\">[efStat $ver] / &copy;1998-2016 Enogu Fukashigi\@YugenKoubou</A></DIV>\n</BODY>\n</HTML>\n";
+	print "\n<HR>\n<DIV align=right><A href=\"https://ygkb.jp/\">[efStat $ver] / &copy;1998-2016 Enogu Fukashigi\@YugenKoubou</A></DIV>\n</BODY>\n</HTML>\n";
 }
 
 

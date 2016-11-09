@@ -529,13 +529,28 @@ sub Macro_CountRef {
 		{ $flag = 15; ++$REF_SEARCH_SHARE{'Biglobe'}; }
 
 	elsif ($ref =~ '^!search\.yahoo\.')
-		{ $flag = 16; ++$REF_SEARCH_SHARE{'Yahoo!(Keyword)'}; }
+		{ $flag = 16; ++$REF_SEARCH_SHARE{'Yahoo!(文字)'}; }
+
+	elsif ($ref =~ '^.*image\.search\.yahoo\.')
+		{ $flag = 16; ++$REF_SEARCH_SHARE{'Yahoo!(画像)'}; }
 
 	elsif ($ref =~ '^!google\.yahoo\.')
 		{ $flag = 17; ++$REF_SEARCH_SHARE{'Yahoo!(Google)'}; }
 
 	elsif ($ref =~ '^.*yandex\.ru')
 		{ $flag = 17; ++$REF_SEARCH_SHARE{'Yandex'}; }
+
+	elsif ($ref =~ '^.*websearch\.rakuten\.co\.jp')
+		{ $flag = 18; ++$REF_SEARCH_SHARE{'楽天ウェブ検索'}; }
+
+	elsif ($ref =~ '^.*bing\.com')
+		{ $flag = 19; ++$REF_SEARCH_SHARE{'Bing'}; }
+
+	elsif ($ref =~ '^.*search\.smt\.docomo\.ne\.jp')
+		{ $flag = 20; ++$REF_SEARCH_SHARE{'dメニュー'}; }
+
+	elsif ($ref =~ '^.*search\.nifty\.com')
+		{ $flag = 21; ++$REF_SEARCH_SHARE{'@nifty'}; }
 
 
 	# 通常のURL
@@ -561,7 +576,7 @@ sub Macro_CountRef {
 	if ($flag > 0) {
 		++$REF{'-search-'};
 		foreach $_ (split(/&/, $ref)) {
-			s/%20|\+|\|/ /gi;								# 処理速度の関係でかなり曖昧
+			s/%20|\+|\|　/ /gi;								# 処理速度の関係でかなり曖昧
 
 			# Yahoo!
 			if ($flag == 3) {
@@ -609,9 +624,29 @@ sub Macro_CountRef {
 				++$REF_SEARCH{$1}	if (/key=(.+)/);
 			}
 
-			# Yahoo! (search, google)
+			# Yahoo! (文字列検索, 画像検索, google)
 			elsif (($flag == 16) || ($flag == 17)) {
 				++$REF_SEARCH{$1}	if (/p=(.+)/);
+			}
+
+			# 楽天ウェブ検索
+			elsif ($flag == 18) {
+				++$REF_SEARCH{$1}	if (/qt=(.+)/ || /before_qt=(.*)/);
+			}
+
+			# Bing
+			elsif ($flag == 19) {
+				++$REF_SEARCH{$1}	if (/q=(.+)/);
+			}
+
+			# dメニュー
+			elsif ($flag == 20) {
+				++$REF_SEARCH{$1}	if (/MT=(.+)/);
+			}
+
+			# @nifty
+			elsif ($flag == 21) {
+				++$REF_SEARCH{$1}	if (/Text=(.+)/);
 			}
 		}
 	}
