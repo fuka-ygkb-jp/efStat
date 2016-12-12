@@ -492,7 +492,7 @@ sub Macro_CountRef {
 	if ($ref =~ '^!dir\.yahoo\.')
 		{ $flag =  3; ++$REF_SEARCH_SHARE{'Yahoo!(Directory)'}; }
 
-	elsif (($ref =~ '^!\w+\.goo\.ne\.jp/'))
+	elsif ($ref =~ '^*search\.goo\.ne\.jp/')
 		{ $flag =  4; ++$REF_SEARCH_SHARE{'goo'}; }
 
 	elsif ($ref =~ '^!\w+\.infoseek\.')
@@ -504,32 +504,20 @@ sub Macro_CountRef {
 	elsif ($ref =~ '^.+\.google\.')
 		{ $flag =  7; ++$REF_SEARCH_SHARE{'Google'}; }
 
-	elsif ($ref =~ '^!infonavi\.infoweb\.ne\.jp/')
-		{ $flag = 8; $REF_SEARCH_SHARE{'InfoNavigator'}; }
-
 	elsif ($ref =~ '^!\w+\.lycos\.')
 		{ $flag =  9; ++$REF_SEARCH_SHARE{'Lycos'}; }
 
-	elsif (($ref =~ '^!\w+\.fresheye\.') || ($ref =~ '^!\w+\.jplaza\.'))
+	elsif ($ref =~ '^!\w+\.fresheye\.')
 		{ $flag = 10; ++$REF_SEARCH_SHARE{'Fresheye'}; }
-
-	elsif ($ref =~ '^!kensaku\.org')
-		{ $flag = 11; ++$REF_SEARCH_SHARE{'RingRing'}; }
 
 	elsif ($ref =~ '^!\w+\.excite\.')
 		{ $flag = 12; ++$REF_SEARCH_SHARE{'excite'}; }
-
-	elsif ($ref =~ '^!\w+\.altavista\.')
-		{ $flag = 13; ++$REF_SEARCH_SHARE{'altavista'}; }
-
-	elsif ($ref =~ '^!search\.odn\.ne\.jp/')
-		{ $flag = 14; ++$REF_SEARCH_SHARE{'ODN'}; }
 
 	elsif ($ref =~ '^!\w+\.search\.biglobe\.ne\.jp/')
 		{ $flag = 15; ++$REF_SEARCH_SHARE{'Biglobe'}; }
 
 	elsif ($ref =~ '^!search\.yahoo\.')
-		{ $flag = 16; ++$REF_SEARCH_SHARE{'Yahoo!(文字)'}; }
+		{ $flag = 16; ++$REF_SEARCH_SHARE{'Yahoo!(Keyword)'}; }
 
 	elsif ($ref =~ '^.*image\.search\.yahoo\.')
 		{ $flag = 16; ++$REF_SEARCH_SHARE{'Yahoo!(画像)'}; }
@@ -551,6 +539,21 @@ sub Macro_CountRef {
 
 	elsif ($ref =~ '^.*search\.nifty\.com')
 		{ $flag = 21; ++$REF_SEARCH_SHARE{'@nifty'}; }
+
+	elsif ($ref =~ '^.*search\.fenrir-inc\.com')
+		{ $flag = 22; ++$REF_SEARCH_SHARE{'Sleipnir Start'}; }
+
+	elsif ($ref =~ '^.*search\.auone\.jp')
+		{ $flag = 23; ++$REF_SEARCH_SHARE{'auポータル'}; }
+
+	elsif ($ref =~ '^.*\.so-net\.ne\.jp/search')
+		{ $flag = 24; ++$REF_SEARCH_SHARE{'So-net'}; }
+
+	elsif ($ref =~ '^.*\.hao123\.com')
+		{ $flag = 25; ++$REF_SEARCH_SHARE{'Hao123'}; }
+
+	elsif ($ref =~ '^.*\.luna\.tv')
+		{ $flag = 26; ++$REF_SEARCH_SHARE{'Lunascape'}; }
 
 
 	# 通常のURL
@@ -599,14 +602,9 @@ sub Macro_CountRef {
 				++$REF_SEARCH{$1}	if (/q=(.+)/ || /aq=(.+)/ || /MT=(.+)/);
 			}
 
-			# Google, excite, altavista
-			elsif (($flag == 7) || ($flag == 12) || ($flag == 13)) {
+			# Google, excite
+			elsif (($flag == 7) || ($flag == 12)) {
 				++$REF_SEARCH{$1}	if (/q=(.+)/);
-			}
-
-			# infoweb, ODN
-			elsif (($flag == 8) || ($flag == 14)) {
-				++$REF_SEARCH{$1}	if (/QueryString=(.+)/ || /OLDQUERYDISPLAY=(.+)/);
 			}
 
 			# lycos
@@ -617,11 +615,6 @@ sub Macro_CountRef {
 			# fresheye
 			elsif ($flag == 10) {
 				++$REF_SEARCH{$1}	if (/kw=(.+)/);
-			}
-
-			# RingRing
-			elsif ($flag == 11) {
-				++$REF_SEARCH{$1}	if (/key=(.+)/);
 			}
 
 			# Yahoo! (文字列検索, 画像検索, google)
@@ -647,6 +640,31 @@ sub Macro_CountRef {
 			# @nifty
 			elsif ($flag == 21) {
 				++$REF_SEARCH{$1}	if (/Text=(.+)/);
+			}
+
+			# Sleipnir Start
+			elsif ($flag == 22) {
+				++$REF_SEARCH{$1}	if (/q=(.+)/);
+			}
+
+			# auポータル
+			elsif ($flag == 23) {
+				++$REF_SEARCH{$1}	if (/q=(.+)/);
+			}
+
+			# So-net
+			elsif ($flag == 24) {
+				++$REF_SEARCH{$1}	if (/query=(.+)/);
+			}
+
+			# Hao123
+			elsif ($flag == 25) {
+				++$REF_SEARCH{$1}	if (/query=(.+)/);
+			}
+
+			# Lunascape
+			elsif ($flag == 26) {
+				++$REF_SEARCH{$1}	if (/q=(.+)/);
 			}
 		}
 	}

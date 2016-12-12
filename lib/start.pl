@@ -105,7 +105,7 @@ elsif ($ENV{'REQUEST_METHOD'} eq 'POST') {
 	if (($DoTasteless > 1) || ($DoPutGraph > 1) ||
 	    ($DoLink > 1) || ($DoSaveCookie > 1)
 	) { &func::PutError('仕様に無いオプション指定です。'); }
-	elsif (($Limit_Log > 999)   || ($Limit_Ref > 999)  ||
+	elsif (($Limit_Log > 999)    || ($Limit_Ref > 999)  ||
 	       ($Limit_Search > 999) || ($Limit_Host > 999) ||
 	       ($Limit_Domain > 999) || ($Limit_Jp > 999)   || ($Limit_Agent > 999)
 	) { &func::PutError('仕様に無い制限指定です。'); }
